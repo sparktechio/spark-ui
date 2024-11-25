@@ -1,0 +1,12 @@
+{
+  "name": "@spark-ui/react-input",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Input field\" && exit 1"
+  },
+  "keywords": [],
+  "author": "akifh@spark-tech.io"
+}
