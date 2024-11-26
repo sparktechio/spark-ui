@@ -1,12 +1,33 @@
 {
-  "name": "@spark-ui/react-input",
-  "version": "1.0.0",
+  "name": "@sparkui/react-input",
+  "version": "1.0.5",
   "license": "MIT",
-  "description": "",
-  "main": "index.js",
+  "description": "Spark UI, React input field",
+  "main": "lib/Input.js",
+  "types": "lib/Input.d.ts",
   "scripts": {
+    "build": "tsc && babel lib --out-dir lib --extensions \".ts,.tsx\"",
+    "patch": "npm version patch",
+    "publish": "npm publish --access ../../tests/primitives/input/public",
     "test": "echo \"Input field\" && exit 1"
   },
-  "keywords": [],
-  "author": "akifh@spark-tech.io"
+  "keywords": [
+    "react",
+    "input"
+  ],
+  "author": "akifh@spark-tech.io",
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.25.9",
+    "@babel/preset-typescript": "^7.26.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "typescript": "^5.7.2"
+  }
 }
