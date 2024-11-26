@@ -1,19 +1,19 @@
 import React from "react";
-import {Field, Form} from "@sparkui/react-form";
+import {Form} from "@sparkui/react-form";
 import styled from "styled-components";
 
-export const Example = () =>  {
-  const [nameEnabled, setNameEnabled] = React.useState<boolean>(true);
+export const FormStory = () =>  {
+  const [nameEnabled, setNameEnabled] = React.useState(true);
   const value = {personal: {name: '', description: "akif", age: 22}};
 
-  const name: Field<string> = {
+  const name = {
     name: "name",
     required: true,
     placeholder: "Name",
     param: "personal.name",
   }
 
-  const description: Field<string> = {
+  const description = {
     name: "description",
     required: true,
     pattern: /^[0-9\-+\/?]+$/,
@@ -21,7 +21,7 @@ export const Example = () =>  {
     param: "personal.description",
   }
 
-  const age: Field<number> = {
+  const age = {
     name: "age",
     required: false,
     placeholder: "age",
