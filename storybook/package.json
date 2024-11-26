@@ -28,7 +28,7 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "@sparkui/react-form": "file:../primitives/form",
+    "@sparkui/react-form": "file:../components/form",
     "bootstrap": "^5.3.3",
     "prop-types": "^15.8.1",
     "styled-components": "^6.1.13"

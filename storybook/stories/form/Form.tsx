@@ -44,7 +44,7 @@ export const FormStory = () =>  {
                     onBlur={({target: {value}}) => onBlur(value)}
                     {...element}
                   />
-                  {error && <span className="alert alert-danger">Validation failed</span>}
+                  {error && <span className="alert alert-danger my-2">Validation failed</span>}
                   <button className="btn btn-secondary" onClick={() => setNameEnabled(false)}>Hide name</button>
                 </FormControl>
               )}
@@ -62,7 +62,7 @@ export const FormStory = () =>  {
                 onBlur={({target: {value}}) => onBlur(value)}
                 {...element}
               />
-              {error && <span className="alert alert-danger">Validation failed</span>}
+              {error && <span className="alert alert-danger my-2">Validation failed</span>}
             </FormControl>
           )}
         </Form.TextField>
@@ -77,7 +77,7 @@ export const FormStory = () =>  {
                 type="number"
                 {...element}
               />
-              {error && <span className="alert alert-danger">Validation failed</span>}
+              {error && <span className="alert alert-danger my-2">Validation failed</span>}
             </FormControl>
           )}
         </Form.NumericField>
