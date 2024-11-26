@@ -16,6 +16,7 @@ export const Example = () =>  {
   const description: Field<string> = {
     name: "description",
     required: true,
+    pattern: /^[0-9\-\+\/\?]+$/,
     placeholder: "description",
     param: "personal.description",
   }
@@ -50,6 +51,7 @@ export const Example = () =>  {
         <Form.TextField {...description}>
           {({onChange, onBlur, error, element}) => (
             <FormControl>
+              <span>Digits and special characters only: -+/?</span>
               <input
                 onChange={({target: {value}}) => onChange(value)}
                 onBlur={({target: {value}}) => onBlur(value)}
@@ -84,7 +86,7 @@ const App = styled.div`
     display:flex;
     flex-direction: column;
     gap: 22px;
-    width: 200px;
+    width: 300px;
 `;
 
 const FormControl = styled.div`

@@ -64,7 +64,6 @@ export const FormSubmit = <B, >(
       const valid = validateFormField(field);
       if (!valid) {
         const newField = {...field, error: true};
-        console.log(newField);
         setField(newField);
         return newField;
       }
