@@ -1,6 +1,6 @@
 import {JSX, RefObject, useEffect, useRef} from "react";
 import {useFormContext} from "../context/FormProvider";
-import {validateFormField} from "./FormSubmit";
+import {validateFormField, ValidationError} from "../validation/Validator";
 
 export interface Field<V> {
   name: string;
@@ -11,10 +11,13 @@ export interface Field<V> {
   placeholder?: string,
   className?: string,
 
-  validate?: (value: any) => boolean,
+  validate?: (value?: V) => boolean,
   pattern?: RegExp,
   required?: boolean,
-  maxLength?: number
+  maxLength?: number,
+  minLength?: number,
+  min?: number,
+  max?: number,
 }
 
 export interface ControlledElement {
@@ -26,7 +29,7 @@ export interface ControlledElement {
 export interface EnhancedField<V, I extends ControlledElement> extends Field<V> {
   reference: RefObject<I>;
   touched?: boolean;
-  error?: boolean;
+  errors: ValidationError[];
 }
 
 export interface NestedElementProps<V, I> {
@@ -39,8 +42,8 @@ export interface NestedElementProps<V, I> {
 export interface ElementProps<V, I> {
   onChange: (value: V) => void;
   onBlur: (value: V) => void;
-  validate: () => boolean;
-  error?: boolean;
+  validate: () => ValidationError[];
+  errors: ValidationError[];
   element: NestedElementProps<V, I>;
 }
 
@@ -67,10 +70,10 @@ export const FormField = <V, I>({onChange, children, ...fieldProps}: FormFieldPr
   );
 
   return children({
-    onChange: (value) => setField({...field, value, error: field.touched ? !validateFormField({...field, value}) : field.error}),
+    onChange: (value) => setField({...field, value, errors: field.touched ? !validateFormField({...field, value}) : field.errors}),
     validate: () => validateFormField(field),
-    onBlur: (value) => setField({...field, value, touched: true, error: !validateFormField({...field, value})}),
-    error: field.error,
+    onBlur: (value) => setField({...field, value, touched: true, errors: validateFormField({...field, value})}),
+    errors: field.errors,
     element: {
       ref,
       name: field.name,

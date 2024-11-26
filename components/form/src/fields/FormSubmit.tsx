@@ -1,6 +1,7 @@
 import {ButtonHTMLAttributes, JSX, useState} from "react";
 import {useFormContext} from "../context/FormProvider";
-import {EnhancedField, Field} from "./FormField";
+import {EnhancedField} from "./FormField";
+import {validateFormField} from "../validation/Validator";
 
 export type Submit = <T,>(data: T) => Promise<void>;
 
@@ -9,21 +10,6 @@ export interface FormSubmitProps<B> {
   onError?: (error: unknown) => void;
   children: (props: B) => JSX.Element;
 }
-
-export const validateFormField = ({ required, pattern, value, validate = () => true }: Field<any>) => {
-  if (required) {
-    if (!value) {
-      return false;
-    }
-    return validate(value) && (pattern ? pattern.test(value) : /.+/.test(value));
-  } else {
-    if (value && value !== "") {
-      return validate(value) && (pattern ? pattern.test(value) : true);
-    } else {
-      return validate(value);
-    }
-  }
-};
 
 export const FormSubmit = <B, >(
   {
@@ -61,14 +47,14 @@ export const FormSubmit = <B, >(
 
   const onBeforeSubmit = async () => {
     const invalid = fields.map(field => {
-      const valid = validateFormField(field);
-      if (!valid) {
-        const newField = {...field, error: true};
+      const errors = validateFormField(field);
+      if (errors.length > 0) {
+        const newField = {...field, errors};
         setField(newField);
         return newField;
       }
       return field;
-    }).find(item => item.error);
+    }).find(item => item.errors.length > 0);
     if (invalid) {
       focusInvalid(invalid);
     } else {

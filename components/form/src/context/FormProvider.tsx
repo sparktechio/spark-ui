@@ -59,7 +59,7 @@ export const FormProvider = <F,>(
         ...field,
         reference,
         value: getNestedValue(value, field.param, field.value),
-        error: false,
+        errors: [],
       }
     }
   }

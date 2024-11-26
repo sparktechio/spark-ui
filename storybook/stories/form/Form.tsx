@@ -25,6 +25,11 @@ export const FormStory = () =>  {
   const age = {
     name: "age",
     required: false,
+    minLength: 4,
+    maxLength: 4,
+    min: 1999,
+    max: 2024,
+    validate: (value?: number) => value != 2020,
     placeholder: "age",
     param: "personal.age",
   }
@@ -35,7 +40,7 @@ export const FormStory = () =>  {
         {
           nameEnabled && (
             <Form.TextField {...name}>
-              {({onChange, onBlur, error, element}) => (
+              {({onChange, onBlur, errors, element}) => (
                 <FormControl>
                   <input
                     className="form-control"
@@ -44,7 +49,7 @@ export const FormStory = () =>  {
                     onBlur={({target: {value}}) => onBlur(value)}
                     {...element}
                   />
-                  {error && <span className="alert alert-danger my-2">Validation failed</span>}
+                  {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
                   <button className="btn btn-secondary" onClick={() => setNameEnabled(false)}>Hide name</button>
                 </FormControl>
               )}
@@ -52,7 +57,7 @@ export const FormStory = () =>  {
           )
         }
         <Form.TextField {...description}>
-          {({onChange, onBlur, error, element}) => (
+          {({onChange, onBlur, errors, element}) => (
             <FormControl>
               <span className="form-label">Digits and special characters only: -+/?</span>
               <input
@@ -62,12 +67,12 @@ export const FormStory = () =>  {
                 onBlur={({target: {value}}) => onBlur(value)}
                 {...element}
               />
-              {error && <span className="alert alert-danger my-2">Validation failed</span>}
+              {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
             </FormControl>
           )}
         </Form.TextField>
         <Form.NumericField {...age}>
-          {({onChange, onBlur, error, element}) => (
+          {({onChange, onBlur, errors, element}) => (
             <FormControl>
               <input
                 className="form-control"
@@ -77,7 +82,7 @@ export const FormStory = () =>  {
                 type="number"
                 {...element}
               />
-              {error && <span className="alert alert-danger my-2">Validation failed</span>}
+              {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
             </FormControl>
           )}
         </Form.NumericField>
