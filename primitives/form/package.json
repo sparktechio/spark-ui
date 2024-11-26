@@ -1,15 +1,16 @@
 {
-  "name": "@sparkui/react-input",
-  "version": "1.0.5",
+  "name": "@sparkui/react-form",
+  "version": "1.0.0",
   "license": "MIT",
-  "description": "Spark UI, React input field",
-  "main": "lib/Input.js",
-  "types": "lib/Input.d.ts",
+  "description": "Spark UI, React form",
+  "main": "lib/form/Form.js",
+  "types": "lib/form/Form.d.ts",
+  "source": "src/form/Form.tsx",
   "scripts": {
     "build": "tsc && babel lib --out-dir lib --extensions \".ts,.tsx\"",
     "patch": "npm version patch",
     "publish": "npm publish --access public",
-    "test": "echo \"Input field\" && exit 1"
+    "test": "echo \"Form\" && exit 1"
   },
   "keywords": [
     "react",
