@@ -1,6 +1,6 @@
 {
   "name": "@sparkui/react-form",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "MIT",
   "description": "Spark UI, React form",
   "main": "dist/index.js",
