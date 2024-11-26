@@ -2,4 +2,5 @@
 **/*.iml
 *.iml
 **/lib
+**/dist
 **/node_modules

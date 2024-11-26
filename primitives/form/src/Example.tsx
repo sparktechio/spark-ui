@@ -1,8 +1,8 @@
-import React from 'react';
-import {Field} from "./src/fields/FormField";
-import {Form} from "./src/Form";
+import React from "react";
+import {Field} from "./fields/FormField";
+import {Form} from "./Form";
 
-function App() {
+export const Example = () =>  {
   const value = {personal: {name: "akif", age: 22}};
   const name: Field<string> = {
     value: "akif",
@@ -64,5 +64,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

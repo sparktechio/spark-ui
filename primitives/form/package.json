@@ -1,13 +1,13 @@
 {
   "name": "@sparkui/react-form",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "license": "MIT",
   "description": "Spark UI, React form",
-  "main": "lib/form/Form.js",
-  "types": "lib/form/Form.d.ts",
-  "source": "src/form/Form.tsx",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "source": "src/index.ts",
   "scripts": {
-    "build": "tsc && babel lib --out-dir lib --extensions \".ts,.tsx\"",
+    "build": "tsc && babel dist --out-dir dist --extensions \".ts,.tsx\"",
     "patch": "npm version patch",
     "publish": "npm publish --access public",
     "test": "echo \"Form\" && exit 1"
@@ -15,6 +15,10 @@
   "keywords": [
     "react",
     "input"
+  ],
+  "files": [
+    "src",
+    "dist"
   ],
   "author": "akifh@spark-tech.io",
   "dependencies": {
