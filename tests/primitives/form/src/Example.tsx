@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 export const Example = () =>  {
   const [nameEnabled, setNameEnabled] = React.useState<boolean>(true);
-  const value = {personal: {description: "akif", age: 22}};
+  const value = {personal: {name: '', description: "akif", age: 22}};
 
   const name: Field<string> = {
     name: "name",
@@ -75,7 +75,7 @@ export const Example = () =>  {
           )}
         </Form.NumericField>
         <Form.ButtonSubmit onSubmit={async (e) => console.log(e)}>
-          {(props) => (<Button {...props}>Send</Button>)}
+          {(props) => (<Button {...props}>Submit</Button>)}
         </Form.ButtonSubmit>
       </Form>
     </App>
