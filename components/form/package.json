@@ -1,6 +1,6 @@
 {
   "name": "@sparkui/react-form",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT",
   "description": "Spark UI, React form",
   "main": "dist/index.js",
@@ -10,6 +10,7 @@
     "build": "tsc && babel dist --out-dir dist --extensions \".ts,.tsx\"",
     "patch": "npm version patch",
     "publish": "npm publish --access public",
+    "release": "npm run build && npm run patch && npm run publish",
     "test": "echo \"Form\" && exit 1"
   },
   "keywords": [
