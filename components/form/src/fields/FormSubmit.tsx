@@ -44,7 +44,7 @@ export const FormSubmit = (
     const invalid = fields.map(field => {
       const errors = validateFormField(field);
       if (errors.length > 0) {
-        const newField = {...field, errors};
+        const newField = {...field, touched: true, errors};
         setField(newField);
         return newField;
       }
