@@ -3,9 +3,9 @@ import {FormProvider} from "./context/FormProvider";
 import {EnhancedField, FormField, FormFieldProps} from "./fields/FormField";
 import {FormSubmit, FormSubmitProps} from "./fields/FormSubmit";
 import {
-  getButtonSubmitProps,
+  getButtonSubmitProps, getInputCheckboxProps,
   getInputDateProps,
-  getInputNumericProps,
+  getInputNumericProps, getInputRadioProps,
   getInputTextProps,
   getSelectProps
 } from "./utils/Utils";
@@ -58,6 +58,18 @@ Form.DateField = ({children, ...props}: FormFieldProps<Date, HTMLInputElement>) 
 
 Form.NumericField = ({children, ...props}: FormFieldProps<number, HTMLInputElement>) => (
   <FormField<number, HTMLInputElement> {...props} propsGenerator={getInputNumericProps}>
+    {children}
+  </FormField>
+);
+
+Form.CheckBoxField = ({children, ...props}: FormFieldProps<boolean, HTMLInputElement>) => (
+  <FormField<boolean, HTMLInputElement> {...props} propsGenerator={getInputCheckboxProps}>
+    {children}
+  </FormField>
+);
+
+Form.RadioField = ({children, ...props}: FormFieldProps<string, HTMLInputElement>) => (
+  <FormField<string, HTMLInputElement> {...props} propsGenerator={getInputRadioProps}>
     {children}
   </FormField>
 );

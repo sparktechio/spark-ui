@@ -1,8 +1,8 @@
 import { fn } from '@storybook/test';
-import {Pager} from "@sparkui/react-pager";
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from "styled-components";
+import {Pager} from "./pager";
 
 const generator = (page: number) => {
   const numbers = [];

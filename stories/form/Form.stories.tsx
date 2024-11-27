@@ -1,20 +1,27 @@
 import { fn } from '@storybook/test';
-import {Form} from "@sparkui/react-form";
 import styled from "styled-components";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
+import {Form} from "./form";
 
 const FormElement = styled(Form)`
-    display:flex;
+    display: flex;
     flex-direction: column;
     gap: 22px;
     width: 300px;
 `;
 
 const FormControl = styled.div`
-    display:flex;
+    display: flex;
     flex-direction: column;
     gap: 4px;
+`;
+
+const Row = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    gap: 8px;
 `;
 
 export default {
@@ -32,7 +39,7 @@ export default {
 
 export const Basic = () =>  {
   const [nameEnabled, setNameEnabled] = React.useState(true);
-  const value = {personal: {name: '', description: "123", age: 2021}, created: new Date(), status: ''};
+  const value = {personal: {name: '', description: "123", age: 2021}, created: new Date(), status: '', color: 'green'};
 
   const age = {
     required: false,
@@ -85,6 +92,47 @@ export const Basic = () =>  {
           </FormControl>
         )}
       </Form.DateField>
+      <Form.CheckBoxField param="new">
+        {({props, errors}) => (
+          <FormControl>
+            <Row>
+              <input id="new" className="form-check-input" placeholder="Created Date" {...props}/>
+              <label htmlFor="new">New2</label>
+            </Row>
+            {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
+          </FormControl>
+        )}
+      </Form.CheckBoxField>
+      <Form.RadioField param="color">
+        {({value, props, errors}) => (
+          <FormControl>
+            <Row>
+              <input {...props} id="red" name="color" value="red" checked={value === 'red'} className="form-check-input" placeholder="Created Date"/>
+              <label htmlFor="red">Red</label>
+            </Row>
+            <Row>
+              <input {...props} id="green" name="color" value="green" checked={value === 'green'} className="form-check-input" placeholder="Created Date"/>
+              <label htmlFor="green">Green</label>
+            </Row>
+            {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
+          </FormControl>
+        )}
+      </Form.RadioField>
+      <Form.RadioField param="color">
+        {({value, props, errors}) => (
+          <FormControl>
+            <Row>
+              <input {...props} id="orange" name="color" value="orange" checked={value === 'orange'} className="form-check-input" placeholder="Created Date"/>
+              <label htmlFor="orange">Orange</label>
+            </Row>
+            <Row>
+              <input {...props} id="blue" name="blue" value="blue" checked={value === 'blue'} className="form-check-input" placeholder="Created Date"/>
+              <label htmlFor="blue">Blue</label>
+            </Row>
+            {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
+          </FormControl>
+        )}
+      </Form.RadioField>
       <Form.SelectField param="status" required={true}>
         {({props, errors}) => (
           <FormControl>

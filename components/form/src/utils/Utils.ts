@@ -52,6 +52,38 @@ export const getInputNumericProps = (
   }
 }
 
+export const getInputCheckboxProps = (
+  {
+    onChange,
+    onBlur,
+    value,
+    ref
+  }: ElementProps<boolean, HTMLInputElement>
+) => {
+  return {
+    onChange: ({target: {checked}}: ChangeEvent<HTMLInputElement>) => onChange(checked),
+    onBlur: ({target: {checked}}: ChangeEvent<HTMLInputElement>) => onBlur(checked),
+    type: "checkbox",
+    ref,
+    checked: value
+  }
+}
+
+export const getInputRadioProps = (
+  {
+    onChange,
+    onBlur,
+    ref
+  }: ElementProps<string, HTMLInputElement>
+) => {
+  return {
+    onChange: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onChange(value),
+    onBlur: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onBlur(value),
+    type: "radio",
+    ref,
+  }
+}
+
 export const getInputDateProps = (
   {
     onChange,
