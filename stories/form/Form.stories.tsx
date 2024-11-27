@@ -39,7 +39,7 @@ export default {
 
 export const Basic = () =>  {
   const [nameEnabled, setNameEnabled] = React.useState(true);
-  const value = {personal: {name: '', description: "123", age: 2021}, created: new Date(), status: '', color: 'green'};
+  const value = {personal: {name: '', description: "123", age: 2021}, created: new Date(), status: 'started', color: 'green'};
 
   const age = {
     required: false,
@@ -92,7 +92,7 @@ export const Basic = () =>  {
           </FormControl>
         )}
       </Form.DateField>
-      <Form.CheckBoxField param="new">
+      <Form.CheckBoxField param="new" required={true}>
         {({props, errors}) => (
           <FormControl>
             <Row>
@@ -103,7 +103,7 @@ export const Basic = () =>  {
           </FormControl>
         )}
       </Form.CheckBoxField>
-      <Form.RadioField param="color">
+      <Form.RadioField param="color" required={true}>
         {({value, props, errors}) => (
           <FormControl>
             <Row>
@@ -118,7 +118,7 @@ export const Basic = () =>  {
           </FormControl>
         )}
       </Form.RadioField>
-      <Form.RadioField param="color">
+      <Form.RadioField param="color" required={true}>
         {({value, props, errors}) => (
           <FormControl>
             <Row>
@@ -138,8 +138,8 @@ export const Basic = () =>  {
           <FormControl>
             <select className="form-control" placeholder="Color" {...props}>
               <option value="" disabled>Select your option</option>
-              <option value="blue">Blue</option>
-              <option value="red">Red</option>
+              <option value="started">Started</option>
+              <option value="finished">Finished</option>
             </select>
             {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
           </FormControl>

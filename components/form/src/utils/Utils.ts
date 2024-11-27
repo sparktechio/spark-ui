@@ -65,7 +65,7 @@ export const getInputCheckboxProps = (
     onBlur: ({target: {checked}}: ChangeEvent<HTMLInputElement>) => onBlur(checked),
     type: "checkbox",
     ref,
-    checked: value
+    checked: !!value
   }
 }
 
