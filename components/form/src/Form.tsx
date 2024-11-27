@@ -11,17 +11,26 @@ import {
 } from "./utils/Utils";
 
 export interface FormProps<F> {
+  className?: string;
   value?: F;
   onChange?: (value: F) => void;
   onFieldChange?: (field: EnhancedField<any, any>) => void;
   children: ReactNode;
 }
 
-export const Form = <F,>({value, onChange, onFieldChange, children}: FormProps<F>) => {
+export const Form = <F,>({className, value, onChange, onFieldChange, children}: FormProps<F>) => {
   return (
-    <FormProvider value={value} onChange={onChange} onFieldChange={onFieldChange}>
-      {children}
-    </FormProvider>
+    className ? (
+        <form className={className}>
+          <FormProvider value={value} onChange={onChange} onFieldChange={onFieldChange}>
+            {children}
+          </FormProvider>
+        </form>
+      ) : (
+      <FormProvider value={value} onChange={onChange} onFieldChange={onFieldChange}>
+        {children}
+      </FormProvider>
+    )
   )
 }
 
