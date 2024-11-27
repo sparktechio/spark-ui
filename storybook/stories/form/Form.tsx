@@ -76,7 +76,7 @@ export const FormStory = () =>  {
           )}
         </Form.DateField>
         <Form.ButtonSubmit onSubmit={async (e) => console.log(e)}>
-          {(props) => (<button className="btn btn-primary"  {...props}>Submit</button>)}
+          {({props}) => (<button className="btn btn-primary" {...props}>Submit</button>)}
         </Form.ButtonSubmit>
       </Form>
     </App>

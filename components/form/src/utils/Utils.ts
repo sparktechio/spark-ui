@@ -1,5 +1,6 @@
 import {ElementProps} from "../fields/FormField";
 import {ChangeEvent} from "react";
+import {SubmitChildrenProps} from "../fields/FormSubmit";
 
 export const getInputTextProps = (
   {
@@ -56,5 +57,13 @@ export const getInputDateProps = (
     ref,
     value: value?.toISOString().slice(0, 10),
     name,
+  }
+}
+
+export const getButtonSubmitProps = ({onSubmit, loading}: SubmitChildrenProps) => {
+  return {
+    onClick: onSubmit,
+    disabled: loading,
+    type: "button",
   }
 }

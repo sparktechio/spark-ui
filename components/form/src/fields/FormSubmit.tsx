@@ -1,22 +1,30 @@
-import {ButtonHTMLAttributes, JSX, useState} from "react";
+import {JSX, useState} from "react";
 import {useFormContext} from "../context/FormProvider";
 import {EnhancedField} from "./FormField";
 import {validateFormField} from "../validation/Validator";
 
 export type Submit = <T,>(data: T) => Promise<void>;
 
-export interface FormSubmitProps<B> {
+export interface SubmitChildrenProps {
   onSubmit: Submit;
-  onError?: (error: unknown) => void;
-  children: (props: B) => JSX.Element;
+  loading: boolean;
+  props?: any;
 }
 
-export const FormSubmit = <B, >(
+export interface FormSubmitProps {
+  onSubmit: Submit;
+  onError?: (error: unknown) => void;
+  propsGenerator?: (props: SubmitChildrenProps) => any;
+  children: (props: SubmitChildrenProps) => JSX.Element;
+}
+
+export const FormSubmit = (
   {
     onSubmit,
     onError,
+    propsGenerator,
     children,
-  }: FormSubmitProps<B>
+  }: FormSubmitProps
 ) => {
   const [loading, setLoading] = useState(false);
   const {fields, setField} = useFormContext();
@@ -74,11 +82,15 @@ export const FormSubmit = <B, >(
     }
   }
 
-  return (children({
-    onClick: onBeforeSubmit,
-    disabled: loading,
-    type: "button"
-  } as B));
-}
+  const element = {
+    onSubmit: onBeforeSubmit,
+    loading,
+  }
 
-export const FormButtonSubmit = FormSubmit<ButtonHTMLAttributes<HTMLButtonElement>>;
+  return (children(
+    {
+      ...element,
+      props: propsGenerator ? propsGenerator(element) : undefined,
+    }
+  ));
+}
