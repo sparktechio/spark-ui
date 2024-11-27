@@ -1,5 +1,6 @@
 import React, {createContext, ReactNode, RefObject, useContext, useState} from "react";
 import {EnhancedField, Field} from "../fields/FormField";
+import {setNestedValue} from "../utils/ValueGenerator";
 
 export interface FormContextProps {
   fields: EnhancedField<any, any>[];
@@ -11,6 +12,8 @@ export interface FormContextProps {
 
 export interface FormContextProviderProps<F> {
   value?: F;
+  onChange?: (value: F) => void;
+  onFieldChange?: (field: EnhancedField<any, any>) => void;
   children: ReactNode;
 }
 
@@ -25,7 +28,12 @@ export const FormContext = createContext<FormContextProps>({
 export const useFormContext = () => useContext(FormContext);
 
 export const FormProvider = <F,>(
-  {value = {} as F, children}: FormContextProviderProps<F>
+  {
+    value = {} as F,
+    onChange,
+    onFieldChange,
+    children
+  }: FormContextProviderProps<F>
 ) => {
   const [fields, setFields] = useState<EnhancedField<any, any>[]>([]);
 
@@ -47,7 +55,21 @@ export const FormProvider = <F,>(
   };
 
   const setField = (field: EnhancedField<any, any>) => {
-    setFields((fields) => [...fields.filter((item) => item.param !== field.param), {...field}]);
+    setFields((fields) => {
+      const newFields = [...fields.filter((item) => item.param !== field.param), {...field}];
+      if (onChange) {
+        onChange(
+          newFields.reduce((previousValue, currentValue) => ({
+            ...previousValue,
+            ...setNestedValue(previousValue, currentValue.param, currentValue.value)
+          }), {}) as F
+        );
+      }
+      return newFields;
+    });
+    if (onFieldChange) {
+      onFieldChange(field);
+    }
   }
 
   const getField = (field: Field<any>, reference: RefObject<any>) => {

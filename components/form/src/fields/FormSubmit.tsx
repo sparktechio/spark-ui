@@ -2,6 +2,7 @@ import {JSX, useState} from "react";
 import {useFormContext} from "../context/FormProvider";
 import {EnhancedField} from "./FormField";
 import {validateFormField} from "../validation/Validator";
+import {setNestedValue} from "../utils/ValueGenerator";
 
 export type Submit = <T,>(data: T) => Promise<void>;
 
@@ -28,20 +29,6 @@ export const FormSubmit = (
 ) => {
   const [loading, setLoading] = useState(false);
   const {fields, setField} = useFormContext();
-
-  const setNestedValue = (target: any, key: string, value: any) => {
-    const keys = key.split('.');
-    let currentTarget = target;
-    for (let index = 0; index < keys.length - 1; index++) {
-      const nestedKey = keys[index];
-      if (!currentTarget[nestedKey] || typeof currentTarget[nestedKey] !== 'object') {
-        currentTarget[nestedKey] = {};
-      }
-      currentTarget = currentTarget[nestedKey];
-    }
-    currentTarget[keys[keys.length - 1]] = value;
-    return target;
-  }
 
   const focusInvalid = (invalid: EnhancedField<any, any>) => {
     const ref = invalid.reference;

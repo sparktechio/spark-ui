@@ -1,6 +1,6 @@
 import React, {ReactNode} from "react";
 import {FormProvider} from "./context/FormProvider";
-import {FormField, FormFieldProps} from "./fields/FormField";
+import {EnhancedField, FormField, FormFieldProps} from "./fields/FormField";
 import {FormSubmit, FormSubmitProps} from "./fields/FormSubmit";
 import {
   getButtonSubmitProps,
@@ -12,12 +12,14 @@ import {
 
 export interface FormProps<F> {
   value?: F;
+  onChange?: (value: F) => void;
+  onFieldChange?: (field: EnhancedField<any, any>) => void;
   children: ReactNode;
 }
 
-export const Form = <F,>({value, children}: FormProps<F>) => {
+export const Form = <F,>({value, onChange, onFieldChange, children}: FormProps<F>) => {
   return (
-    <FormProvider value={value}>
+    <FormProvider value={value} onChange={onChange} onFieldChange={onFieldChange}>
       {children}
     </FormProvider>
   )
