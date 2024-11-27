@@ -3,7 +3,6 @@ import {useFormContext} from "../context/FormProvider";
 import {validateFormField, ValidationError} from "../validation/Validator";
 
 export interface Field<V> {
-  name: string;
   param: string,
 
   value?: V;
@@ -36,7 +35,6 @@ export interface ElementProps<V, I> {
   validate: () => ValidationError[];
   errors: ValidationError[];
   ref: RefObject<I>;
-  name: string;
   value: V;
   props?: any
 }
@@ -58,19 +56,18 @@ export const FormField = <V, I>({onChange, children, propsGenerator, ...fieldPro
     () => {
       registerField(field);
       return () => {
-        unRegisterField(field.name);
+        unRegisterField(field.param);
       }
     },
     []
   );
 
   const element: ElementProps<V, I> = {
-    onChange: (value) => setField({...field, value, errors: field.touched ? !validateFormField({...field, value}) : field.errors}),
+    onChange: (value) => setField({...field, value, errors: field.touched ? validateFormField({...field, value}) : field.errors}),
     validate: () => validateFormField(field),
     onBlur: (value) => setField({...field, value, touched: true, errors: validateFormField({...field, value})}),
     errors: field.errors,
     ref,
-    name: field.name,
     value: field.value
   }
 

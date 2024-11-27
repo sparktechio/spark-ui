@@ -5,25 +5,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const FormStory = () =>  {
   const [nameEnabled, setNameEnabled] = React.useState(true);
-  const value = {personal: {name: '', description: "akif", age: 22}};
-
-  const name = {
-    name: "name",
-    required: true,
-    placeholder: "Name",
-    param: "personal.name",
-  }
-
-  const description = {
-    name: "description",
-    required: true,
-    pattern: /^[0-9\-+\/?]+$/,
-    placeholder: "description",
-    param: "personal.description",
-  }
+  const value = {personal: {name: '', description: "123", age: 2021}, created: new Date(), status: ''};
 
   const age = {
-    name: "age",
     required: false,
     minLength: 4,
     maxLength: 4,
@@ -39,10 +23,10 @@ export const FormStory = () =>  {
       <Form value={value}>
         {
           nameEnabled && (
-            <Form.TextField {...name}>
+            <Form.TextField param={"personal.name"} required={true}>
               {({props, errors}) => (
                 <FormControl>
-                  <input className="form-control"  placeholder={name.name} {...props} />
+                  <input className="form-control" placeholder="Name" {...props} />
                   {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
                   <button className="btn btn-secondary" onClick={() => setNameEnabled(false)}>Hide name</button>
                 </FormControl>
@@ -50,11 +34,11 @@ export const FormStory = () =>  {
             </Form.TextField>
           )
         }
-        <Form.TextField {...description}>
+        <Form.TextField param={"personal.description"} required={true} pattern={/^[0-9\-+\/?]+$/}>
           {({props, errors}) => (
             <FormControl>
-              <span className="form-label">Digits and special characters only: -+/?</span>
-              <input className="form-control" placeholder={description.name} {...props} />
+              <span className="form-label">Digits or special characters only: -+/?</span>
+              <input className="form-control" placeholder="Desc" {...props} />
               {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
             </FormControl>
           )}
@@ -62,12 +46,12 @@ export const FormStory = () =>  {
         <Form.NumericField {...age}>
           {({props, errors}) => (
             <FormControl>
-              <input className="form-control" placeholder={age.name} {...props} />
+              <input className="form-control" placeholder={age.param} {...props} />
               {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
             </FormControl>
           )}
         </Form.NumericField>
-        <Form.DateField name="created" param="created" required={true}>
+        <Form.DateField param="created" required={true}>
           {({props, errors}) => (
             <FormControl>
               <input className="form-control" placeholder="Created Date" {...props}/>
@@ -75,6 +59,18 @@ export const FormStory = () =>  {
             </FormControl>
           )}
         </Form.DateField>
+        <Form.SelectField param="status" required={true}>
+          {({props, errors}) => (
+            <FormControl>
+              <select className="form-control" placeholder="Color" {...props}>
+                <option value="" disabled>Select your option</option>
+                <option value="blue">Blue</option>
+                <option value="red">Red</option>
+              </select>
+              {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
+            </FormControl>
+          )}
+        </Form.SelectField>
         <Form.ButtonSubmit onSubmit={async (e) => console.log(e)}>
           {({props}) => (<button className="btn btn-primary" {...props}>Submit</button>)}
         </Form.ButtonSubmit>

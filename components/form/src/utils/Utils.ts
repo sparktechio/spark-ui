@@ -2,12 +2,27 @@ import {ElementProps} from "../fields/FormField";
 import {ChangeEvent} from "react";
 import {SubmitChildrenProps} from "../fields/FormSubmit";
 
+export const getSelectProps = (
+  {
+    onChange,
+    onBlur,
+    value,
+    ref
+  }: ElementProps<string, HTMLSelectElement>
+) => {
+  return {
+    onChange: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onChange(value),
+    onBlur: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onBlur(value),
+    ref,
+    value,
+  }
+}
+
 export const getInputTextProps = (
   {
     onChange,
     onBlur,
     value,
-    name,
     ref
   }: ElementProps<string, HTMLInputElement>
 ) => {
@@ -17,7 +32,6 @@ export const getInputTextProps = (
     type: "text",
     ref,
     value,
-    name,
   }
 }
 
@@ -26,7 +40,6 @@ export const getInputNumericProps = (
     onChange,
     onBlur,
     value,
-    name,
     ref
   }: ElementProps<number, HTMLInputElement>
 ) => {
@@ -36,7 +49,6 @@ export const getInputNumericProps = (
     type: "number",
     ref,
     value,
-    name,
   }
 }
 
@@ -45,18 +57,15 @@ export const getInputDateProps = (
     onChange,
     onBlur,
     value,
-    name,
     ref
   }: ElementProps<Date, HTMLInputElement>
 ) => {
-  console.log(value?.toISOString().slice(0, 10));
   return {
     onChange: ({target: {valueAsDate}}: ChangeEvent<HTMLInputElement>) => onChange(valueAsDate),
     onBlur: ({target: {valueAsDate}}: ChangeEvent<HTMLInputElement>) => onBlur(valueAsDate),
     type: "date",
     ref,
-    value: value?.toISOString().slice(0, 10),
-    name,
+    value: value ? new Date(value).toISOString().slice(0, 10): undefined,
   }
 }
 

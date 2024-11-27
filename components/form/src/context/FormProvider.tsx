@@ -4,7 +4,7 @@ import {EnhancedField, Field} from "../fields/FormField";
 export interface FormContextProps {
   fields: EnhancedField<any, any>[];
   setField: (field: EnhancedField<any, any>) => void;
-  getField: (field: Field<any>, ref: RefObject<any>) => any;
+  getField: (field: Field<any>, ref: RefObject<any>) => EnhancedField<any, any>;
   registerField: (field: EnhancedField<any, any>) => void;
   unRegisterField: (name: string) => void;
 }
@@ -17,7 +17,7 @@ export interface FormContextProviderProps<F> {
 export const FormContext = createContext<FormContextProps>({
   fields: [],
   setField: () => ({}),
-  getField: () => ({}),
+  getField: () => ({} as EnhancedField<any, any>),
   registerField: () => ({}),
   unRegisterField: () => ({}),
 });
@@ -47,11 +47,11 @@ export const FormProvider = <F,>(
   };
 
   const setField = (field: EnhancedField<any, any>) => {
-    setFields((fields) => [...fields.filter((item) => item.name !== field.name), {...field}]);
+    setFields((fields) => [...fields.filter((item) => item.param !== field.param), {...field}]);
   }
 
   const getField = (field: Field<any>, reference: RefObject<any>) => {
-    const item = fields.find(item => item.name === field.name);
+    const item = fields.find(item => item.param === field.param);
     if (item) {
       return item;
     } else {
@@ -66,7 +66,7 @@ export const FormProvider = <F,>(
 
   const registerField = (field: EnhancedField<any, any>) => {
     setFields((fields) => {
-      const hasField = fields.find((item) => item.name === field.name);
+      const hasField = fields.find((item) => item.param === field.param);
       if (hasField) {
         return fields;
       } else {
@@ -76,7 +76,7 @@ export const FormProvider = <F,>(
   };
 
   const unRegisterField = (field: string) => {
-    setFields((prev) => prev.filter((item) => item.name !== field));
+    setFields((prev) => prev.filter((item) => item.param !== field));
   };
 
   return (
