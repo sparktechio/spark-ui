@@ -12,24 +12,25 @@ import {
 
 export interface FormProps<F> {
   className?: string;
+  hideForm?: boolean;
   value?: F;
   onChange?: (value: F) => void;
   onFieldChange?: (field: EnhancedField<any, any>) => void;
   children: ReactNode;
 }
 
-export const Form = <F,>({className, value, onChange, onFieldChange, children}: FormProps<F>) => {
+export const Form = <F,>({className, hideForm, value, onChange, onFieldChange, children}: FormProps<F>) => {
   return (
-    className ? (
-        <form className={className}>
-          <FormProvider value={value} onChange={onChange} onFieldChange={onFieldChange}>
-            {children}
-          </FormProvider>
-        </form>
+    hideForm ? (
+        <FormProvider value={value} onChange={onChange} onFieldChange={onFieldChange}>
+          {children}
+        </FormProvider>
       ) : (
-      <FormProvider value={value} onChange={onChange} onFieldChange={onFieldChange}>
-        {children}
-      </FormProvider>
+      <form className={className}>
+        <FormProvider value={value} onChange={onChange} onFieldChange={onFieldChange}>
+          {children}
+        </FormProvider>
+      </form>
     )
   )
 }
