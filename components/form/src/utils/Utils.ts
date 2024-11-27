@@ -1,6 +1,7 @@
 import {ElementProps} from "../fields/FormField";
 import {ChangeEvent} from "react";
 import {SubmitChildrenProps} from "../fields/FormSubmit";
+import {isDefined} from "../validation/Validator";
 
 export const getSelectProps = (
   {
@@ -65,7 +66,7 @@ export const getInputCheckboxProps = (
     onBlur: ({target: {checked}}: ChangeEvent<HTMLInputElement>) => onBlur(checked),
     type: "checkbox",
     ref,
-    checked: !!value
+    checked: isDefined(value) ? value : false,
   }
 }
 
