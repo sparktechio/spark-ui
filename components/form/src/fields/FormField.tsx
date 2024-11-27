@@ -8,8 +8,6 @@ export interface Field<V> {
 
   value?: V;
   label?: string,
-  placeholder?: string,
-  className?: string,
 
   validate?: (value?: V) => boolean,
   pattern?: RegExp,
@@ -32,27 +30,24 @@ export interface EnhancedField<V, I extends ControlledElement> extends Field<V> 
   errors: ValidationError[];
 }
 
-export interface NestedElementProps<V, I> {
+export interface ElementProps<V, I> {
+  onChange: (value?: V | null) => void;
+  onBlur: (value?: V | null) => void;
+  validate: () => ValidationError[];
+  errors: ValidationError[];
   ref: RefObject<I>;
   name: string;
   value: V;
-  placeholder?: string;
-}
-
-export interface ElementProps<V, I> {
-  onChange: (value: V) => void;
-  onBlur: (value: V) => void;
-  validate: () => ValidationError[];
-  errors: ValidationError[];
-  element: NestedElementProps<V, I>;
+  props?: any
 }
 
 export interface FormFieldProps<V, I> extends Field<V> {
   onChange?: (value: Field<V>) => void;
   children: (props: ElementProps<V, I>) => JSX.Element;
+  propsGenerator?: (props: ElementProps<V, I>) => any;
 }
 
-export const FormField = <V, I>({onChange, children, ...fieldProps}: FormFieldProps<V, I>) => {
+export const FormField = <V, I>({onChange, children, propsGenerator, ...fieldProps}: FormFieldProps<V, I>) => {
 
   const {setField, getField, registerField, unRegisterField} = useFormContext();
 
@@ -69,18 +64,18 @@ export const FormField = <V, I>({onChange, children, ...fieldProps}: FormFieldPr
     []
   );
 
-  return children({
+  const element: ElementProps<V, I> = {
     onChange: (value) => setField({...field, value, errors: field.touched ? !validateFormField({...field, value}) : field.errors}),
     validate: () => validateFormField(field),
     onBlur: (value) => setField({...field, value, touched: true, errors: validateFormField({...field, value})}),
     errors: field.errors,
-    element: {
-      ref,
-      name: field.name,
-      value: field.value,
-    }
+    ref,
+    name: field.name,
+    value: field.value
+  }
+
+  return children({
+    ...element,
+    props: propsGenerator ? propsGenerator(element) : undefined,
   });
 }
-
-export const FormTextField = FormField<string, HTMLInputElement>;
-export const FormNumericField = FormField<number, HTMLInputElement>;

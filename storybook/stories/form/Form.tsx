@@ -40,15 +40,9 @@ export const FormStory = () =>  {
         {
           nameEnabled && (
             <Form.TextField {...name}>
-              {({onChange, onBlur, errors, element}) => (
+              {({props, errors}) => (
                 <FormControl>
-                  <input
-                    className="form-control"
-                    placeholder={name.name}
-                    onChange={({target: {value}}) => onChange(value)}
-                    onBlur={({target: {value}}) => onBlur(value)}
-                    {...element}
-                  />
+                  <input className="form-control"  placeholder={name.name} {...props} />
                   {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
                   <button className="btn btn-secondary" onClick={() => setNameEnabled(false)}>Hide name</button>
                 </FormControl>
@@ -57,35 +51,30 @@ export const FormStory = () =>  {
           )
         }
         <Form.TextField {...description}>
-          {({onChange, onBlur, errors, element}) => (
+          {({props, errors}) => (
             <FormControl>
               <span className="form-label">Digits and special characters only: -+/?</span>
-              <input
-                className="form-control"
-                placeholder={description.name}
-                onChange={({target: {value}}) => onChange(value)}
-                onBlur={({target: {value}}) => onBlur(value)}
-                {...element}
-              />
+              <input className="form-control" placeholder={description.name} {...props} />
               {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
             </FormControl>
           )}
         </Form.TextField>
         <Form.NumericField {...age}>
-          {({onChange, onBlur, errors, element}) => (
+          {({props, errors}) => (
             <FormControl>
-              <input
-                className="form-control"
-                placeholder={age.name}
-                onChange={({target: {valueAsNumber}}) => onChange(valueAsNumber)}
-                onBlur={({target: {valueAsNumber}}) => onBlur(valueAsNumber)}
-                type="number"
-                {...element}
-              />
+              <input className="form-control" placeholder={age.name} {...props} />
               {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
             </FormControl>
           )}
         </Form.NumericField>
+        <Form.DateField name="created" param="created" required={true}>
+          {({props, errors}) => (
+            <FormControl>
+              <input className="form-control" placeholder="Created Date" {...props}/>
+              {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
+            </FormControl>
+          )}
+        </Form.DateField>
         <Form.ButtonSubmit onSubmit={async (e) => console.log(e)}>
           {(props) => (<button className="btn btn-primary"  {...props}>Submit</button>)}
         </Form.ButtonSubmit>

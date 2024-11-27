@@ -1,7 +1,8 @@
 import React, {ReactNode} from "react";
 import {FormProvider} from "./context/FormProvider";
-import {FormField, FormNumericField, FormTextField} from "./fields/FormField";
+import {FormField, FormFieldProps} from "./fields/FormField";
 import {FormButtonSubmit, FormSubmit} from "./fields/FormSubmit";
+import {getInputDateProps, getInputNumericProps, getInputTextProps} from "./utils/Utils";
 
 export interface FormProps<F> {
   value?: F;
@@ -17,7 +18,23 @@ export const Form = <F,>({value, children}: FormProps<F>) => {
 }
 
 Form.Field = FormField;
-Form.TextField = FormTextField;
-Form.NumericField = FormNumericField;
 Form.Submit = FormSubmit;
 Form.ButtonSubmit = FormButtonSubmit;
+
+Form.TextField = ({children, ...props}: FormFieldProps<string, HTMLInputElement>) => (
+  <FormField<string, HTMLInputElement> {...props} propsGenerator={getInputTextProps}>
+    {children}
+  </FormField>
+);
+
+Form.DateField = ({children, ...props}: FormFieldProps<Date, HTMLInputElement>) => (
+  <FormField<Date, HTMLInputElement> {...props} propsGenerator={getInputDateProps}>
+    {children}
+  </FormField>
+);
+
+Form.NumericField = ({children, ...props}: FormFieldProps<number, HTMLInputElement>) => (
+  <FormField<number, HTMLInputElement> {...props} propsGenerator={getInputNumericProps}>
+    {children}
+  </FormField>
+);
