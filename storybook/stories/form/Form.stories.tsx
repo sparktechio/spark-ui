@@ -1,9 +1,36 @@
-import React from "react";
+import { fn } from '@storybook/test';
 import {Form} from "@sparkui/react-form";
 import styled from "styled-components";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import React from "react";
 
-export const FormStory = () =>  {
+const FormElement = styled(Form)`
+    display:flex;
+    flex-direction: column;
+    gap: 22px;
+    width: 300px;
+`;
+
+const FormControl = styled.div`
+    display:flex;
+    flex-direction: column;
+    gap: 4px;
+`;
+
+export default {
+  title: 'Components/Form',
+  component: Form,
+  parameters: {
+    layout: 'centered',
+  },
+  tags: ['autodocs'],
+  argTypes: {
+    backgroundColor: { control: 'color' },
+  },
+  args: { onClick: fn() },
+};
+
+export const Basic = () =>  {
   const [nameEnabled, setNameEnabled] = React.useState(true);
   const value = {personal: {name: '', description: "123", age: 2021}, created: new Date(), status: ''};
 
@@ -76,16 +103,3 @@ export const FormStory = () =>  {
     </FormElement>
   );
 }
-
-const FormElement = styled(Form)`
-    display:flex;
-    flex-direction: column;
-    gap: 22px;
-    width: 300px;
-`;
-
-const FormControl = styled.div`
-    display:flex;
-    flex-direction: column;
-    gap: 4px;
-`;
