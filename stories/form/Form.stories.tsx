@@ -145,6 +145,22 @@ export const Basic = () =>  {
           </FormControl>
         )}
       </Form.SelectField>
+      <Form.Field<string, HTMLInputElement> param="custom" required={true}>
+        {({onChange, onBlur, ref, value, errors}) => (
+          <FormControl>
+            <input
+              className="form-control"
+              placeholder="Name"
+              type="text"
+              ref={ref}
+              value={value}
+              onChange={({target: {value}}) => onChange(value)}
+              onBlur={({target: {value}}) => onBlur(value)}
+            />
+            {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
+          </FormControl>
+        )}
+      </Form.Field>
       <Form.ButtonSubmit onSubmit={async (e) => console.log(e)}>
         {({props}) => (<button className="btn btn-primary" {...props}>Submit</button>)}
       </Form.ButtonSubmit>
