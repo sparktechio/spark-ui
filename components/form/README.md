@@ -4,12 +4,15 @@
 You are building React user interfaces and want to gather input from users, but you also want to validate that input, 
 including some basic checks and complex custom checks and want to set default values as object for whole form.
 Additionally, you aim to generate a request payload and display certain fields conditionally. On top of that you
-want to control rendering and component hooks. Furthermore, you would like to incorporate custom user-defined 
-form fields and buttons, or even utilize third-party components, while maintaining control over the styling and 
-overall look and feel of the form. For all these requirements, React Form `@sparkui/react-form` is exactly what you need.
+want to control rendering, component hooks, visualization of the errors and side effects. Furthermore, you would 
+like to incorporate custom user-defined form fields and buttons, or even utilize third-party components, 
+while maintaining control over the styling and overall look and feel of the form. 
 
+For all these requirements, React Form `@sparkui/react-form` is exactly what you need.
 
-This module provides a set of reusable React components, `Form` and `FormField`, that handle field validation and payload generation for form inputs. Built with a focus on flexibility, these components allow for easy integration into your projects and can be styled according to your needs.
+This module provides a set of reusable React components, `Form`, `FormField`, `TextField` ..., that handle
+field validation and payload generation for form inputs. Built with a focus on flexibility, these components 
+allow for easy integration into your projects and can be styled according to your needs.
 
 ## Components
 
