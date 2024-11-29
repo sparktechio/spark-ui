@@ -42,24 +42,23 @@ export const Form = <F,>({className, hideForm, value, onStateChange, onFieldChan
   )
 }
 
-Form.Field = FormField;
-Form.AppField = AppFormField;
+Form.FormField = FormField;
 Form.SelectField = SelectField;
-Form.AppSelectField = AppSelectField;
 Form.TextField = TextField;
-Form.AppTextField = AppTextField;
 Form.PasswordField = PasswordField;
-Form.AppPasswordField = AppPasswordField;
 Form.CheckBoxField = CheckBoxField;
-Form.AppCheckBoxField = AppCheckBoxField;
 Form.RadioField = RadioField;
-Form.AppRadioField = AppRadioField;
 Form.NumericField = NumericField;
-Form.AppNumericField = AppNumericField;
 Form.DateField = DateField;
-Form.AppDateField = AppDateField;
 
-
+Form.Field = AppFormField;
+Form.Select = AppSelectField;
+Form.Text = AppTextField;
+Form.Password = AppPasswordField;
+Form.CheckBox = AppCheckBoxField;
+Form.Radio = AppRadioField;
+Form.Numeric = AppNumericField;
+Form.Date = AppDateField;
 
 export interface AppFormSubmitProps extends BaseFormSubmitProps {
   renderer: string;
@@ -71,7 +70,7 @@ Form.ButtonSubmit = ({children, ...props}: FormSubmitProps) => (
   </FormSubmit>
 );
 
-Form.AppButtonSubmit = ({renderer, ...props}: AppFormSubmitProps) => {
+Form.Submit = ({renderer, ...props}: AppFormSubmitProps) => {
   const {renderSubmit} = useFormRenderContext();
   return (
     <FormSubmit {...props} propsGenerator={getButtonSubmitProps}>

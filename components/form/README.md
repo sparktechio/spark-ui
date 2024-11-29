@@ -63,7 +63,7 @@ The `Field` component is the child container that manages the state of the form 
       getValue, // Get value of any field by param
       fetField, // Get field object of any field by param
   }) => (
-    <FormControl>
+    <>
       <input
         className="form-control"
         placeholder="Name"
@@ -74,7 +74,7 @@ The `Field` component is the child container that manages the state of the form 
         onBlur={({target: {value}}) => onBlur(value)}
       />
       {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
-    </FormControl>
+    </>
   )}
 </Form.Field>
 ```
@@ -87,13 +87,13 @@ The `Field` component is the child container that manages the state of the form 
 - SelectField
 - CheckBoxField
 - RadioField
-- AppTextField (render template defined inside `FormRenderProvider`)
-- AppPasswordField (render template defined inside `FormRenderProvider`)
-- AppNumericField (render template defined inside `FormRenderProvider`)
-- AppDateField (render template defined inside `FormRenderProvider`)
-- AppSelectField (render template defined inside `FormRenderProvider`)
-- AppCheckBoxField (render template defined inside `FormRenderProvider`)
-- AppRadioField (render template defined inside `FormRenderProvider`)
+- Text (render template defined inside `FormRenderProvider`)
+- Password (render template defined inside `FormRenderProvider`)
+- Numeric (render template defined inside `FormRenderProvider`)
+- Date (render template defined inside `FormRenderProvider`)
+- Select (render template defined inside `FormRenderProvider`)
+- CheckBox (render template defined inside `FormRenderProvider`)
+- Radio (render template defined inside `FormRenderProvider`)
 
 ### `FormRenderProvider`
 
@@ -112,32 +112,32 @@ export const FormRenderer = ({children}: {children: ReactNode}) => (
     fieldRenderers={
       {
         'my-input': ({props, params, errors}) => (
-          <FormControl>
+          <>
             <input className="form-control" {...params} {...props} />
             {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
-          </FormControl>
+          </>
         ),
         'my-checkbox': ({props, params, errors}) => (
-          <FormControl>
-            <Row>
+          <>
+            <>
               <input id="new" className="form-check-input" {...params.input} {...props}/>
               <label htmlFor="new">{...params.label}</label>
-            </Row>
+            </>
             {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
-          </FormControl>
+          </>
         ),
         'my-radio-set': ({value, props, params, errors}) => (
-          <FormControl>
+          <>
             {
               params.map((item: any) => (
-                <Row key={item.key}>
+                <div key={item.key}>
                   <input {...props} id={item.key} value={item.key} checked={value === item.key} className="form-check-input" />
                   <label htmlFor={item.key}>{item.label}</label>
-                </Row>
+                </div>
               ))
             }
             {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
-          </FormControl>
+          </>
         ),
       }
     }
@@ -145,19 +145,6 @@ export const FormRenderer = ({children}: {children: ReactNode}) => (
     {children}
   </FormRenderProvider>
 );
-
-export const FormControl = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-`;
-
-export const Row = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    gap: 8px;
-`;
 ```
 
 
@@ -191,9 +178,9 @@ export const Row = styled.div`
 
 // or with global renderer
 
-<Form.AppTextField
+<Form.Text
   renderer="my-input"
-  param={"details.name"}
+  param="details.name"
   required={true}
   params={{
     placeholder: "Name"
@@ -214,7 +201,7 @@ export const Row = styled.div`
 
 // or with global renderer
 
-<Form.AppPasswordField
+<Form.Password
   renderer="my-input"
   param={"details.secret"}
   required={true}
@@ -237,7 +224,7 @@ export const Row = styled.div`
 
 // or with global renderer
 
-<Form.AppNumericField
+<Form.Numeric
   renderer="my-input"
   param="details.age"
   params={{
@@ -259,7 +246,7 @@ export const Row = styled.div`
 
 // or with global renderer
 
-<Form.AppDateField
+<Form.Date
   renderer="my-input"
   param="created"
   required={true}
@@ -323,7 +310,7 @@ export const Row = styled.div`
 ```tsx
 <Form.Field<string, HTMLInputElement> param="custom" required={true}>
   {({onChange, onBlur, ref, value, errors}) => (
-      <FormControl>
+      <>
         <input
           className="form-control"
           placeholder="Name"
@@ -334,69 +321,49 @@ export const Row = styled.div`
           onBlur={({target: {value}}) => onBlur(value)}
         />
         {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
-      </FormControl>
+      </>
     )}
 </Form.Field>
 ```
 
 #### Full example with bootstrap UI
 ```tsx
-export const ExampleForm = () =>  {
-  const value = {personal: {name: '', description: "123", age: 2021}, created: new Date(), status: 'started', color: 'green'};
+const initialState = {personal: {name: '', description: "123", age: 2021}, created: new Date(), status: 'started', color: 'green'};
 
-  const age = {
-    required: false,
-    minLength: 4,
-    maxLength: 4,
-    min: 1999,
-    max: 2024,
-    validate: (value?: number) => value != 2020,
-    placeholder: "age",
-    param: "personal.age",
-  }
-
-  return (
-    <FormRenderer>
-      <FormElement value={value}>
-        <Form.AppTextField
-          renderer="my-input"
-          param={"personal.name"}
-          required={true}
-          params={{
-            placeholder: "Name"
-          }}
-        />
-        <Form.AppPasswordField
-          renderer="my-input"
-          param={"secret"}
-          pattern={/^[0-9\-+\/?]+$/}
-          params={{
-            placeholder: "Secret"
-          }}
-        />
-        <Form.AppRadioField
-          renderer="my-radio-set"
-          param={"color"}
-          params={[
-            {key: 'red', label: 'Red'},
-            {key: 'blue', label: 'Blue'},
-            {key: 'green', label: 'Green'},
-          ]}
-        />
-        <Form.AppButtonSubmit
-          renderer="my-submit"
-          onSubmit={async (e) => console.log(e)}
-          params={"Submit"}
-        />
-      </FormElement>
-    </FormRenderer>
-  );
-};
-
-const FormElement = styled(Form)`
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-    width: 300px;
-`;
+export const ExampleForm = () => (
+        <FormRenderer>
+          <Form value={initialState}>
+            <Form.Text
+              renderer="my-input"
+              param={"personal.name"}
+              required={true}
+              params={{
+                placeholder: "Name"
+              }}
+            />
+            <Form.Password
+              renderer="my-input"
+              param={"secret"}
+              pattern={/^[0-9\-+\/?]+$/}
+              params={{
+                placeholder: "Secret"
+              }}
+            />
+            <Form.Radio
+              renderer="my-radio-set"
+              param={"color"}
+              params={[
+                {key: 'red', label: 'Red'},
+                {key: 'blue', label: 'Blue'},
+                {key: 'green', label: 'Green'},
+              ]}
+            />
+            <Form.Submit
+              renderer="my-submit"
+              onSubmit={async (e) => console.log(e)}
+              params={"Submit"}
+            />
+          </Form>
+        </FormRenderer>
+);
 ```

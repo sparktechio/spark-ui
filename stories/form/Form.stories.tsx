@@ -10,14 +10,14 @@ const sate = {personal: {name: '', description: "123", age: 2021}, created: new 
 export const Basic = () =>  (
   <FormRenderer>
     <Form value={sate} className="container row">
-      <Form.AppTextField
+      <Form.Text
         renderer="my-input"
         param={"personal.name"}
         params={{
           placeholder: "Name"
         }}
       />
-      <Form.AppCheckBoxField
+      <Form.CheckBox
         renderer="my-checkbox"
         param={"new"}
         params={{
@@ -25,7 +25,7 @@ export const Basic = () =>  (
           label: "New"
         }}
       />
-      <Form.AppPasswordField
+      <Form.Password
         renderer="my-input"
         param={"secret"}
         pattern={/^[0-9\-+\/?]+$/}
@@ -33,7 +33,7 @@ export const Basic = () =>  (
           placeholder: "Secret"
         }}
       />
-      <Form.AppRadioField
+      <Form.Radio
         renderer="my-radio-set"
         param={"color"}
         params={[
@@ -42,14 +42,14 @@ export const Basic = () =>  (
           {key: 'green', label: 'Green'},
         ]}
       />
-      <Form.AppNumericField
+      <Form.Numeric
         renderer="my-input"
         param="age"
         params={{
           placeholder: "Age"
         }}
       />
-      <Form.AppDateField
+      <Form.Date
         renderer="my-input"
         param="created"
         required={true}
@@ -57,7 +57,7 @@ export const Basic = () =>  (
           placeholder: "Age"
         }}
       />
-      <Form.Field<string, HTMLInputElement> param="custom" required={true}>
+      <Form.FormField<string, HTMLInputElement> param="custom" required={true}>
         {({onChange, onBlur, ref, value, errors}) => (
           <FormControl>
             <input
@@ -72,7 +72,7 @@ export const Basic = () =>  (
             {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
           </FormControl>
         )}
-      </Form.Field>
+      </Form.FormField>
       <Form.SelectField param="status" required={true}>
         {({props, errors}) => (
           <FormControl>
@@ -95,7 +95,7 @@ export const Basic = () =>  (
         )}
       </Form.TextField>
       <div className="col-12">
-        <Form.AppButtonSubmit
+        <Form.Submit
           renderer="my-submit"
           onSubmit={async (e) => console.log(e)}
           params={"Submit"}
