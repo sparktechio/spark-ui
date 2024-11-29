@@ -1,14 +1,21 @@
 import React, {ReactNode} from "react";
 import {FormProvider} from "./context/FormProvider";
-import {EnhancedField, FormField, FormFieldProps} from "./fields/FormField";
-import {FormSubmit, FormSubmitProps} from "./fields/FormSubmit";
+import {EnhancedField, FormField} from "./fields/FormField";
+import {BaseFormSubmitProps, FormSubmit, FormSubmitProps} from "./fields/FormSubmit";
 import {
-  getButtonSubmitProps, getInputCheckboxProps,
-  getInputDateProps,
-  getInputNumericProps, getInputRadioProps,
-  getInputTextProps,
-  getSelectProps
+  getButtonSubmitProps
 } from "./utils/Utils";
+import {
+  AppCheckBoxField, AppDateField,
+  AppFormField, AppNumericField,
+  AppPasswordField, AppRadioField,
+  AppSelectField,
+  AppTextField, CheckBoxField, DateField, NumericField,
+  PasswordField, RadioField,
+  SelectField,
+  TextField
+} from "./fields/FormFields";
+import {useFormRenderContext} from "./context/FormRenderProvider";
 
 export interface FormProps<F> {
   className?: string;
@@ -36,46 +43,39 @@ export const Form = <F,>({className, hideForm, value, onChange, onFieldChange, c
 }
 
 Form.Field = FormField;
-Form.Submit = FormSubmit;
+Form.AppField = AppFormField;
+Form.SelectField = SelectField;
+Form.AppSelectField = AppSelectField;
+Form.TextField = TextField;
+Form.AppTextField = AppTextField;
+Form.PasswordField = PasswordField;
+Form.AppPasswordField = AppPasswordField;
+Form.CheckBoxField = CheckBoxField;
+Form.AppCheckBoxField = AppCheckBoxField;
+Form.RadioField = RadioField;
+Form.AppRadioField = AppRadioField;
+Form.NumericField = NumericField;
+Form.AppNumericField = AppNumericField;
+Form.DateField = DateField;
+Form.AppDateField = AppDateField;
 
-Form.SelectField = ({children, ...props}: FormFieldProps<string, HTMLSelectElement>) => (
-  <FormField<string, HTMLSelectElement> {...props} propsGenerator={getSelectProps}>
-    {children}
-  </FormField>
-);
 
-Form.TextField = ({children, ...props}: FormFieldProps<string, HTMLInputElement>) => (
-  <FormField<string, HTMLInputElement> {...props} propsGenerator={getInputTextProps}>
-    {children}
-  </FormField>
-);
 
-Form.DateField = ({children, ...props}: FormFieldProps<Date, HTMLInputElement>) => (
-  <FormField<Date, HTMLInputElement> {...props} propsGenerator={getInputDateProps}>
-    {children}
-  </FormField>
-);
-
-Form.NumericField = ({children, ...props}: FormFieldProps<number, HTMLInputElement>) => (
-  <FormField<number, HTMLInputElement> {...props} propsGenerator={getInputNumericProps}>
-    {children}
-  </FormField>
-);
-
-Form.CheckBoxField = ({children, ...props}: FormFieldProps<boolean, HTMLInputElement>) => (
-  <FormField<boolean, HTMLInputElement> {...props} propsGenerator={getInputCheckboxProps}>
-    {children}
-  </FormField>
-);
-
-Form.RadioField = ({children, ...props}: FormFieldProps<string, HTMLInputElement>) => (
-  <FormField<string, HTMLInputElement> {...props} propsGenerator={getInputRadioProps}>
-    {children}
-  </FormField>
-);
+export interface AppFormSubmitProps extends BaseFormSubmitProps {
+  renderer: string;
+}
 
 Form.ButtonSubmit = ({children, ...props}: FormSubmitProps) => (
   <FormSubmit {...props} propsGenerator={getButtonSubmitProps}>
     {children}
   </FormSubmit>
 );
+
+Form.AppButtonSubmit = ({renderer, ...props}: AppFormSubmitProps) => {
+  const {renderSubmit} = useFormRenderContext();
+  return (
+    <FormSubmit {...props} propsGenerator={getButtonSubmitProps}>
+      {(props) => renderSubmit(renderer, props)}
+    </FormSubmit>
+  );
+}

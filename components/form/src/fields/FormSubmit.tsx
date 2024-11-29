@@ -10,12 +10,17 @@ export interface SubmitChildrenProps {
   onSubmit: Submit;
   loading: boolean;
   props?: any;
+  params?: any;
 }
 
-export interface FormSubmitProps {
+export interface BaseFormSubmitProps {
   onSubmit: Submit;
   onError?: (error: unknown) => void;
+  params?: any;
   propsGenerator?: (props: SubmitChildrenProps) => any;
+}
+
+export interface FormSubmitProps extends BaseFormSubmitProps {
   children: (props: SubmitChildrenProps) => JSX.Element;
 }
 
@@ -25,6 +30,7 @@ export const FormSubmit = (
     onError,
     propsGenerator,
     children,
+    params,
   }: FormSubmitProps
 ) => {
   const [loading, setLoading] = useState(false);
@@ -72,6 +78,7 @@ export const FormSubmit = (
   const element = {
     onSubmit: onBeforeSubmit,
     loading,
+    params,
   }
 
   return (children(

@@ -36,6 +36,23 @@ export const getInputTextProps = (
   }
 }
 
+export const getInputPasswordProps = (
+  {
+    onChange,
+    onBlur,
+    value,
+    ref
+  }: ElementProps<string, HTMLInputElement>
+) => {
+  return {
+    onChange: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onChange(value),
+    onBlur: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onBlur(value),
+    type: "password",
+    ref,
+    value,
+  }
+}
+
 export const getInputNumericProps = (
   {
     onChange,
@@ -74,6 +91,7 @@ export const getInputRadioProps = (
   {
     onChange,
     onBlur,
+    field,
     ref
   }: ElementProps<string, HTMLInputElement>
 ) => {
@@ -81,8 +99,9 @@ export const getInputRadioProps = (
     onChange: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onChange(value),
     onBlur: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onBlur(value),
     type: "radio",
+    name: field.param,
     ref,
-  }
+}
 }
 
 export const getInputDateProps = (
