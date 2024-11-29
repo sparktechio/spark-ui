@@ -29,11 +29,13 @@ export interface EnhancedField<V, I extends ControlledElement> extends Field<V> 
   errors: ValidationError[];
 }
 
-export interface ElementProps<V, I> {
+export interface FieldChildrenProps<V, I> {
   onChange: (value?: V | null) => void;
   onBlur: (value?: V | null) => void;
   validate: () => ValidationError[];
   errors: ValidationError[];
+  getField: (param: string) => Field<V> | undefined;
+  getValue: (param: string) => V | undefined;
   fields: Field<any>[];
   field: Field<any>;
   ref: RefObject<I>;
@@ -45,13 +47,13 @@ export interface ElementProps<V, I> {
 
 export interface BaseFormFieldProps<V, I> extends Field<V> {
   onChange?: (value: Field<V>) => void;
-  propsGenerator?: (props: ElementProps<V, I>) => any;
+  propsGenerator?: (props: FieldChildrenProps<V, I>) => any;
   format?: (value?: V) => any;
   params?: any;
 }
 
 export interface FormFieldProps<V, I> extends BaseFormFieldProps<V, I> {
-  children: (props: ElementProps<V, I>) => JSX.Element;
+  children: (props: FieldChildrenProps<V, I>) => JSX.Element;
 }
 
 export const FormField = <V, I>({onChange, children, params, format, propsGenerator, ...fieldProps}: FormFieldProps<V, I>) => {
@@ -71,12 +73,14 @@ export const FormField = <V, I>({onChange, children, params, format, propsGenera
     []
   );
 
-  const element: ElementProps<V, I> = {
+  const element: FieldChildrenProps<V, I> = {
     onChange: (value) => setField({...field, value, errors: field.touched ? validateFormField({...field, value}) : field.errors}),
     validate: () => validateFormField(field),
     onBlur: (value) => setField({...field, value, touched: true, errors: validateFormField({...field, value})}),
     errors: field.errors,
     value: field.value,
+    getField: (param: string) => fields.find(item => item.param === param),
+    getValue: (param: string) => fields.find(item => item.param === param)?.value,
     params,
     ref,
     fields,

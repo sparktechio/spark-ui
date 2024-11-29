@@ -47,7 +47,7 @@ export const FormRenderer = ({children}: {children: ReactNode}) => (
   </FormRenderProvider>
 );
 
-export const FormControl = styled.div`
+export const FormControl = styled.div.attrs({className: "col-12 col-md-6 p-2"})`
     display: flex;
     flex-direction: column;
     gap: 4px;

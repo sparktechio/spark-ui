@@ -1,14 +1,14 @@
 import React, {createContext, JSX, ReactNode, useContext} from "react";
-import {ElementProps} from "../fields/FormField";
+import {FieldChildrenProps} from "../fields/FormField";
 import {SubmitChildrenProps} from "../fields/FormSubmit";
 
 export interface FormRenderContextProps {
-  renderField: (renderer: string, props: ElementProps<any, any>) => JSX.Element;
+  renderField: (renderer: string, props: FieldChildrenProps<any, any>) => JSX.Element;
   renderSubmit: (renderer: string, props: SubmitChildrenProps) => JSX.Element;
 }
 
 export interface FormRenderContextProviderProps {
-  fieldRenderers: Record<string, (props: ElementProps<any, any>) => JSX.Element>;
+  fieldRenderers: Record<string, (props: FieldChildrenProps<any, any>) => JSX.Element>;
   submitRenderers: Record<string, (props: SubmitChildrenProps) => JSX.Element>;
   children: ReactNode;
 }
@@ -28,7 +28,7 @@ export const FormRenderProvider = (
   }: FormRenderContextProviderProps
 ) => {
 
-  const renderField = (name: string, props: ElementProps<any, any>) => {
+  const renderField = (name: string, props: FieldChildrenProps<any, any>) => {
     const renderer = fieldRenderers[name];
     if (renderer) {
       return renderer(props);

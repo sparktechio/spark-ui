@@ -1,4 +1,4 @@
-import {ElementProps} from "../fields/FormField";
+import {FieldChildrenProps} from "../fields/FormField";
 import {ChangeEvent} from "react";
 import {SubmitChildrenProps} from "../fields/FormSubmit";
 import {isDefined} from "../validation/Validator";
@@ -12,7 +12,7 @@ export const getSelectProps = (
     field: {
       required,
     }
-  }: ElementProps<string, HTMLSelectElement>
+  }: FieldChildrenProps<string, HTMLSelectElement>
 ) => {
   return {
     onChange: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onChange(value),
@@ -34,7 +34,7 @@ export const getInputTextProps = (
       minLength,
       maxLength,
     }
-  }: ElementProps<string, HTMLInputElement>
+  }: FieldChildrenProps<string, HTMLInputElement>
 ) => {
   return {
     onChange: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onChange(value),
@@ -59,7 +59,7 @@ export const getInputPasswordProps = (
       minLength,
       maxLength,
     }
-  }: ElementProps<string, HTMLInputElement>
+  }: FieldChildrenProps<string, HTMLInputElement>
 ) => {
   return {
     onChange: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onChange(value),
@@ -84,7 +84,7 @@ export const getInputNumericProps = (
       min,
       max,
     }
-  }: ElementProps<number, HTMLInputElement>
+  }: FieldChildrenProps<number, HTMLInputElement>
 ) => {
   return {
     onChange: ({target: {valueAsNumber}}: ChangeEvent<HTMLInputElement>) => onChange(valueAsNumber),
@@ -107,7 +107,7 @@ export const getInputCheckboxProps = (
     field: {
       required,
     }
-  }: ElementProps<boolean, HTMLInputElement>
+  }: FieldChildrenProps<boolean, HTMLInputElement>
 ) => {
   return {
     onChange: ({target: {checked}}: ChangeEvent<HTMLInputElement>) => onChange(checked),
@@ -128,7 +128,7 @@ export const getInputRadioProps = (
     field: {
       required,
     }
-  }: ElementProps<string, HTMLInputElement>
+  }: FieldChildrenProps<string, HTMLInputElement>
 ) => {
   return {
     onChange: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onChange(value),
@@ -150,7 +150,7 @@ export const getInputDateProps = (
       required,
     },
     format = (value?: Date) => (value ? new Date(value).toISOString().slice(0, 10): undefined)
-  }: ElementProps<Date, HTMLInputElement>
+  }: FieldChildrenProps<Date, HTMLInputElement>
 ) => {
   return {
     onChange: ({target: {valueAsDate}}: ChangeEvent<HTMLInputElement>) => onChange(valueAsDate),

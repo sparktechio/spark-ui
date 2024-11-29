@@ -27,7 +27,7 @@ The `Form` component is the parent container that manages the state of the form,
 - **onStateChange** (function(state), optional): A callback called on every update.
 - **children** (ReactNode, required): The `FormField` components that represent the form fields of the form.
 
-### `Field<ValueType, HtmlElementType>`
+### `Field<ValueType, ElementType>`
 
 The `Field` component is the child container that manages the state of the form field.
 
@@ -39,7 +39,45 @@ The `Field` component is the child container that manages the state of the form 
 - **max** (number, optional): Max value
 - **minLength** (number, optional): Min length
 - **maxLength** (number, optional): Max length
-- **custom** (function(value?: T), optional): Custom validator
+- **custom** (function(value?: T) => boolean, optional): Custom validator
+- **children** (function(props: FieldChildrenProps<ValueType, ElementType>) => JSX.Element, required): Field renderer
+  - **onChange** (function(value?: T) => void, required): Set new value
+  - **onBlur** (function(value?: T) => void), required: Mark as touched and set new value
+  - **ref** (RefObject, required): Reference that should be forwarded to focusable element
+  - **value** (V, optional): Current value
+  - **fields** (Field<V>[], optional): All fields
+  - **getField** (function(value: string) => Field<V>, required): Find field object by param
+  - **getValue** (function(value: string) => V, required): Find value of some another field by param
+  - **props** (any, optional): Props prepared for native elements
+  - **params** (any, optional): Custom params
+
+```tsx
+<Form.Field<string, HTMLInputElement> param="custom" required={true}>
+  {({
+      onChange, // Register change
+      onBlur, // Register blor
+      ref,  // Reference intended for the focus in case of errors
+      value,  // Current value
+      errors, // List of errors triggered with onBlur or onChange when touched
+      fields, // List of all fields in the form
+      getValue, // Get value of any field by param
+      fetField, // Get field object of any field by param
+  }) => (
+    <FormControl>
+      <input
+        className="form-control"
+        placeholder="Name"
+        type="text"
+        ref={ref}
+        value={value}
+        onChange={({target: {value}}) => onChange(value)}
+        onBlur={({target: {value}}) => onBlur(value)}
+      />
+      {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
+    </FormControl>
+  )}
+</Form.Field>
+```
 
 #### Instances
 - TextField
@@ -336,29 +374,6 @@ export const ExampleForm = () =>  {
             placeholder: "Secret"
           }}
         />
-        <Form.AppNumericField
-          renderer="my-input"
-          param="age"
-          params={{
-            placeholder: "Age"
-          }}
-        />
-        <Form.AppDateField
-          renderer="my-input"
-          param="created"
-          required={true}
-          params={{
-            placeholder: "Age"
-          }}
-        />
-        <Form.AppCheckBoxField
-          renderer="my-checkbox"
-          param={"new"}
-          params={{
-            input: {placeholder: "Age"},
-            label: "New"
-          }}
-        />
         <Form.AppRadioField
           renderer="my-radio-set"
           param={"color"}
@@ -368,43 +383,6 @@ export const ExampleForm = () =>  {
             {key: 'green', label: 'Green'},
           ]}
         />
-        <Form.TextField param={"personal.description"} required={true} pattern={/^[0-9\-+\/?]+$/}>
-          {({props, errors}) => (
-            <FormControl>
-              <span className="form-label">Digits or special characters only: -+/?</span>
-              <input className="form-control" placeholder="Desc" {...props} />
-              {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
-            </FormControl>
-          )}
-        </Form.TextField>
-        <Form.SelectField param="status" required={true}>
-          {({props, errors}) => (
-            <FormControl>
-              <select className="form-control" placeholder="Color" {...props}>
-                <option value="" disabled>Select your option</option>
-                <option value="started">Started</option>
-                <option value="finished">Finished</option>
-              </select>
-              {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
-            </FormControl>
-          )}
-        </Form.SelectField>
-        <Form.Field<string, HTMLInputElement> param="custom" required={true}>
-          {({onChange, onBlur, ref, value, errors}) => (
-            <FormControl>
-              <input
-                className="form-control"
-                placeholder="Name"
-                type="text"
-                ref={ref}
-                value={value}
-                onChange={({target: {value}}) => onChange(value)}
-                onBlur={({target: {value}}) => onBlur(value)}
-              />
-              {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
-            </FormControl>
-          )}
-        </Form.Field>
         <Form.AppButtonSubmit
           renderer="my-submit"
           onSubmit={async (e) => console.log(e)}

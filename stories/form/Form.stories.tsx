@@ -1,22 +1,15 @@
 import { fn } from '@storybook/test';
-import styled from "styled-components";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
 import {Form} from "./form";
 import {FormControl, FormRenderer} from "./FormRenderer";
 
-const StyledForm = styled(Form)`
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-    width: 300px;
-`;
 
 const sate = {personal: {name: '', description: "123", age: 2021}, created: new Date(), status: 'started', color: 'green'};
 
 export const Basic = () =>  (
   <FormRenderer>
-    <StyledForm value={sate}>
+    <Form value={sate} className="container row">
       <Form.AppTextField
         renderer="my-input"
         param={"personal.name"}
@@ -107,7 +100,7 @@ export const Basic = () =>  (
         onSubmit={async (e) => console.log(e)}
         params={"Submit"}
       />
-    </StyledForm>
+    </Form>
   </FormRenderer>
 );
 
