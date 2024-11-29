@@ -13,9 +13,16 @@ export const Basic = () =>  (
       <Form.AppTextField
         renderer="my-input"
         param={"personal.name"}
-        required={true}
         params={{
           placeholder: "Name"
+        }}
+      />
+      <Form.AppCheckBoxField
+        renderer="my-checkbox"
+        param={"new"}
+        params={{
+          input: {placeholder: "Age"},
+          label: "New"
         }}
       />
       <Form.AppPasswordField
@@ -25,6 +32,15 @@ export const Basic = () =>  (
         params={{
           placeholder: "Secret"
         }}
+      />
+      <Form.AppRadioField
+        renderer="my-radio-set"
+        param={"color"}
+        params={[
+          {key: 'red', label: 'Red'},
+          {key: 'blue', label: 'Blue'},
+          {key: 'green', label: 'Green'},
+        ]}
       />
       <Form.AppNumericField
         renderer="my-input"
@@ -41,44 +57,6 @@ export const Basic = () =>  (
           placeholder: "Age"
         }}
       />
-      <Form.AppCheckBoxField
-        renderer="my-checkbox"
-        param={"new"}
-        params={{
-          input: {placeholder: "Age"},
-          label: "New"
-        }}
-      />
-      <Form.AppRadioField
-        renderer="my-radio-set"
-        param={"color"}
-        params={[
-          {key: 'red', label: 'Red'},
-          {key: 'blue', label: 'Blue'},
-          {key: 'green', label: 'Green'},
-        ]}
-      />
-      <Form.TextField param={"personal.description"} required={true} pattern={/^[0-9\-+\/?]+$/}>
-        {({props, errors}) => (
-          <FormControl>
-            <span className="form-label">Digits or special characters only: -+/?</span>
-            <input className="form-control" placeholder="Desc" {...props} />
-            {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
-          </FormControl>
-        )}
-      </Form.TextField>
-      <Form.SelectField param="status" required={true}>
-        {({props, errors}) => (
-          <FormControl>
-            <select className="form-control" placeholder="Color" {...props}>
-              <option value="" disabled>Select your option</option>
-              <option value="started">Started</option>
-              <option value="finished">Finished</option>
-            </select>
-            {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
-          </FormControl>
-        )}
-      </Form.SelectField>
       <Form.Field<string, HTMLInputElement> param="custom" required={true}>
         {({onChange, onBlur, ref, value, errors}) => (
           <FormControl>
@@ -95,11 +73,34 @@ export const Basic = () =>  (
           </FormControl>
         )}
       </Form.Field>
-      <Form.AppButtonSubmit
-        renderer="my-submit"
-        onSubmit={async (e) => console.log(e)}
-        params={"Submit"}
-      />
+      <Form.SelectField param="status" required={true}>
+        {({props, errors}) => (
+          <FormControl>
+            <select className="form-control" placeholder="Color" {...props}>
+              <option value="" disabled>Select your option</option>
+              <option value="started">Started</option>
+              <option value="finished">Finished</option>
+            </select>
+            {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
+          </FormControl>
+        )}
+      </Form.SelectField>
+      <Form.TextField param={"personal.description"} required={true} pattern={/^[0-9\-+\/?]+$/}>
+        {({props, errors}) => (
+          <FormControl>
+            <span className="form-label">Digits or special characters only: -+/?</span>
+            <input className="form-control" placeholder="Desc" {...props} />
+            {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
+          </FormControl>
+        )}
+      </Form.TextField>
+      <div className="col-12">
+        <Form.AppButtonSubmit
+          renderer="my-submit"
+          onSubmit={async (e) => console.log(e)}
+          params={"Submit"}
+        />
+      </div>
     </Form>
   </FormRenderer>
 );
