@@ -6,7 +6,9 @@ export interface Field<V> {
   param: string,
 
   value?: V;
+  formatValue?: (value?: V) => any;
   label?: string,
+  disabled?: boolean,
 
   validate?: (value?: V) => boolean,
   pattern?: RegExp,
@@ -39,7 +41,8 @@ export interface FieldChildrenProps<V, I> {
   fields: Field<any>[];
   field: Field<any>;
   ref: RefObject<I>;
-  format?: (value?: V) => any;
+  formatValue?: (value?: V) => any;
+  disabled?: boolean,
   value?: V;
   params?: any;
   props?: any;
@@ -48,7 +51,6 @@ export interface FieldChildrenProps<V, I> {
 export interface BaseFormFieldProps<V, I> extends Field<V> {
   onChange?: (value: Field<V>) => void;
   propsGenerator?: (props: FieldChildrenProps<V, I>) => any;
-  format?: (value?: V) => any;
   params?: any;
 }
 
@@ -56,7 +58,7 @@ export interface FormFieldProps<V, I> extends BaseFormFieldProps<V, I> {
   children: (props: FieldChildrenProps<V, I>) => JSX.Element;
 }
 
-export const FormField = <V, I>({onChange, children, params, format, propsGenerator, ...fieldProps}: FormFieldProps<V, I>) => {
+export const FormField = <V, I>({onChange, children, params, propsGenerator, ...fieldProps}: FormFieldProps<V, I>) => {
 
   const {fields, setField, getField, registerField, unRegisterField} = useFormContext();
 
@@ -79,13 +81,14 @@ export const FormField = <V, I>({onChange, children, params, format, propsGenera
     onBlur: (value) => setField({...field, value, touched: true, errors: validateFormField({...field, value})}),
     errors: field.errors,
     value: field.value,
+    formatValue: field.formatValue,
+    disabled: field.disabled,
     getField: (param: string) => fields.find(item => item.param === param),
     getValue: (param: string) => fields.find(item => item.param === param)?.value,
     params,
     ref,
     fields,
     field,
-    format
   }
 
   return children({

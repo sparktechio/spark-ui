@@ -32,7 +32,7 @@ export const PasswordField = ({children, ...props}: FormFieldProps<string, HTMLI
   </FormField>
 );
 
-export const DateField = ({children, format, ...props}: FormFieldProps<Date, HTMLInputElement>) => (
+export const DateField = ({children, ...props}: FormFieldProps<Date, HTMLInputElement>) => (
   <FormField<Date, HTMLInputElement> {...props} propsGenerator={getInputDateProps}>
     {children}
   </FormField>

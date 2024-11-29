@@ -11,6 +11,7 @@ export const getSelectProps = (
     ref,
     field: {
       required,
+      disabled,
     }
   }: FieldChildrenProps<string, HTMLSelectElement>
 ) => {
@@ -20,6 +21,7 @@ export const getSelectProps = (
     ref,
     value,
     required,
+    disabled,
   }
 }
 
@@ -33,6 +35,7 @@ export const getInputTextProps = (
       required,
       minLength,
       maxLength,
+      disabled,
     }
   }: FieldChildrenProps<string, HTMLInputElement>
 ) => {
@@ -45,6 +48,7 @@ export const getInputTextProps = (
     required,
     minLength,
     maxLength,
+    disabled,
   }
 }
 
@@ -58,6 +62,7 @@ export const getInputPasswordProps = (
       required,
       minLength,
       maxLength,
+      disabled,
     }
   }: FieldChildrenProps<string, HTMLInputElement>
 ) => {
@@ -70,6 +75,7 @@ export const getInputPasswordProps = (
     required,
     minLength,
     maxLength,
+    disabled,
   }
 }
 
@@ -83,6 +89,7 @@ export const getInputNumericProps = (
       required,
       min,
       max,
+      disabled,
     }
   }: FieldChildrenProps<number, HTMLInputElement>
 ) => {
@@ -95,6 +102,7 @@ export const getInputNumericProps = (
     required,
     min,
     max,
+    disabled,
   }
 }
 
@@ -106,6 +114,7 @@ export const getInputCheckboxProps = (
     ref,
     field: {
       required,
+      disabled,
     }
   }: FieldChildrenProps<boolean, HTMLInputElement>
 ) => {
@@ -116,6 +125,7 @@ export const getInputCheckboxProps = (
     checked: isDefined(value) ? value : false,
     ref,
     required,
+    disabled,
   }
 }
 
@@ -127,6 +137,7 @@ export const getInputRadioProps = (
     ref,
     field: {
       required,
+      disabled,
     }
   }: FieldChildrenProps<string, HTMLInputElement>
 ) => {
@@ -137,7 +148,8 @@ export const getInputRadioProps = (
     name: field.param,
     required,
     ref,
-}
+    disabled,
+  }
 }
 
 export const getInputDateProps = (
@@ -148,17 +160,19 @@ export const getInputDateProps = (
     ref,
     field: {
       required,
+      disabled,
     },
-    format = (value?: Date) => (value ? new Date(value).toISOString().slice(0, 10): undefined)
+    formatValue = (value?: Date) => (value ? new Date(value).toISOString().slice(0, 10): undefined)
   }: FieldChildrenProps<Date, HTMLInputElement>
 ) => {
   return {
     onChange: ({target: {valueAsDate}}: ChangeEvent<HTMLInputElement>) => onChange(valueAsDate),
     onBlur: ({target: {valueAsDate}}: ChangeEvent<HTMLInputElement>) => onBlur(valueAsDate),
     type: "date",
-    value: format(value),
+    value: formatValue(value),
     ref,
     required,
+    disabled,
   }
 }
 
