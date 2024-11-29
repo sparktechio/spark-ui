@@ -1,4 +1,4 @@
-import React, {ReactNode} from "react";
+import React, {FormHTMLAttributes, ReactNode} from "react";
 import {FormProvider} from "./context/FormProvider";
 import {EnhancedField, FormField} from "./fields/FormField";
 import {BaseFormSubmitProps, FormSubmit, FormSubmitProps} from "./fields/FormSubmit";
@@ -17,24 +17,24 @@ import {
 } from "./fields/FormFields";
 import {useFormRenderContext} from "./context/FormRenderProvider";
 
-export interface FormProps<F> {
+export interface FormProps<F> extends FormHTMLAttributes<HTMLFormElement> {
   className?: string;
   hideForm?: boolean;
   value?: F;
-  onChange?: (value: F) => void;
+  onStateChange?: (value: F) => void;
   onFieldChange?: (field: EnhancedField<any, any>) => void;
   children: ReactNode;
 }
 
-export const Form = <F,>({className, hideForm, value, onChange, onFieldChange, children}: FormProps<F>) => {
+export const Form = <F,>({className, hideForm, value, onStateChange, onFieldChange, children, ...other}: FormProps<F>) => {
   return (
     hideForm ? (
-        <FormProvider value={value} onChange={onChange} onFieldChange={onFieldChange}>
+        <FormProvider value={value} onChange={onStateChange} onFieldChange={onFieldChange}>
           {children}
         </FormProvider>
       ) : (
-      <form className={className}>
-        <FormProvider value={value} onChange={onChange} onFieldChange={onFieldChange}>
+      <form className={className} {...other}>
+        <FormProvider value={value} onChange={onStateChange} onFieldChange={onFieldChange}>
           {children}
         </FormProvider>
       </form>

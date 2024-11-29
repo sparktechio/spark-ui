@@ -29,8 +29,6 @@ export interface EnhancedField<V, I extends ControlledElement> extends Field<V> 
   errors: ValidationError[];
 }
 
-export type Renderer<V, I> = (props: ElementProps<V, I>) => JSX.Element;
-
 export interface ElementProps<V, I> {
   onChange: (value?: V | null) => void;
   onBlur: (value?: V | null) => void;
@@ -39,7 +37,8 @@ export interface ElementProps<V, I> {
   fields: Field<any>[];
   field: Field<any>;
   ref: RefObject<I>;
-  value: V;
+  format?: (value?: V) => any;
+  value?: V;
   params?: any;
   props?: any;
 }
@@ -47,6 +46,7 @@ export interface ElementProps<V, I> {
 export interface BaseFormFieldProps<V, I> extends Field<V> {
   onChange?: (value: Field<V>) => void;
   propsGenerator?: (props: ElementProps<V, I>) => any;
+  format?: (value?: V) => any;
   params?: any;
 }
 
@@ -54,9 +54,9 @@ export interface FormFieldProps<V, I> extends BaseFormFieldProps<V, I> {
   children: (props: ElementProps<V, I>) => JSX.Element;
 }
 
-export const FormField = <V, I>({onChange, children, params, propsGenerator, ...fieldProps}: FormFieldProps<V, I>) => {
+export const FormField = <V, I>({onChange, children, params, format, propsGenerator, ...fieldProps}: FormFieldProps<V, I>) => {
 
-  const {setField, getField, fields, registerField, unRegisterField} = useFormContext();
+  const {fields, setField, getField, registerField, unRegisterField} = useFormContext();
 
   const ref = useRef<I>(null);
   const field = getField(fieldProps, ref);
@@ -80,7 +80,8 @@ export const FormField = <V, I>({onChange, children, params, propsGenerator, ...
     params,
     ref,
     fields,
-    field
+    field,
+    format
   }
 
   return children({

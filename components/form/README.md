@@ -24,7 +24,7 @@ The `Form` component is the parent container that manages the state of the form,
 
 - **value** (object, optional): Initial form state.
 - **onFieldChange** (function(field), optional): A callback called on every field update.
-- **onChange** (function(state), optional): A callback called on every update.
+- **onStateChange** (function(state), optional): A callback called on every update.
 - **children** (ReactNode, required): The `FormField` components that represent the form fields of the form.
 
 ### `Field<ValueType, HtmlElementType>`
