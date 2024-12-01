@@ -9,10 +9,10 @@ import {
   AppCheckBoxField, AppDateField, AppEmailField, AppFilesField,
   AppFormField, AppNumericField,
   AppPasswordField, AppRadioField,
-  AppSelectField,
+  AppSelectField, AppTextAreaField,
   AppTextField, CheckBoxField, DateField, EmailField, FilesField, NumericField,
   PasswordField, RadioField,
-  SelectField,
+  SelectField, TextAreaField,
   TextField
 } from "./fields/FormFields";
 import {useFormRenderContext} from "./context/FormRenderProvider";
@@ -45,6 +45,7 @@ export const Form = <F,>({className, hideForm, value, onStateChange, onFieldChan
 Form.FormField = FormField;
 Form.SelectField = SelectField;
 Form.TextField = TextField;
+Form.TextAreaField = TextAreaField;
 Form.EmailField = EmailField;
 Form.FilesField = FilesField;
 Form.PasswordField = PasswordField;
@@ -56,6 +57,7 @@ Form.DateField = DateField;
 Form.Field = AppFormField;
 Form.Select = AppSelectField;
 Form.Text = AppTextField;
+Form.TextArea = AppTextAreaField;
 Form.Email = AppEmailField;
 Form.Files = AppFilesField;
 Form.Password = AppPasswordField;

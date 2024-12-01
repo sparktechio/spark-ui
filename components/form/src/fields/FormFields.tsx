@@ -5,7 +5,7 @@ import {
   getInputCheckboxProps,
   getInputDateProps, getInputEmailProps, getInputFilesProps,
   getInputNumericProps,
-  getInputPasswordProps, getInputRadioProps,
+  getInputPasswordProps, getInputRadioProps, getInputTextAreaProps,
   getInputTextProps,
   getSelectProps
 } from "../utils/Utils";
@@ -22,6 +22,12 @@ export const SelectField = ({children, ...props}: FormFieldProps<string, HTMLSel
 
 export const TextField = ({children, ...props}: FormFieldProps<string, HTMLInputElement>) => (
   <FormField<string, HTMLInputElement> {...props} propsGenerator={getInputTextProps}>
+    {children}
+  </FormField>
+);
+
+export const TextAreaField = ({children, ...props}: FormFieldProps<string, HTMLTextAreaElement>) => (
+  <FormField<string, HTMLTextAreaElement> {...props} propsGenerator={getInputTextAreaProps}>
     {children}
   </FormField>
 );
@@ -90,6 +96,15 @@ export const AppTextField = ({renderer, ...props}: AppFormFieldProps<string, HTM
   const {renderField} = useFormRenderContext();
   return (
     <FormField<string, HTMLInputElement> {...props} propsGenerator={getInputTextProps}>
+      {(props) => renderField(renderer, props)}
+    </FormField>
+  );
+}
+
+export const AppTextAreaField = ({renderer, ...props}: AppFormFieldProps<string, HTMLTextAreaElement>) => {
+  const {renderField} = useFormRenderContext();
+  return (
+    <FormField<string, HTMLTextAreaElement> {...props} propsGenerator={getInputTextAreaProps}>
       {(props) => renderField(renderer, props)}
     </FormField>
   );

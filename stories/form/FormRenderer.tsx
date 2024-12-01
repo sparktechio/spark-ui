@@ -18,6 +18,13 @@ export const FormRenderer = ({children}: {children: ReactNode}) => (
             {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
           </FormControl>
         ),
+        'my-textarea': ({props, params, errors}) => (
+          <FormControl>
+            <label>{...params.label}</label>
+            <textarea className="form-control" {...params.input} {...props}/>
+            {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
+          </FormControl>
+        ),
         'my-checkbox': ({props, params, errors}) => (
           <FormControl>
             <Row>

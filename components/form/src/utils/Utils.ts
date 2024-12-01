@@ -52,6 +52,32 @@ export const getInputTextProps = (
   }
 }
 
+export const getInputTextAreaProps = (
+  {
+    onChange,
+    onBlur,
+    value,
+    ref,
+    field: {
+      required,
+      minLength,
+      maxLength,
+      disabled,
+    }
+  }: FieldChildrenProps<string, HTMLTextAreaElement>
+) => {
+  return {
+    onChange: ({target: {value}}: ChangeEvent<HTMLTextAreaElement>) => onChange(value),
+    onBlur: ({target: {value}}: ChangeEvent<HTMLTextAreaElement>) => onBlur(value),
+    ref,
+    value,
+    required,
+    minLength,
+    maxLength,
+    disabled,
+  }
+}
+
 export const getInputEmailProps = (
   {
     onChange,

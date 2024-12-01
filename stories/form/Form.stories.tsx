@@ -42,6 +42,14 @@ export const Basic = () =>  (
           {key: 'green', label: 'Green'},
         ]}
       />
+      <Form.TextArea
+        renderer="my-textarea"
+        param="description"
+        params={{
+          placeholder: "Description",
+          label: "Description"
+        }}
+      />
       <Form.Numeric
         renderer="my-input"
         param="age"
