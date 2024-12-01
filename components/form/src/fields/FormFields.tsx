@@ -3,7 +3,7 @@ import React from "react";
 import {useFormRenderContext} from "../context/FormRenderProvider";
 import {
   getInputCheckboxProps,
-  getInputDateProps,
+  getInputDateProps, getInputEmailProps, getInputFilesProps,
   getInputNumericProps,
   getInputPasswordProps, getInputRadioProps,
   getInputTextProps,
@@ -26,6 +26,12 @@ export const TextField = ({children, ...props}: FormFieldProps<string, HTMLInput
   </FormField>
 );
 
+export const EmailField = ({children, ...props}: FormFieldProps<string, HTMLInputElement>) => (
+  <FormField<string, HTMLInputElement> {...props} propsGenerator={getInputEmailProps}>
+    {children}
+  </FormField>
+);
+
 export const PasswordField = ({children, ...props}: FormFieldProps<string, HTMLInputElement>) => (
   <FormField<string, HTMLInputElement> {...props} propsGenerator={getInputPasswordProps}>
     {children}
@@ -34,6 +40,12 @@ export const PasswordField = ({children, ...props}: FormFieldProps<string, HTMLI
 
 export const DateField = ({children, ...props}: FormFieldProps<Date, HTMLInputElement>) => (
   <FormField<Date, HTMLInputElement> {...props} propsGenerator={getInputDateProps}>
+    {children}
+  </FormField>
+);
+
+export const FilesField = ({children, value = [], ...props}: FormFieldProps<File[], HTMLInputElement>) => (
+  <FormField<File[], HTMLInputElement> {...props} propsGenerator={getInputFilesProps}>
     {children}
   </FormField>
 );
@@ -83,6 +95,15 @@ export const AppTextField = ({renderer, ...props}: AppFormFieldProps<string, HTM
   );
 }
 
+export const AppEmailField = ({renderer, ...props}: AppFormFieldProps<string, HTMLInputElement>) => {
+  const {renderField} = useFormRenderContext();
+  return (
+    <FormField<string, HTMLInputElement> {...props} propsGenerator={getInputEmailProps}>
+      {(props) => renderField(renderer, props)}
+    </FormField>
+  );
+}
+
 export const AppPasswordField = ({renderer, ...props}: AppFormFieldProps<string, HTMLInputElement>) => {
   const {renderField} = useFormRenderContext();
   return (
@@ -96,6 +117,15 @@ export const AppDateField = ({renderer, ...props}: AppFormFieldProps<Date, HTMLI
   const {renderField} = useFormRenderContext();
   return (
     <FormField<Date, HTMLInputElement> {...props} propsGenerator={getInputDateProps}>
+      {(props) => renderField(renderer, props)}
+    </FormField>
+  );
+}
+
+export const AppFilesField = ({renderer, value = [], ...props}: AppFormFieldProps<File[], HTMLInputElement>) => {
+  const {renderField} = useFormRenderContext();
+  return (
+    <FormField<File[], HTMLInputElement> {...props} propsGenerator={getInputFilesProps}>
       {(props) => renderField(renderer, props)}
     </FormField>
   );

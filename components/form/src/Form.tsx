@@ -6,11 +6,11 @@ import {
   getButtonSubmitProps
 } from "./utils/Utils";
 import {
-  AppCheckBoxField, AppDateField,
+  AppCheckBoxField, AppDateField, AppEmailField, AppFilesField,
   AppFormField, AppNumericField,
   AppPasswordField, AppRadioField,
   AppSelectField,
-  AppTextField, CheckBoxField, DateField, NumericField,
+  AppTextField, CheckBoxField, DateField, EmailField, FilesField, NumericField,
   PasswordField, RadioField,
   SelectField,
   TextField
@@ -45,6 +45,8 @@ export const Form = <F,>({className, hideForm, value, onStateChange, onFieldChan
 Form.FormField = FormField;
 Form.SelectField = SelectField;
 Form.TextField = TextField;
+Form.EmailField = EmailField;
+Form.FilesField = FilesField;
 Form.PasswordField = PasswordField;
 Form.CheckBoxField = CheckBoxField;
 Form.RadioField = RadioField;
@@ -54,6 +56,8 @@ Form.DateField = DateField;
 Form.Field = AppFormField;
 Form.Select = AppSelectField;
 Form.Text = AppTextField;
+Form.Email = AppEmailField;
+Form.Files = AppFilesField;
 Form.Password = AppPasswordField;
 Form.CheckBox = AppCheckBoxField;
 Form.Radio = AppRadioField;

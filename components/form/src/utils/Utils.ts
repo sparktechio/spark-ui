@@ -52,6 +52,33 @@ export const getInputTextProps = (
   }
 }
 
+export const getInputEmailProps = (
+  {
+    onChange,
+    onBlur,
+    value,
+    ref,
+    field: {
+      required,
+      minLength,
+      maxLength,
+      disabled,
+    }
+  }: FieldChildrenProps<string, HTMLInputElement>
+) => {
+  return {
+    onChange: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onChange(value),
+    onBlur: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onBlur(value),
+    type: "email",
+    ref,
+    value,
+    required,
+    minLength,
+    maxLength,
+    disabled,
+  }
+}
+
 export const getInputPasswordProps = (
   {
     onChange,
@@ -170,6 +197,29 @@ export const getInputDateProps = (
     onBlur: ({target: {valueAsDate}}: ChangeEvent<HTMLInputElement>) => onBlur(valueAsDate),
     type: "date",
     value: formatValue(value),
+    ref,
+    required,
+    disabled,
+  }
+}
+
+export const getInputFilesProps = (
+  {
+    onChange,
+    onBlur,
+    value,
+    ref,
+    field: {
+      required,
+      disabled,
+    },
+  }: FieldChildrenProps<File[], HTMLInputElement>
+) => {
+  return {
+    onChange: ({target: {files}}: ChangeEvent<HTMLInputElement>) => onChange(Array.from(files ?? [])),
+    onBlur: ({target: {files}}: ChangeEvent<HTMLInputElement>) => onBlur(Array.from(files ?? [])),
+    type: "file",
+    value,
     ref,
     required,
     disabled,

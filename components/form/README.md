@@ -81,19 +81,23 @@ The `Field` component is the child container that manages the state of the form 
 
 #### Instances
 - TextField
+- EmailField
 - PasswordField
 - NumericField
 - DateField
 - SelectField
 - CheckBoxField
 - RadioField
+- FilesField
 - Text (render template defined inside `FormRenderProvider`)
+- Email (render template defined inside `FormRenderProvider`)
 - Password (render template defined inside `FormRenderProvider`)
 - Numeric (render template defined inside `FormRenderProvider`)
 - Date (render template defined inside `FormRenderProvider`)
 - Select (render template defined inside `FormRenderProvider`)
 - CheckBox (render template defined inside `FormRenderProvider`)
 - Radio (render template defined inside `FormRenderProvider`)
+- Files (render template defined inside `FormRenderProvider`)
 
 ### `FormRenderProvider`
 
