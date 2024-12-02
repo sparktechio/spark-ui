@@ -1,13 +1,183 @@
 import { fn } from '@storybook/test';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import {Form} from "./form";
 import {FormControl, FormRenderer} from "./FormRenderer";
+import {FormController} from "./form/context/FormProvider";
 
 
 const sate = {personal: {name: '', description: "123", age: 2021}, created: new Date(), status: 'started', color: 'green'};
 
-export const Basic = () =>  (
+export const Text = () =>  (
+  <FormRenderer>
+    <Form value={{name: ''}} className="container row">
+      <Form.Text
+        renderer="my-input"
+        param="name"
+        params={{
+          placeholder: "Name"
+        }}
+      />
+      <Form.Submit
+        renderer="my-submit"
+        onSubmit={async (e) => console.log(e)}
+        params={"Submit"}
+      />
+    </Form>
+  </FormRenderer>
+);
+
+export const CheckBox = () =>  (
+  <FormRenderer>
+    <Form value={{new: false}} className="container row">
+      <Form.CheckBox
+        renderer="my-checkbox"
+        param="new"
+        params={{
+          input: {placeholder: "New"},
+          label: "New"
+        }}
+      />
+      <Form.Submit
+        renderer="my-submit"
+        onSubmit={async (e) => console.log(e)}
+        params={"Submit"}
+      />
+    </Form>
+  </FormRenderer>
+);
+
+export const Password = () =>  (
+  <FormRenderer>
+    <Form value={{secret: ''}} className="container row">
+      <Form.Password
+        renderer="my-input"
+        param="secret"
+        pattern={/^[0-9\-+\/?]+$/}
+        params={{
+          placeholder: "Secret"
+        }}
+      />
+      <Form.Submit
+        renderer="my-submit"
+        onSubmit={async (e) => console.log(e)}
+        params={"Submit"}
+      />
+    </Form>
+  </FormRenderer>
+);
+
+export const RadioSet = () =>  (
+  <FormRenderer>
+    <Form value={{color: ''}} className="container row">
+      <Form.Radio
+        renderer="my-radio-set"
+        param="color"
+        params={[
+          {key: 'red', label: 'Red'},
+          {key: 'blue', label: 'Blue'},
+          {key: 'green', label: 'Green'},
+        ]}
+      />
+      <Form.Submit
+        renderer="my-submit"
+        onSubmit={async (e) => console.log(e)}
+        params={"Submit"}
+      />
+    </Form>
+  </FormRenderer>
+);
+
+export const TextArea = () =>  (
+  <FormRenderer>
+    <Form value={{description: ''}} className="container row">
+      <Form.TextArea
+        renderer="my-textarea"
+        param="description"
+        params={{
+          placeholder: "Description",
+          label: "Description"
+        }}
+      />
+      <Form.Submit
+        renderer="my-submit"
+        onSubmit={async (e) => console.log(e)}
+        params={"Submit"}
+      />
+    </Form>
+  </FormRenderer>
+);
+
+export const Numeric = () =>  (
+  <FormRenderer>
+    <Form value={{age: null}} className="container row">
+      <Form.Numeric
+        renderer="my-input"
+        param="age"
+        params={{
+          placeholder: "Age"
+        }}
+      />
+      <Form.Submit
+        renderer="my-submit"
+        onSubmit={async (e) => console.log(e)}
+        params={"Submit"}
+      />
+    </Form>
+  </FormRenderer>
+);
+
+export const IsoDate = () =>  (
+  <FormRenderer>
+    <Form value={{created: new Date()}} className="container row">
+      <Form.Date
+        renderer="my-input"
+        param="created"
+        required={true}
+        formatOutputValue={(date?: Date) => date?.toISOString()}
+        params={{
+          placeholder: "Created"
+        }}
+      />
+      <Form.Submit
+        renderer="my-submit"
+        onSubmit={async (e) => console.log(e)}
+        params={"Submit"}
+      />
+    </Form>
+  </FormRenderer>
+);
+
+export const DynamicValue = () =>  {
+  const ref = useRef<FormController<{name: string}>>();
+
+  useEffect(() => {
+    setTimeout(() => {
+      ref.current?.setFieldValue('name', "New dynamic value");
+    }, 2000);
+  }, []);
+
+  return (
+    <FormRenderer>
+      <Form value={{name: ''}} className="container row" controllerRef={ref}>
+        <Form.Text
+          renderer="my-input"
+          param="name"
+          params={{
+            placeholder: "Name"
+          }}
+        />
+        <Form.Submit
+          renderer="my-submit"
+          onSubmit={async (e) => console.log(e)}
+          params={"Submit"}
+        />
+      </Form>
+    </FormRenderer>
+  )
+};
+
+export const FullForm = () =>  (
   <FormRenderer>
     <Form value={sate} className="container row">
       <Form.Text
@@ -102,13 +272,11 @@ export const Basic = () =>  (
           </FormControl>
         )}
       </Form.TextField>
-      <div className="col-12">
-        <Form.Submit
-          renderer="my-submit"
-          onSubmit={async (e) => console.log(e)}
-          params={"Submit"}
-        />
-      </div>
+      <Form.Submit
+        renderer="my-submit"
+        onSubmit={async (e) => console.log(e)}
+        params={"Submit"}
+      />
     </Form>
   </FormRenderer>
 );

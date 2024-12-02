@@ -46,6 +46,15 @@ export const FormSubmit = (
     }
   }
 
+  const toValue = (
+    {
+      formatOutputValue = (value) => value,
+      value
+    }: EnhancedField<any, any>
+  ) => {
+    return formatOutputValue(value);
+  }
+
   const onBeforeSubmit = async () => {
     const invalid = fields.map(field => {
       const errors = validateFormField(field);
@@ -62,9 +71,9 @@ export const FormSubmit = (
       setLoading(true);
       try {
         await onSubmit(
-          fields.reduce((previousValue, currentValue) => ({
+          fields.reduce((previousValue, field) => ({
             ...previousValue,
-            ...setNestedValue(previousValue, currentValue.param, currentValue.value)
+            ...setNestedValue(previousValue, field.param, toValue(field))
           }), {})
         );
       } catch (error: unknown) {

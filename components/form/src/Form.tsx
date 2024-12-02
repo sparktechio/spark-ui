@@ -1,5 +1,5 @@
-import React, {FormHTMLAttributes, ReactNode} from "react";
-import {FormProvider} from "./context/FormProvider";
+import React, {FormHTMLAttributes, MutableRefObject, ReactNode, useRef} from "react";
+import {FormController, FormProvider} from "./context/FormProvider";
 import {EnhancedField, FormField} from "./fields/FormField";
 import {BaseFormSubmitProps, FormSubmit, FormSubmitProps} from "./fields/FormSubmit";
 import {
@@ -21,20 +21,33 @@ export interface FormProps<F> extends FormHTMLAttributes<HTMLFormElement> {
   className?: string;
   hideForm?: boolean;
   value?: F;
+  controllerRef?: MutableRefObject<FormController<F> | undefined>;
   onStateChange?: (value: F) => void;
   onFieldChange?: (field: EnhancedField<any, any>) => void;
   children: ReactNode;
 }
 
-export const Form = <F,>({className, hideForm, value, onStateChange, onFieldChange, children, ...other}: FormProps<F>) => {
+export const Form = <F,>(
+  {
+    className,
+    hideForm,
+    value,
+    controllerRef,
+    onStateChange,
+    onFieldChange,
+    children,
+    ...other
+  }: FormProps<F>
+) => {
+  const ref = useRef<FormController<F>>();
   return (
     hideForm ? (
-        <FormProvider value={value} onChange={onStateChange} onFieldChange={onFieldChange}>
+        <FormProvider value={value} onChange={onStateChange} onFieldChange={onFieldChange} controllerRef={controllerRef ?? ref}>
           {children}
         </FormProvider>
       ) : (
       <form className={className} {...other}>
-        <FormProvider value={value} onChange={onStateChange} onFieldChange={onFieldChange}>
+        <FormProvider value={value} onChange={onStateChange} onFieldChange={onFieldChange} controllerRef={controllerRef ?? ref}>
           {children}
         </FormProvider>
       </form>

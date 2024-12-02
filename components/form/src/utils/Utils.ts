@@ -215,14 +215,14 @@ export const getInputDateProps = (
       required,
       disabled,
     },
-    formatValue = (value?: Date) => (value ? new Date(value).toISOString().slice(0, 10): undefined)
+    formatElementValue = (value?: Date) => (value ? new Date(value).toISOString().slice(0, 10): undefined)
   }: FieldChildrenProps<Date, HTMLInputElement>
 ) => {
   return {
     onChange: ({target: {valueAsDate}}: ChangeEvent<HTMLInputElement>) => onChange(valueAsDate),
     onBlur: ({target: {valueAsDate}}: ChangeEvent<HTMLInputElement>) => onBlur(valueAsDate),
     type: "date",
-    value: formatValue(value),
+    value: formatElementValue(value),
     ref,
     required,
     disabled,

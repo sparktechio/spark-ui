@@ -7,7 +7,11 @@ export const FormRenderer = ({children}: {children: ReactNode}) => (
   <FormRenderProvider
     submitRenderers={
       {
-        'my-submit': ({props, params}) => (<button className="btn btn-primary" {...props}>{params}</button>)
+        'my-submit': ({props, params}) => (
+          <FormControl>
+            <button className="btn btn-primary p-2" {...props}>{params}</button>
+          </FormControl>
+        )
       }
     }
     fieldRenderers={
@@ -54,7 +58,7 @@ export const FormRenderer = ({children}: {children: ReactNode}) => (
   </FormRenderProvider>
 );
 
-export const FormControl = styled.div.attrs({className: "col-12 col-md-6 p-2"})`
+export const FormControl = styled.div.attrs({className: "col-12 p-2"})`
     display: flex;
     flex-direction: column;
     gap: 4px;

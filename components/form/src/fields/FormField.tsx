@@ -6,7 +6,8 @@ export interface Field<V> {
   param: string,
 
   value?: V;
-  formatValue?: (value?: V) => any;
+  formatElementValue?: (value?: V) => any;
+  formatOutputValue?: (value?: V) => any;
   label?: string,
   disabled?: boolean,
 
@@ -41,7 +42,8 @@ export interface FieldChildrenProps<V, I> {
   fields: Field<any>[];
   field: Field<any>;
   ref: RefObject<I>;
-  formatValue?: (value?: V) => any;
+  formatElementValue?: (value?: V) => any;
+  formatOutputValue?: (value?: V) => any;
   disabled?: boolean,
   value?: V;
   params?: any;
@@ -81,7 +83,8 @@ export const FormField = <V, I>({onChange, children, params, propsGenerator, ...
     onBlur: (value) => setField({...field, value, touched: true, errors: validateFormField({...field, value})}),
     errors: field.errors,
     value: field.value,
-    formatValue: field.formatValue,
+    formatElementValue: field.formatElementValue,
+    formatOutputValue: field.formatOutputValue,
     disabled: field.disabled,
     getField: (param: string) => fields.find(item => item.param === param),
     getValue: (param: string) => fields.find(item => item.param === param)?.value,
