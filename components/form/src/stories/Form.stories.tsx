@@ -1,10 +1,8 @@
-import { fn } from '@storybook/test';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useEffect, useRef} from "react";
-import {Form} from "./form";
 import {FormControl, FormRenderer} from "./FormRenderer";
-import {FormController} from "./form/context/FormProvider";
-
+import {Form} from "../Form";
+import {FormController} from "../context/FormProvider";
 
 const sate = {personal: {name: '', description: "123", age: 2021}, created: new Date(), status: 'started', color: 'green'};
 
@@ -291,5 +289,4 @@ export default {
   argTypes: {
     backgroundColor: { control: 'color' },
   },
-  args: { onClick: fn() },
 };

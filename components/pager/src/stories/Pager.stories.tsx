@@ -1,8 +1,7 @@
-import { fn } from '@storybook/test';
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from "styled-components";
-import {Pager} from "./pager";
+import {Pager} from "../Pager";
 
 const generator = (page: number) => {
   const numbers = [];
@@ -30,7 +29,6 @@ export default {
   argTypes: {
     backgroundColor: { control: 'color' },
   },
-  args: { onClick: fn() },
 };
 
 export const Basic = () => (

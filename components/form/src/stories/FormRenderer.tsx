@@ -1,6 +1,6 @@
 import React from "react";
-import {FormRenderProvider} from "./form/context/FormRenderProvider";
 import {ReactNode} from "react";
+import {FormRenderProvider} from "../context/FormRenderProvider";
 import styled from "styled-components";
 
 export const FormRenderer = ({children}: {children: ReactNode}) => (
