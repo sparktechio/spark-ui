@@ -36,15 +36,16 @@ export const getInputTextProps = (
       minLength,
       maxLength,
       disabled,
-    }
+    },
+    formatElementValue = (value) => isDefined(value) ? value : '',
   }: FieldChildrenProps<string, HTMLInputElement>
 ) => {
   return {
     onChange: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onChange(value),
     onBlur: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onBlur(value),
+    value: formatElementValue(value),
     type: "text",
     ref,
-    value,
     required,
     minLength,
     maxLength,
@@ -63,14 +64,15 @@ export const getInputTextAreaProps = (
       minLength,
       maxLength,
       disabled,
-    }
+    },
+    formatElementValue = (value) => isDefined(value) ? value : '',
   }: FieldChildrenProps<string, HTMLTextAreaElement>
 ) => {
   return {
     onChange: ({target: {value}}: ChangeEvent<HTMLTextAreaElement>) => onChange(value),
     onBlur: ({target: {value}}: ChangeEvent<HTMLTextAreaElement>) => onBlur(value),
+    value: formatElementValue(value),
     ref,
-    value,
     required,
     minLength,
     maxLength,
@@ -89,15 +91,16 @@ export const getInputEmailProps = (
       minLength,
       maxLength,
       disabled,
-    }
+    },
+    formatElementValue = (value) => isDefined(value) ? value : '',
   }: FieldChildrenProps<string, HTMLInputElement>
 ) => {
   return {
     onChange: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onChange(value),
     onBlur: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onBlur(value),
+    value: formatElementValue(value),
     type: "email",
     ref,
-    value,
     required,
     minLength,
     maxLength,
@@ -116,15 +119,16 @@ export const getInputPasswordProps = (
       minLength,
       maxLength,
       disabled,
-    }
+    },
+    formatElementValue = (value) => isDefined(value) ? value : '',
   }: FieldChildrenProps<string, HTMLInputElement>
 ) => {
   return {
     onChange: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onChange(value),
     onBlur: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onBlur(value),
     type: "password",
+    value: formatElementValue(value),
     ref,
-    value,
     required,
     minLength,
     maxLength,
@@ -143,15 +147,16 @@ export const getInputNumericProps = (
       min,
       max,
       disabled,
-    }
+    },
+    formatElementValue = value => isDefined(value) ? value : ''
   }: FieldChildrenProps<number, HTMLInputElement>
 ) => {
   return {
     onChange: ({target: {valueAsNumber}}: ChangeEvent<HTMLInputElement>) => onChange(valueAsNumber),
     onBlur: ({target: {valueAsNumber}}: ChangeEvent<HTMLInputElement>) => onBlur(valueAsNumber),
+    value: formatElementValue(value),
     type: "number",
     ref,
-    value,
     required,
     min,
     max,
@@ -168,14 +173,15 @@ export const getInputCheckboxProps = (
     field: {
       required,
       disabled,
-    }
+    },
+    formatElementValue = (value) => isDefined(value) ? value : false,
   }: FieldChildrenProps<boolean, HTMLInputElement>
 ) => {
   return {
     onChange: ({target: {checked}}: ChangeEvent<HTMLInputElement>) => onChange(checked),
     onBlur: ({target: {checked}}: ChangeEvent<HTMLInputElement>) => onBlur(checked),
+    checked: formatElementValue(value),
     type: "checkbox",
-    checked: isDefined(value) ? value : false,
     ref,
     required,
     disabled,
@@ -215,14 +221,14 @@ export const getInputDateProps = (
       required,
       disabled,
     },
-    formatElementValue = (value?: Date) => (value ? new Date(value).toISOString().slice(0, 10): undefined)
+    formatElementValue = (value?: Date) => (value ? new Date(value).toISOString().slice(0, 10): '')
   }: FieldChildrenProps<Date, HTMLInputElement>
 ) => {
   return {
     onChange: ({target: {valueAsDate}}: ChangeEvent<HTMLInputElement>) => onChange(valueAsDate),
     onBlur: ({target: {valueAsDate}}: ChangeEvent<HTMLInputElement>) => onBlur(valueAsDate),
-    type: "date",
     value: formatElementValue(value),
+    type: "date",
     ref,
     required,
     disabled,
@@ -239,13 +245,14 @@ export const getInputFilesProps = (
       required,
       disabled,
     },
+    formatElementValue = (value) => isDefined(value) ? value : [],
   }: FieldChildrenProps<File[], HTMLInputElement>
 ) => {
   return {
     onChange: ({target: {files}}: ChangeEvent<HTMLInputElement>) => onChange(Array.from(files ?? [])),
     onBlur: ({target: {files}}: ChangeEvent<HTMLInputElement>) => onBlur(Array.from(files ?? [])),
+    value: formatElementValue(value),
     type: "file",
-    value,
     ref,
     required,
     disabled,
