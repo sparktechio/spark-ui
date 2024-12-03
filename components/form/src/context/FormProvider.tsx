@@ -8,16 +8,20 @@ import React, {
 } from "react";
 import {EnhancedField, Field} from "../fields/FormField";
 import {setNestedValue} from "../utils/ValueGenerator";
+import {validateFormField} from "../validation/Validator";
 
 export interface FormContextProps {
   fields: EnhancedField<any, any>[];
+  focusField: (field: EnhancedField<any, any>) => void;
   setField: (field: EnhancedField<any, any>) => void;
   getField: (field: Field<any>, ref: RefObject<any>) => EnhancedField<any, any>;
+  getFirstInvalidField: (touch?: boolean) => EnhancedField<any, any> | undefined;
   registerField: (field: EnhancedField<any, any>) => void;
   unRegisterField: (name: string) => void;
 }
 
 export interface FormController<F> {
+  isValid: (touch?: boolean) => boolean;
   setValue: (value: F) => void;
   setFieldValue: (param: string, value: any) => void;
 }
@@ -32,8 +36,10 @@ export interface FormContextProviderProps<F> {
 
 export const FormContext = createContext<FormContextProps>({
   fields: [],
+  focusField: () => ({}),
   setField: () => ({}),
   getField: () => ({} as EnhancedField<any, any>),
+  getFirstInvalidField: () => undefined,
   registerField: () => ({}),
   unRegisterField: () => ({}),
 });
@@ -65,7 +71,18 @@ export const FormProvider = <F,>(
     return result;
   }
 
+  const focusField = (invalid: EnhancedField<any, any>) => {
+    const ref = invalid.reference;
+    if (ref?.current) {
+      ref.current.focus();
+      if (ref.current.scrollIntoView) {
+        ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }
+
   controllerRef.current = {
+    isValid: (touch) => !!getFirstInvalidField(touch),
     setValue: (value: F) => {
       const dictionary = objectToDictionary(value);
       setFields(fields => fields.map(field => {
@@ -150,8 +167,20 @@ export const FormProvider = <F,>(
     setFields((prev) => prev.filter((item) => item.param !== field));
   };
 
+  const getFirstInvalidField = (touch = true) => {
+    return fields.map(field => {
+      const errors = validateFormField(field);
+      if (touch && errors.length > 0) {
+        const newField = {...field, touched: true, errors};
+        setField(newField);
+        return newField;
+      }
+      return field;
+    }).find(item => item.errors.length > 0);
+  }
+
   return (
-    <FormContext.Provider value={{ fields, setField, getField, registerField, unRegisterField }}>
+    <FormContext.Provider value={{ fields, setField, getField, focusField, getFirstInvalidField, registerField, unRegisterField }}>
       {children}
     </FormContext.Provider>
   );

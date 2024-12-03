@@ -34,17 +34,7 @@ export const FormSubmit = (
   }: FormSubmitProps
 ) => {
   const [loading, setLoading] = useState(false);
-  const {fields, setField} = useFormContext();
-
-  const focusInvalid = (invalid: EnhancedField<any, any>) => {
-    const ref = invalid.reference;
-    if (ref?.current) {
-      ref.current.focus();
-      if (ref.current.scrollIntoView) {
-        ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    }
-  }
+  const {fields, getFirstInvalidField, focusField} = useFormContext();
 
   const toValue = (
     {
@@ -56,17 +46,9 @@ export const FormSubmit = (
   }
 
   const onBeforeSubmit = async () => {
-    const invalid = fields.map(field => {
-      const errors = validateFormField(field);
-      if (errors.length > 0) {
-        const newField = {...field, touched: true, errors};
-        setField(newField);
-        return newField;
-      }
-      return field;
-    }).find(item => item.errors.length > 0);
+    const invalid = getFirstInvalidField();
     if (invalid) {
-      focusInvalid(invalid);
+      focusField(invalid);
     } else {
       setLoading(true);
       try {
