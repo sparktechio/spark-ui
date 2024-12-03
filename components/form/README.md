@@ -1,4 +1,5 @@
 # React Form
+Automated the functional part of the React forms:
 - Simple design and ease of use
 - Style-agnostic
 - Validation:
@@ -12,11 +13,11 @@
 - Applicable to any React framework
 
 ```jsx
-<Form value={{request: {email: 'initial@google.com'}}} onFieldChange={console.log}>
+<Form value={{request: {email: 'user@domain.com'}}} onFieldChange={console.log}>
   <Form.EmailField param="request.email" required={true} pattern="/^[a-zA-Z0-9._%+-]+@domain\.com$/">
     {({props, errors}) => (
       <>
-        <label>Only company domain @domain.com</label>
+        <label>Only company domain @domain.com:</label>
         <input placeholder="Email" {...props} />
         {errors.length > 0 && <span>Validation failed {errors}</span>}
       </>
@@ -25,6 +26,7 @@
   <Form.PasswordField param="request.password" required={true}>
     {({props, errors}) => (
       <>
+        <label>Password:</label>
         <input placeholder="Password" {...props} />
         {errors.length > 0 && <span>Validation failed {errors}</span>}
       </>
