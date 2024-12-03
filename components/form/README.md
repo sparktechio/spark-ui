@@ -6,6 +6,7 @@ Automated the functional part of the React forms:
   - Basic and complex validators
   - Automatic focus and scroll to the first invalid field
 - Conditional rendering
+- Control fields outside
 - Automatic payload generation
 - Dynamic patching
 - Disabled double submit
