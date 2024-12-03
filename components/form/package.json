@@ -6,6 +6,10 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sparktechio/spark-ui.git"
+  },
   "scripts": {
     "build": "tsc && babel dist --out-dir dist --extensions \".ts,.tsx\"",
     "storybook": "storybook dev -p 6006",

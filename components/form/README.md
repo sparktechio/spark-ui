@@ -1,4 +1,40 @@
 # React Form
+- Simple design and ease of use
+- Style-agnostic
+- Validation:
+  - Basic and complex validators
+  - Automatic focus and scroll to the first invalid field
+- Conditional rendering
+- Automatic payload generation
+- Dynamic patching
+- Disabled double submit
+- Globally defined elements
+- Applicable to any React framework
+- 
+```jsx
+<Form value={{request: {email: 'initial@google.com'}}} onFieldChange={console.log}>
+  <Form.EmailField param="request.email" required={true} pattern="/^[a-zA-Z0-9._%+-]+@domain\.com$/">
+    {({props, errors}) => (
+      <>
+        <label>Only company domain @domain.com</label>
+        <input placeholder="Email" {...props} />
+        {errors.length > 0 && <span>Validation failed {errors}</span>}
+      </>
+    )}
+  </Form.EmailField>
+  <Form.PasswordField param="request.password" required={true}>
+    {({props, errors}) => (
+      <>
+        <input placeholder="Password" {...props} />
+        {errors.length > 0 && <span>Validation failed {errors}</span>}
+      </>
+    )}
+  </Form.PasswordField>
+  <Form.ButtonSubmit onSubmit={async (e) => console.log(e)}>
+    {({props}) => (<button {...props}>Submit</button>)}
+  </Form.ButtonSubmit>
+</Form>
+```
 
 ## Overview
 You are building React user interfaces and want to gather input from users, but you also want to validate that input, 
