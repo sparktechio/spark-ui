@@ -10,7 +10,7 @@
 - Disabled double submit
 - Globally defined elements
 - Applicable to any React framework
-- 
+
 ```jsx
 <Form value={{request: {email: 'initial@google.com'}}} onFieldChange={console.log}>
   <Form.EmailField param="request.email" required={true} pattern="/^[a-zA-Z0-9._%+-]+@domain\.com$/">
