@@ -1,21 +1,17 @@
 import React from "react";
 import {ReactNode} from "react";
-import {FormRenderProvider} from "../context/FormRenderProvider";
 import styled from "styled-components";
+import {ThemeProvider} from "@sparkui/react-theme";
 
 export const FormRenderer = ({children}: {children: ReactNode}) => (
-  <FormRenderProvider
-    submitRenderers={
+  <ThemeProvider
+    renderers={
       {
         'my-submit': ({props, params}) => (
           <FormControl>
             <button className="btn btn-primary p-2" {...props}>{params}</button>
           </FormControl>
-        )
-      }
-    }
-    fieldRenderers={
-      {
+        ),
         'my-input': ({props, params, errors}) => (
           <FormControl>
             <input className="form-control" {...params} {...props} />
@@ -55,7 +51,7 @@ export const FormRenderer = ({children}: {children: ReactNode}) => (
     }
   >
     {children}
-  </FormRenderProvider>
+  </ThemeProvider>
 );
 
 export const FormControl = styled.div.attrs({className: "col-12 p-2"})`

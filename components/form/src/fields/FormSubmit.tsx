@@ -1,7 +1,6 @@
 import {JSX, useState} from "react";
 import {useFormContext} from "../context/FormProvider";
 import {EnhancedField} from "./FormField";
-import {validateFormField} from "../validation/Validator";
 import {setNestedValue} from "../utils/ValueGenerator";
 
 export type Submit = <T,>(data: T) => Promise<void>;

@@ -15,7 +15,7 @@ import {
   SelectField, TextAreaField,
   TextField
 } from "./fields/FormFields";
-import {useFormRenderContext} from "./context/FormRenderProvider";
+import {useThemeContext} from "@sparkui/react-theme";
 
 export interface FormProps<F> extends FormHTMLAttributes<HTMLFormElement> {
   className?: string;
@@ -90,10 +90,10 @@ Form.ButtonSubmit = ({children, ...props}: FormSubmitProps) => (
 );
 
 Form.Submit = ({renderer, ...props}: AppFormSubmitProps) => {
-  const {renderSubmit} = useFormRenderContext();
+  const {render} = useThemeContext();
   return (
     <FormSubmit {...props} propsGenerator={getButtonSubmitProps}>
-      {(props) => renderSubmit(renderer, props)}
+      {(props) => render(renderer, props)}
     </FormSubmit>
   );
 }

@@ -1,6 +1,5 @@
 import {BaseFormFieldProps, FormField, FormFieldProps} from "./FormField";
 import React from "react";
-import {useFormRenderContext} from "../context/FormRenderProvider";
 import {
   getInputCheckboxProps,
   getInputDateProps, getInputEmailProps, getInputFilesProps,
@@ -9,6 +8,7 @@ import {
   getInputTextProps,
   getSelectProps
 } from "../utils/Utils";
+import {useThemeContext} from "@sparkui/react-theme";
 
 export interface AppFormFieldProps<V, I> extends BaseFormFieldProps<V, I> {
   renderer: string;
@@ -75,100 +75,100 @@ export const RadioField = ({children, ...props}: FormFieldProps<string, HTMLInpu
 );
 
 export const AppFormField = <V, I>({renderer, ...props}: AppFormFieldProps<V, I>) => {
-  const {renderField} = useFormRenderContext();
+  const {render} = useThemeContext();
   return (
     <FormField<V, I> {...props}>
-      {(props) => renderField(renderer, props)}
+      {(props) => render(renderer, props)}
     </FormField>
   );
 }
 
 export const AppSelectField = ({renderer, ...props}: AppFormFieldProps<string, HTMLSelectElement>) => {
-  const {renderField} = useFormRenderContext();
+  const {render} = useThemeContext();
   return (
     <FormField<string, HTMLSelectElement> {...props} propsGenerator={getSelectProps}>
-      {(props) => renderField(renderer, props)}
+      {(props) => render(renderer, props)}
     </FormField>
   );
 }
 
 export const AppTextField = ({renderer, ...props}: AppFormFieldProps<string, HTMLInputElement>) => {
-  const {renderField} = useFormRenderContext();
+  const {render} = useThemeContext();
   return (
     <FormField<string, HTMLInputElement> {...props} propsGenerator={getInputTextProps}>
-      {(props) => renderField(renderer, props)}
+      {(props) => render(renderer, props)}
     </FormField>
   );
 }
 
 export const AppTextAreaField = ({renderer, ...props}: AppFormFieldProps<string, HTMLTextAreaElement>) => {
-  const {renderField} = useFormRenderContext();
+  const {render} = useThemeContext();
   return (
     <FormField<string, HTMLTextAreaElement> {...props} propsGenerator={getInputTextAreaProps}>
-      {(props) => renderField(renderer, props)}
+      {(props) => render(renderer, props)}
     </FormField>
   );
 }
 
 export const AppEmailField = ({renderer, ...props}: AppFormFieldProps<string, HTMLInputElement>) => {
-  const {renderField} = useFormRenderContext();
+  const {render} = useThemeContext();
   return (
     <FormField<string, HTMLInputElement> {...props} propsGenerator={getInputEmailProps}>
-      {(props) => renderField(renderer, props)}
+      {(props) => render(renderer, props)}
     </FormField>
   );
 }
 
 export const AppPasswordField = ({renderer, ...props}: AppFormFieldProps<string, HTMLInputElement>) => {
-  const {renderField} = useFormRenderContext();
+  const {render} = useThemeContext();
   return (
     <FormField<string, HTMLInputElement> {...props} propsGenerator={getInputPasswordProps}>
-      {(props) => renderField(renderer, props)}
+      {(props) => render(renderer, props)}
     </FormField>
   );
 }
 
 export const AppDateField = ({renderer, ...props}: AppFormFieldProps<Date, HTMLInputElement>) => {
-  const {renderField} = useFormRenderContext();
+  const {render} = useThemeContext();
   return (
     <FormField<Date, HTMLInputElement> {...props} propsGenerator={getInputDateProps}>
-      {(props) => renderField(renderer, props)}
+      {(props) => render(renderer, props)}
     </FormField>
   );
 }
 
 export const AppFilesField = ({renderer, value = [], ...props}: AppFormFieldProps<File[], HTMLInputElement>) => {
-  const {renderField} = useFormRenderContext();
+  const {render} = useThemeContext();
   return (
     <FormField<File[], HTMLInputElement> {...props} propsGenerator={getInputFilesProps}>
-      {(props) => renderField(renderer, props)}
+      {(props) => render(renderer, props)}
     </FormField>
   );
 }
 
 export const AppNumericField = ({renderer, ...props}: AppFormFieldProps<number, HTMLInputElement>) => {
-  const {renderField} = useFormRenderContext();
+  const {render} = useThemeContext();
   return (
     <FormField<number, HTMLInputElement> {...props} propsGenerator={getInputNumericProps}>
-      {(props) => renderField(renderer, props)}
+      {(props) => render(renderer, props)}
     </FormField>
   );
 }
 
 export const AppCheckBoxField = ({renderer, ...props}: AppFormFieldProps<boolean, HTMLInputElement>) => {
-  const {renderField} = useFormRenderContext();
+  const {render} = useThemeContext();
   return (
     <FormField<boolean, HTMLInputElement> {...props} propsGenerator={getInputCheckboxProps}>
-      {(props) => renderField(renderer, props)}
+      {(props) => render(renderer, props)}
     </FormField>
   );
 }
 
 export const AppRadioField = ({renderer, ...props}: AppFormFieldProps<string, HTMLInputElement>) => {
-  const {renderField} = useFormRenderContext();
+  const {render} = useThemeContext();
   return (
     <FormField<string, HTMLInputElement> {...props} propsGenerator={getInputRadioProps}>
-      {(props) => renderField(renderer, props)}
+      {(props) => render(renderer, props)}
     </FormField>
   );
 }
