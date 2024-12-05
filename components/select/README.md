@@ -1,3 +1,0 @@
-# React Select
-
-Searchable select

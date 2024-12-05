@@ -1,7 +1,7 @@
 import {JSX} from "react";
-import {useSelectContext} from "../context/SelectContext";
+import {useSelectContext} from "../context/DropdownContext";
 
-export interface SelectOption<T> {
+export interface DropdownOption<T> {
   id: string;
   value: T;
 }
@@ -9,20 +9,20 @@ export interface SelectOption<T> {
 export interface SelectFieldChildrenProps<T> {
   className?: string;
   loading?: boolean;
-  selected: SelectOption<T> | undefined;
-  options: SelectOption<T>[];
-  onSelect: (value: SelectOption<T>) => void;
+  selected: DropdownOption<T> | undefined;
+  options: DropdownOption<T>[];
+  onSelect: (value: DropdownOption<T>) => void;
   value?: string;
 }
 
 export interface SelectFieldProps<T> {
   className?: string;
-  onSelect?: (value: SelectOption<T>) => void;
+  onSelect?: (value: DropdownOption<T>) => void;
   onChange?: (value: T) => void;
   children: (props: SelectFieldChildrenProps<T>) => JSX.Element;
 }
 
-export const SelectOptions = <T,>(
+export const DropdownOptions = <T,>(
   {
     className,
     onSelect,
