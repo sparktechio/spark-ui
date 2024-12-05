@@ -4,7 +4,7 @@ import React, {
   useContext,
   useState
 } from "react";
-import {DropdownOption} from "../dropdown/DropdownOptions";
+import {Option} from "../dropdown/DropdownOptions";
 
 export interface DropdownContextProps<T> {
   query: string;
@@ -12,16 +12,18 @@ export interface DropdownContextProps<T> {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   search: (query: string) => void;
-  options: DropdownOption<T>[];
-  onSelect: (value: DropdownOption<T>) => void;
-  selected: DropdownOption<T> | undefined;
+  options: Option<T>[];
+  onSelect: (value: Option<T>) => void;
+  selected: Option<T> | undefined;
 }
 
 export interface DropdownContextProviderProps<T> {
+  onSelect?: (value: Option<T>) => void;
+  onChange?: (value: T) => void;
   initialQuery?: string;
   initialValue?: string;
-  initialOptions?: DropdownOption<T>[]
-  onSearchOptions?: (query: string) => Promise<DropdownOption<T>[]> | DropdownOption<T>[];
+  initialOptions?: Option<T>[]
+  onSearchOptions?: (query: string) => Promise<Option<T>[]> | Option<T>[];
   children: ReactNode;
 }
 
@@ -40,6 +42,8 @@ export const useSelectContext = () => useContext(DropdownContext);
 
 export const SelectContextProvider = <T,>(
   {
+    onSelect,
+    onChange,
     initialQuery = '',
     initialValue,
     initialOptions = [],
@@ -65,12 +69,14 @@ export const SelectContextProvider = <T,>(
     }
   }
 
-  const onSelect = (option: DropdownOption<T>) => {
+  const onSelectOption = (option: Option<T>) => {
     setSelected(option);
+    onChange?.(option.value);
+    onSelect?.(option);
   }
 
   return (
-    <DropdownContext.Provider value={{ query, options, search, loading, selected, onSelect, open, onOpenChange }}>
+    <DropdownContext.Provider value={{ query, options, search, loading, selected, onSelect: onSelectOption, open, onOpenChange }}>
       {children}
     </DropdownContext.Provider>
   );

@@ -1,21 +1,24 @@
 import React, {JSX, ReactNode} from "react";
 import {DropdownSearch} from "./DropdownSearch";
 import {SelectContextProvider, useSelectContext} from "../context/DropdownContext";
-import {DropdownOptions, DropdownOption} from "./DropdownOptions";
+import {DropdownOptions, Option} from "./DropdownOptions";
 import * as RadixDropdown from "@radix-ui/react-dropdown-menu";
+import {DropdownOption} from "./DropdownOption";
 
 export interface DropdownChildrenProps<T> {
-  selected?: DropdownOption<T>;
+  selected?: Option<T>;
   query: string;
   loading: boolean;
-  options: DropdownOption<T>[]
+  options: Option<T>[]
 }
 
 export interface DropdownProps<T> extends Omit<RadixDropdown.DropdownMenuProps, 'children'> {
   selected?: string;
   query?: string;
-  options?: DropdownOption<T>[];
-  onSearchOptions?: (query: string) => Promise<DropdownOption<T>[]> | DropdownOption<T>[];
+  onSelect?: (value: Option<T>) => void;
+  onChange?: (value: T) => void;
+  options?: Option<T>[];
+  onSearchOptions?: (query: string) => Promise<Option<T>[]> | Option<T>[];
   children: ((props: DropdownChildrenProps<T>) => JSX.Element) | ReactNode;
 }
 
@@ -23,6 +26,8 @@ export const Dropdown = <T,>(
   {
     selected,
     query,
+    onSelect,
+    onChange,
     options,
     onSearchOptions,
     children,
@@ -33,6 +38,8 @@ export const Dropdown = <T,>(
   return (
     <RadixDropdown.Root {...radixProps}>
       <SelectContextProvider
+        onSelect={onSelect}
+        onChange={onChange}
         initialQuery={query}
         initialValue={selected}
         initialOptions={options}
@@ -68,3 +75,4 @@ Dropdown.Label = RadixDropdown.Label;
 Dropdown.Group = RadixDropdown.Group;
 Dropdown.Search = DropdownSearch;
 Dropdown.Options = DropdownOptions;
+Dropdown.Option = DropdownOption;

@@ -1,9 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useState} from "react";
-import {DropdownOption} from "../dropdown/DropdownOptions";
+import {Option} from "../dropdown/DropdownOptions";
 import {Dropdown} from "../dropdown/Dropdown";
 
-const options: DropdownOption<string>[] = [
+const options: Option<string>[] = [
   {
     id: 'one',
     value: 'one',
@@ -18,14 +18,17 @@ const options: DropdownOption<string>[] = [
   }
 ];
 
-const onSearch = () => new Promise<DropdownOption<string>[]>(resolve => setTimeout(() => {
-  resolve(options)
-}, 2000));
+const onSearch = (query: string) => new Promise<Option<string>[]>(resolve => setTimeout(() => {
+  resolve([...options, {
+    id: query,
+    value: query,
+  }])
+}, 1000));
 
 export const Basic = () => {
-  const [value, setValue] = useState<DropdownOption<string>>(options[0]);
+  const [value, setValue] = useState<Option<string>>(options[0]);
   return (
-    <Dropdown selected={value.id} onSearchOptions={onSearch}>
+    <Dropdown selected={value.id} onSelect={setValue} onSearchOptions={onSearch}>
       <Dropdown.Trigger>
         {value.id}
       </Dropdown.Trigger>
@@ -35,17 +38,17 @@ export const Basic = () => {
             <input onChange={event => onChange(event.target.value)} {...props}/>
           )}
         </Dropdown.Search>
-        <Dropdown.Options<string> onSelect={setValue}>
-          {({onSelect, options, loading}) => (
+        <Dropdown.Options<string>>
+          {({options, loading}) => (
             <>
               <Dropdown.Label>
                 {loading ? 'Loading...' : 'Found'}
               </Dropdown.Label>
               {
                 options.map(option => (
-                  <Dropdown.Item key={option.id} onSelect={() => onSelect(option)}>
+                  <Dropdown.Option key={option.id} option={option}>
                     {option.id}
-                  </Dropdown.Item>
+                  </Dropdown.Option>
                 ))
               }
             </>
