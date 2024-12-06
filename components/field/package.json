@@ -1,8 +1,8 @@
 {
-  "name": "@sparkui/react-utils",
-  "version": "1.0.2",
+  "name": "@sparkui/react-field",
+  "version": "1.0.0",
   "license": "MIT",
-  "description": "Spark UI, React utils",
+  "description": "Spark UI, React field",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
@@ -35,7 +35,9 @@
   ],
   "author": "akifh@spark-tech.io",
   "dependencies": {
-    "react": "^18.3.1"
+    "react": "^18.3.1",
+    "@sparkui/react-theme": "^1.0.1",
+    "@sparkui/react-utils": "^1.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.9",

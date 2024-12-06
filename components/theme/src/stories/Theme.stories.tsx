@@ -1,10 +1,18 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
-import {ThemeProvider, useThemeContext} from "../context/ThemeProvider";
+import {ThemeProvider} from "../context/ThemeProvider";
+import {Renderer} from "../context/Renderer";
 
 const Button = () => {
-  const {render} = useThemeContext();
-  return render('my-submit', {props: {className: "btn btn-primary p-2", onClick: console.log}, params: {title: 'Submit'}});
+  return <Renderer
+    name='my-submit'
+    props={
+      {
+        props: {className: "btn btn-primary p-2", onClick: console.log},
+        params: {title: 'Submit'}
+      }
+    }
+  />
 }
 
 export const Theme = () => (
