@@ -1,29 +1,30 @@
 import React, {createContext, JSX, ReactNode, useContext} from "react";
+import {defaultRenderers} from "../shared/Renderers";
 
 export interface ThemeContextProps {
   render: (renderer: string, props: Record<string, any>) => JSX.Element;
 }
 
 export interface ThemeContextProviderProps {
-  renderers: Record<string, (props: Record<string, any>) => JSX.Element>;
+  renderers?: Record<string, (props: Record<string, any>) => JSX.Element>;
   children: ReactNode;
 }
 
 export const ThemeContext = createContext<ThemeContextProps>({
-  render: (name: string, props: Record<string, any>) => (<></>),
+  render: () => (<></>),
 });
 
 export const useThemeContext = () => useContext(ThemeContext);
 
 export const ThemeProvider = (
   {
-    renderers,
+    renderers = {},
     children,
   }: ThemeContextProviderProps
 ) => {
 
   const render = (name: string, props: Record<string, any>) => {
-    const renderer = renderers[name];
+    const renderer = renderers[name] ?? defaultRenderers[name];
     if (renderer) {
       return renderer(props);
     } else {

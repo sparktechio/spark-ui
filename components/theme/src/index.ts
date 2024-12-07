@@ -1,1 +1,3 @@
-export {ThemeProvider, useThemeContext} from './context/ThemeProvider';
+export * from './context/ThemeProvider';
+export * from './shared/Text';
+export * from './shared/Button';

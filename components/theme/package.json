@@ -1,6 +1,6 @@
 {
   "name": "@sparkui/react-theme",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "description": "Spark UI, React theme",
   "main": "dist/index.js",
