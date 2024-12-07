@@ -2,60 +2,48 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
 import {ThemeProvider} from "../context/ThemeProvider";
 import {Renderer} from "../context/Renderer";
-import {Error, Info, Label, Subtitle, Text, Title, Warning} from "../shared/Text";
+import {ErrorText, InfoText, LabelText, SubtitleText, Text, TitleText, WarningText} from "../shared/Text";
 import {ErrorButton, InfoButton, PrimaryButton, SecondaryButton, WarningButton} from "../shared/Button";
 
-const Button = () => {
-  return <Renderer
-    name='my-submit'
-    props={
-      {
-        props: {className: "btn btn-primary p-2", onClick: console.log},
-        params: {title: 'Submit'}
-      }
-    }
-  />
-}
-
-export const TitleText = () => (
+export const TextTitle = () => (
   <ThemeProvider>
-    <Title text="Title Text"/>
+    <TitleText text="Title Text"/>
   </ThemeProvider>
 );
 
-export const SubtitleText = () => (
+export const TextSubtitle = () => (
   <ThemeProvider>
-    <Subtitle text="Subtitle Text"/>
+    <SubtitleText text="Subtitle Text"/>
   </ThemeProvider>
 );
 
-export const LabelText = () => (
+export const TextLabel = () => (
   <ThemeProvider>
-    <Label text="Label Text"/>
+    <LabelText text="Label Text"/>
   </ThemeProvider>
 );
 
-export const BodyText = () => (
+export const TextBody = () => (
   <ThemeProvider>
     <Text text="Body Text"/>
   </ThemeProvider>
 );
 
-export const ErrorText = () => (
+export const TextError = () => (
   <ThemeProvider>
-    <Error text="Error Text"/>
+    <ErrorText text="Error Text"/>
   </ThemeProvider>
 );
 
-export const WarningText = () => (
+export const TextWarning = () => (
   <ThemeProvider>
-    <Warning text="Warning Text"/>
+    <WarningText text="Warning Text"/>
   </ThemeProvider>
 );
 
-export const InfoText = () => (
+export const TextInfo = () => (
   <ThemeProvider>
-    <Info text="Info Text"/>
+    <InfoText text="Info Text"/>
   </ThemeProvider>
 );
 
@@ -88,6 +76,18 @@ export const ButtonWarning = () => (
     <WarningButton onClick={console.log} text="Warning Text"/>
   </ThemeProvider>
 );
+
+const Button = () => {
+  return <Renderer
+    name='my-submit'
+    props={
+      {
+        props: {className: "btn btn-primary p-2", onClick: console.log},
+        params: {title: 'Submit'}
+      }
+    }
+  />
+}
 
 export const Custom = () => (
   <ThemeProvider
