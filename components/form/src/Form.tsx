@@ -1,7 +1,16 @@
 import React, {FormHTMLAttributes, MutableRefObject, ReactNode, useRef} from "react";
 import {BaseFormSubmitProps, FormSubmit, FormSubmitProps, SubmitChildrenProps} from "./fields/FormSubmit";
 import {useThemeContext} from "@sparkui/react-theme";
-import {FieldsController, FieldSetProvider} from "@sparkui/react-field";
+import {
+  CheckBoxField, DateField,
+  EmailField,
+  Field,
+  FieldsController,
+  FieldSetProvider, FilesField, NumericField, PasswordField, RadioField,
+  SelectField,
+  TextAreaField,
+  TextField
+} from "@sparkui/react-field";
 import { EnhancedField } from "@sparkui/react-field/dist/fields/BaseField";
 
 export interface FormProps<F> extends FormHTMLAttributes<HTMLFormElement> {
@@ -58,6 +67,18 @@ export const getButtonSubmitProps = ({onSubmit, loading}: SubmitChildrenProps) =
 export interface AppFormSubmitProps extends BaseFormSubmitProps {
   renderer: string;
 }
+
+Form.Field = Field;
+Form.Select = SelectField;
+Form.Text = TextField;
+Form.TextArea = TextAreaField;
+Form.Email = EmailField;
+Form.Files = FilesField;
+Form.Password = PasswordField;
+Form.CheckBox = CheckBoxField;
+Form.Radio = RadioField;
+Form.Numeric = NumericField;
+Form.Date = DateField;
 
 Form.ButtonSubmit = ({children, ...props}: FormSubmitProps) => (
   <FormSubmit {...props} propsGenerator={getButtonSubmitProps}>

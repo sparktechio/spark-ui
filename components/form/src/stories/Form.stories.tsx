@@ -2,22 +2,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useEffect, useRef} from "react";
 import {FormControl, FormRenderer} from "./FormRenderer";
 import {Form} from "../Form";
-import {
-  CheckBoxField,
-  DateField, Field, FieldsController,
-  NumericField,
-  PasswordField,
-  RadioField, SelectField,
-  TextAreaField,
-  TextField
-} from "@sparkui/react-field";
+import {FieldsController} from "@sparkui/react-field";
 
 const sate = {personal: {name: '', description: "123", age: 2021}, created: new Date(), status: 'started', color: 'green'};
 
 export const Text = () =>  (
   <FormRenderer>
     <Form value={{name: ''}} className="container row">
-      <TextField
+      <Form.Text
         renderer="my-input"
         param="name"
         params={{
@@ -36,7 +28,7 @@ export const Text = () =>  (
 export const CheckBox = () =>  (
   <FormRenderer>
     <Form value={{new: false}} className="container row">
-      <CheckBoxField
+      <Form.CheckBox
         renderer="my-checkbox"
         param="new"
         params={{
@@ -56,7 +48,7 @@ export const CheckBox = () =>  (
 export const Password = () =>  (
   <FormRenderer>
     <Form value={{secret: ''}} className="container row">
-      <PasswordField
+      <Form.Password
         renderer="my-input"
         param="secret"
         pattern={/^[0-9\-+\/?]+$/}
@@ -76,7 +68,7 @@ export const Password = () =>  (
 export const RadioSet = () =>  (
   <FormRenderer>
     <Form value={{color: ''}} className="container row">
-      <RadioField
+      <Form.Radio
         renderer="my-radio-set"
         param="color"
         params={[
@@ -97,7 +89,7 @@ export const RadioSet = () =>  (
 export const TextArea = () =>  (
   <FormRenderer>
     <Form value={{description: ''}} className="container row">
-      <TextAreaField
+      <Form.TextArea
         renderer="my-textarea"
         param="description"
         params={{
@@ -117,7 +109,7 @@ export const TextArea = () =>  (
 export const Numeric = () =>  (
   <FormRenderer>
     <Form value={{age: null}} className="container row">
-      <NumericField
+      <Form.Numeric
         renderer="my-input"
         param="age"
         params={{
@@ -136,7 +128,7 @@ export const Numeric = () =>  (
 export const IsoDate = () =>  (
   <FormRenderer>
     <Form value={{created: new Date()}} className="container row">
-      <DateField
+      <Form.Date
         renderer="my-input"
         param="created"
         required={true}
@@ -166,7 +158,7 @@ export const DynamicValue = () =>  {
   return (
     <FormRenderer>
       <Form value={{name: ''}} className="container row" fieldsControllerRef={ref}>
-        <TextField
+        <Form.Text
           renderer="my-input"
           param="name"
           params={{
@@ -186,14 +178,14 @@ export const DynamicValue = () =>  {
 export const FullForm = () =>  (
   <FormRenderer>
     <Form value={sate} className="container row">
-      <TextField
+      <Form.Text
         renderer="my-input"
         param={"personal.name"}
         params={{
           placeholder: "Name"
         }}
       />
-      <CheckBoxField
+      <Form.CheckBox
         renderer="my-checkbox"
         param={"new"}
         params={{
@@ -201,7 +193,7 @@ export const FullForm = () =>  (
           label: "New"
         }}
       />
-      <PasswordField
+      <Form.Password
         renderer="my-input"
         param={"secret"}
         pattern={/^[0-9\-+\/?]+$/}
@@ -209,7 +201,7 @@ export const FullForm = () =>  (
           placeholder: "Secret"
         }}
       />
-      <RadioField
+      <Form.Radio
         renderer="my-radio-set"
         param={"color"}
         params={[
@@ -218,7 +210,7 @@ export const FullForm = () =>  (
           {key: 'green', label: 'Green'},
         ]}
       />
-      <TextAreaField
+      <Form.TextArea
         renderer="my-textarea"
         param="description"
         params={{
@@ -226,14 +218,14 @@ export const FullForm = () =>  (
           label: "Description"
         }}
       />
-      <NumericField
+      <Form.Numeric
         renderer="my-input"
         param="age"
         params={{
           placeholder: "Age"
         }}
       />
-      <DateField
+      <Form.Date
         renderer="my-input"
         param="created"
         required={true}
@@ -241,7 +233,7 @@ export const FullForm = () =>  (
           placeholder: "Age"
         }}
       />
-      <Field<string, HTMLInputElement> param="custom" required={true}>
+      <Form.Field<string, HTMLInputElement> param="custom" required={true}>
         {({onChange, onBlur, ref, value, errors}) => (
           <FormControl>
             <input
@@ -256,8 +248,8 @@ export const FullForm = () =>  (
             {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
           </FormControl>
         )}
-      </Field>
-      <SelectField param="status" required={true}>
+      </Form.Field>
+      <Form.Select param="status" required={true}>
         {({props, errors}) => (
           <FormControl>
             <select className="form-control" placeholder="Color" {...props}>
@@ -268,8 +260,8 @@ export const FullForm = () =>  (
             {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
           </FormControl>
         )}
-      </SelectField>
-      <TextField param={"personal.description"} required={true} pattern={/^[0-9\-+\/?]+$/}>
+      </Form.Select>
+      <Form.Text param={"personal.description"} required={true} pattern={/^[0-9\-+\/?]+$/}>
         {({props, errors}) => (
           <FormControl>
             <span className="form-label">Digits or special characters only: -+/?</span>
@@ -277,7 +269,7 @@ export const FullForm = () =>  (
             {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
           </FormControl>
         )}
-      </TextField>
+      </Form.Text>
       <Form.Submit
         renderer="my-submit"
         onSubmit={async (e) => console.log(e)}
