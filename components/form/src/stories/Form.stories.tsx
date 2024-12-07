@@ -3,6 +3,7 @@ import React, {useEffect, useRef} from "react";
 import {FormControl, FormRenderer} from "./FormRenderer";
 import {Form} from "../Form";
 import {FieldsController} from "@sparkui/react-field";
+import {ErrorText} from "@sparkui/react-theme";
 
 const sate = {personal: {name: '', description: "123", age: 2021}, created: new Date(), status: 'started', color: 'green'};
 
@@ -245,7 +246,7 @@ export const FullForm = () =>  (
               onChange={({target: {value}}) => onChange(value)}
               onBlur={({target: {value}}) => onBlur(value)}
             />
-            {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
+            {errors.length > 0 && <ErrorText text={`Validation failed ${errors}`} />}
           </FormControl>
         )}
       </Form.Field>
@@ -257,7 +258,7 @@ export const FullForm = () =>  (
               <option value="started">Started</option>
               <option value="finished">Finished</option>
             </select>
-            {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
+            {errors.length > 0 && <ErrorText text={`Validation failed ${errors}`} />}
           </FormControl>
         )}
       </Form.Select>
@@ -266,7 +267,7 @@ export const FullForm = () =>  (
           <FormControl>
             <span className="form-label">Digits or special characters only: -+/?</span>
             <input className="form-control" placeholder="Desc" {...props} />
-            {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
+            {errors.length > 0 && <ErrorText text={`Validation failed ${errors}`} />}
           </FormControl>
         )}
       </Form.Text>
