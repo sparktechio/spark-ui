@@ -1,7 +1,7 @@
 import {JSX, useState} from "react";
-import {useFormContext} from "../context/FormProvider";
-import {EnhancedField} from "./FormField";
-import {setNestedValue} from "../utils/ValueGenerator";
+import {useFieldSetContext} from "@sparkui/react-field";
+import {EnhancedField} from "@sparkui/react-field/dist/fields/BaseField";
+import {setNestedValue} from "../../dist/utils/ValueGenerator";
 
 export type Submit = <T,>(data: T) => Promise<void>;
 
@@ -33,7 +33,7 @@ export const FormSubmit = (
   }: FormSubmitProps
 ) => {
   const [loading, setLoading] = useState(false);
-  const {fields, getFirstInvalidField, focusField} = useFormContext();
+  const {fields, getInvalidFields, focusField} = useFieldSetContext();
 
   const toValue = (
     {
@@ -45,7 +45,7 @@ export const FormSubmit = (
   }
 
   const onBeforeSubmit = async () => {
-    const invalid = getFirstInvalidField();
+    const invalid = getInvalidFields().find(() => true);
     if (invalid) {
       focusField(invalid);
     } else {
@@ -54,7 +54,7 @@ export const FormSubmit = (
         await onSubmit(
           fields.reduce((previousValue, field) => ({
             ...previousValue,
-            ...setNestedValue(previousValue, field.param, toValue(field))
+            ...setNestedValue(previousValue, field.param ?? '', toValue(field))
           }), {})
         );
       } catch (error: unknown) {

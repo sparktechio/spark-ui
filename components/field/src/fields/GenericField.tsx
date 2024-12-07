@@ -15,7 +15,7 @@ export interface GenericFieldProps<V, I> extends FormFieldProps<V, I> {
 
 export const GenericField = <V, I>({children, fieldControllerRef, ...props}: GenericFieldProps<V, I>) => {
   const hasContext = hasFieldSetContext();
-  if (hasContext) {
+  if (!hasContext) {
     return (
       <FieldSetProvider fieldControllerRef={fieldControllerRef}>
         <BaseField<V, I> {...props}>{children}</BaseField>
@@ -28,19 +28,19 @@ export const GenericField = <V, I>({children, fieldControllerRef, ...props}: Gen
 
 export const ThemeGenericField = <V, I>({renderer, children, ...props}: ThemeFormFieldProps<V, I>) => {
   const themeContext = useThemeContext();
-  if (themeContext && renderer) {
+  if (children){
+    return (
+      <GenericField<V, I> {...props}>
+        {children}
+      </GenericField>
+    )
+  } else if (themeContext && renderer) {
     const {render} = themeContext;
     return (
       <GenericField<V, I> {...props}>
         {(props) => render(renderer, props)}
       </GenericField>
     );
-  } else if (children){
-    return (
-      <GenericField<V, I> {...props}>
-        {children}
-      </GenericField>
-    )
   } else {
     console.error("Children or (renderer and theme provider) should be provided", props);
     return (<></>);

@@ -15,20 +15,24 @@ export interface FieldSetContextProps {
   focusField: (field: EnhancedField<any, any>) => void;
   setField: (field: EnhancedField<any, any>, trigger?: (value: Field<any>) => void) => void;
   getField: (field: Field<any>, ref: RefObject<any>) => EnhancedField<any, any>;
-  getFirstInvalidField: (touch?: boolean) => EnhancedField<any, any> | undefined;
+  getInvalidFields: (touch?: boolean) => EnhancedField<any, any>[];
   registerField: (field: EnhancedField<any, any>) => void;
   unRegisterField: (name: string) => void;
 }
 
 export interface FieldsController<F> {
   isValid: (touch?: boolean) => boolean;
+  getInvalidFields: (touch?: boolean) => EnhancedField<any, any>[];
   setValue: (value: F) => void;
+  getValue: () => F;
   setFieldValue: (param: string, value: any) => void;
 }
 
 export interface FieldController {
   isValid: (touch?: boolean) => boolean;
+  getInvalidField: (touch?: boolean) => EnhancedField<any, any> | undefined;
   setValue: (value: any) => void;
+  getValue: () => any;
 }
 
 export interface FieldSetContextProviderProps<F> {
@@ -45,7 +49,7 @@ export const FieldSetContext = createContext<FieldSetContextProps>({
   focusField: () => ({}),
   setField: () => ({}),
   getField: () => ({} as EnhancedField<any, any>),
-  getFirstInvalidField: () => undefined,
+  getInvalidFields: () => [],
   registerField: () => ({}),
   unRegisterField: () => ({}),
 });
@@ -92,6 +96,8 @@ export const FieldSetProvider = <F,>(
   if (fieldControllerRef) {
     fieldControllerRef.current = {
       isValid: (touch) => !!getFirstInvalidField(touch),
+      getInvalidField: (touch) => getFirstInvalidField(touch),
+      getValue: () => fields.find(item => item)?.value,
       setValue: (value: any) => {
         setFields(fields => fields.map(field => ({...field, value})))
       },
@@ -101,6 +107,13 @@ export const FieldSetProvider = <F,>(
   if (fieldsControllerRef) {
     fieldsControllerRef.current = {
       isValid: (touch) => !!getFirstInvalidField(touch),
+      getInvalidFields: (touch) => getInvalidFields(touch),
+      getValue: () => (
+        fields.reduce((previousValue, field) => ({
+          ...previousValue,
+          ...setNestedValue(previousValue, field.param ?? '', field.value)
+        }), {}) as F
+      ),
       setValue: (value: F) => {
         const dictionary = objectToDictionary(value);
         setFields(fields => fields.map(field => {
@@ -190,6 +203,10 @@ export const FieldSetProvider = <F,>(
   };
 
   const getFirstInvalidField = (touch = true) => {
+    return getInvalidFields(touch).find(item => item.errors.length > 0);
+  }
+
+  const getInvalidFields = (touch = true) => {
     return fields.map(field => {
       const errors = validateFormField(field);
       if (touch && errors.length > 0) {
@@ -197,12 +214,22 @@ export const FieldSetProvider = <F,>(
         setField(newField);
         return newField;
       }
-      return field;
-    }).find(item => item.errors.length > 0);
+      return {...field, errors};
+    }).filter(item => item.errors.length > 0);
   }
 
   return (
-    <FieldSetContext.Provider value={{ fields, setField, getField, focusField, getFirstInvalidField, registerField, unRegisterField }}>
+    <FieldSetContext.Provider
+      value={{
+        fields,
+        setField,
+        getField,
+        focusField,
+        getInvalidFields,
+        registerField,
+        unRegisterField
+      }}
+    >
       {children}
     </FieldSetContext.Provider>
   );

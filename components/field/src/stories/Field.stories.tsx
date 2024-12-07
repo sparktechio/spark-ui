@@ -10,7 +10,7 @@ import {
   TextField
 } from "../fields/Fields";
 import {Theme} from "./Theme";
-import {FieldController} from "../context/FieldSetProvider";
+import {FieldController, FieldsController, FieldSetProvider} from "../context/FieldSetProvider";
 
 
 export const Text = () =>  (
@@ -127,6 +127,48 @@ export const DynamicValue = () =>  {
           placeholder: "Age"
         }}
       />
+    </Theme>
+  )
+};
+
+export const DynamicFieldsValue = () =>  {
+  const ref = useRef<FieldsController<{age: number, size: number}>>();
+
+  useEffect(() => {
+    setTimeout(() => {
+      ref.current?.setValue(
+        {
+          age: 15,
+          size: 12,
+        }
+      );
+    }, 2000);
+    setTimeout(() => {
+      console.log(ref.current?.isValid(true));
+      console.log(ref.current?.getValue());
+    }, 4000);
+  }, []);
+
+  return (
+    <Theme>
+      <FieldSetProvider fieldsControllerRef={ref}>
+        <NumericField
+          renderer="my-input"
+          param="age"
+          min={44}
+          params={{
+            placeholder: "Age"
+          }}
+        />
+        <NumericField
+          renderer="my-input"
+          param="size"
+          min={44}
+          params={{
+            placeholder: "Size"
+          }}
+        />
+      </FieldSetProvider>
     </Theme>
   )
 };

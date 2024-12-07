@@ -1,27 +1,14 @@
 import React, {FormHTMLAttributes, MutableRefObject, ReactNode, useRef} from "react";
-import {FormController, FormProvider} from "./context/FormProvider";
-import {EnhancedField, FormField} from "./fields/FormField";
-import {BaseFormSubmitProps, FormSubmit, FormSubmitProps} from "./fields/FormSubmit";
-import {
-  getButtonSubmitProps
-} from "./utils/Utils";
-import {
-  AppCheckBoxField, AppDateField, AppEmailField, AppFilesField,
-  AppFormField, AppNumericField,
-  AppPasswordField, AppRadioField,
-  AppSelectField, AppTextAreaField,
-  AppTextField, CheckBoxField, DateField, EmailField, FilesField, NumericField,
-  PasswordField, RadioField,
-  SelectField, TextAreaField,
-  TextField
-} from "./fields/FormFields";
+import {BaseFormSubmitProps, FormSubmit, FormSubmitProps, SubmitChildrenProps} from "./fields/FormSubmit";
 import {useThemeContext} from "@sparkui/react-theme";
+import {FieldsController, FieldSetProvider} from "@sparkui/react-field";
+import { EnhancedField } from "@sparkui/react-field/dist/fields/BaseField";
 
 export interface FormProps<F> extends FormHTMLAttributes<HTMLFormElement> {
   className?: string;
   hideForm?: boolean;
   value?: F;
-  controllerRef?: MutableRefObject<FormController<F> | undefined>;
+  fieldsControllerRef?: MutableRefObject<FieldsController<F> | undefined>;
   onStateChange?: (value: F) => void;
   onFieldChange?: (field: EnhancedField<any, any>) => void;
   children: ReactNode;
@@ -32,52 +19,41 @@ export const Form = <F,>(
     className,
     hideForm,
     value,
-    controllerRef,
+    fieldsControllerRef,
     onStateChange,
     onFieldChange,
     children,
     ...other
   }: FormProps<F>
 ) => {
-  const ref = useRef<FormController<F>>();
+  const ref = useRef<FieldsController<F>>();
+  const provider = (
+    <FieldSetProvider
+      value={value}
+      onChange={onStateChange}
+      onFieldChange={onFieldChange}
+      fieldsControllerRef={fieldsControllerRef ?? ref}
+    >
+      {children}
+    </FieldSetProvider>
+  );
+
   return (
-    hideForm ? (
-        <FormProvider value={value} onChange={onStateChange} onFieldChange={onFieldChange} controllerRef={controllerRef ?? ref}>
-          {children}
-        </FormProvider>
-      ) : (
+    hideForm ? (provider) : (
       <form className={className} {...other}>
-        <FormProvider value={value} onChange={onStateChange} onFieldChange={onFieldChange} controllerRef={controllerRef ?? ref}>
-          {children}
-        </FormProvider>
+        {provider}
       </form>
     )
   )
 }
 
-Form.FormField = FormField;
-Form.SelectField = SelectField;
-Form.TextField = TextField;
-Form.TextAreaField = TextAreaField;
-Form.EmailField = EmailField;
-Form.FilesField = FilesField;
-Form.PasswordField = PasswordField;
-Form.CheckBoxField = CheckBoxField;
-Form.RadioField = RadioField;
-Form.NumericField = NumericField;
-Form.DateField = DateField;
-
-Form.Field = AppFormField;
-Form.Select = AppSelectField;
-Form.Text = AppTextField;
-Form.TextArea = AppTextAreaField;
-Form.Email = AppEmailField;
-Form.Files = AppFilesField;
-Form.Password = AppPasswordField;
-Form.CheckBox = AppCheckBoxField;
-Form.Radio = AppRadioField;
-Form.Numeric = AppNumericField;
-Form.Date = AppDateField;
+export const getButtonSubmitProps = ({onSubmit, loading}: SubmitChildrenProps) => {
+  return {
+    onClick: onSubmit,
+    disabled: loading,
+    type: "button",
+  }
+}
 
 export interface AppFormSubmitProps extends BaseFormSubmitProps {
   renderer: string;
