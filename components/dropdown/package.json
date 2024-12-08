@@ -1,6 +1,6 @@
 {
   "name": "@sparkui/react-dropdown",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "license": "MIT",
   "description": "Spark UI, React dropdown",
   "main": "dist/index.js",
@@ -37,7 +37,8 @@
   "author": "akifh@spark-tech.io",
   "dependencies": {
     "@radix-ui/react-dropdown-menu": "^2.1.2",
-    "react": "^18.3.1"
+    "react": "^18.3.1",
+    "@sparkui/react-field": "^1.0.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.9",

@@ -4,6 +4,7 @@ import {SelectContextProvider, useSelectContext} from "../context/DropdownContex
 import {DropdownOptions, Option} from "./DropdownOptions";
 import * as RadixDropdown from "@radix-ui/react-dropdown-menu";
 import {DropdownOption} from "./DropdownOption";
+import styled from "styled-components";
 
 export interface DropdownChildrenProps<T> {
   selected?: Option<T>;
@@ -65,9 +66,11 @@ export const Dropdown = <T,>(
 }
 
 Dropdown.Trigger = RadixDropdown.Trigger;
+Dropdown.Portal = RadixDropdown.Portal;
+Dropdown.InlineContent = RadixDropdown.Content;
 Dropdown.Content = (props: RadixDropdown.DropdownMenuContentProps) => (
   <RadixDropdown.Portal>
-    <RadixDropdown.Content {...props}/>
+    <StyledContent {...props}/>
   </RadixDropdown.Portal>
 );
 Dropdown.Item = RadixDropdown.Item;
@@ -76,3 +79,13 @@ Dropdown.Group = RadixDropdown.Group;
 Dropdown.Search = DropdownSearch;
 Dropdown.Options = DropdownOptions;
 Dropdown.Option = DropdownOption;
+
+const StyledContent = styled(RadixDropdown.Content)`
+    position: relative;
+    margin-top: 4px;
+    background-color: white;
+    padding: 8px;
+    border: 1px solid #c1c0c0;
+    border-radius: 6px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+`
