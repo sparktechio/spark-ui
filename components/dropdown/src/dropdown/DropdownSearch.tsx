@@ -1,23 +1,23 @@
-import React, {useState, MouseEvent, KeyboardEvent} from "react";
+import {JSX, useState, MouseEvent, KeyboardEvent, InputHTMLAttributes} from "react";
 import {useSelectContext} from "../context/DropdownContext";
 import {useDebounce} from "../hooks/useDebounce";
-import {FieldProps, TextField, ThemeFormFieldProps} from "@sparkui/react-field";
+import {FieldProps, ThemeFormFieldProps} from "@sparkui/react-field";
 import {isDefined} from "@sparkui/react-utils";
 
-export interface DropdownSearchProps<T> extends ThemeFormFieldProps<string, HTMLInputElement>{
-  className?: string;
+export interface DropdownSearchProps<A> {
+  value?: string;
   debounceMs?: number;
+  onChange?: (value: string) => void;
+  children: (props: ThemeFormFieldProps<string, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A>) => JSX.Element;
 }
 
-export const DropdownSearch = <T,>(
+export const DropdownSearch = <A,>(
   {
-    className,
-    debounceMs = 200,
-    params,
-    onChange,
     value,
-    ...props
-  }: DropdownSearchProps<T>
+    onChange,
+    children,
+    debounceMs = 200,
+  }: DropdownSearchProps<A>
 ) => {
   const {query, search} = useSelectContext();
   const [searchQuery, setSearchQuery] = useState(value ?? query);
@@ -32,21 +32,19 @@ export const DropdownSearch = <T,>(
     if (isDefined(field.value)) {
       setSearchQuery(field.value);
       if (onChange) {
-        onChange(field)
+        onChange(field.value)
       }
     }
   }
 
   return (
-    <TextField
-      onChange={onChangeField}
-      value={searchQuery}
-      params={{
-        ...(params ?? {}),
+    children({
+      onChange: onChangeField,
+      value: searchQuery,
+      params: {
         onKeyDown: (event: KeyboardEvent) => event.stopPropagation(),
         onClick: (event: MouseEvent) => event.stopPropagation()
-      }}
-      {...props}
-    />
+      }
+    })
   );
 }

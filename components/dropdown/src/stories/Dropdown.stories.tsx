@@ -2,8 +2,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useState} from "react";
 import {Option} from "../dropdown/DropdownOptions";
 import {Dropdown} from "../dropdown/Dropdown";
-import {FormControl, Theme} from "./Theme";
+import {BootstrapTheme, PrimaryButton} from "@sparkui/react-theme";
 import {TextField} from "@sparkui/react-field";
+import styled from "styled-components";
 
 const options: Option<string>[] = [
   {
@@ -28,15 +29,22 @@ const onSearch = (query: string) => new Promise<Option<string>[]>(resolve => set
 }, 1000));
 
 export const Basic = () => {
-  const [value, setValue] = useState<Option<string>>(options[0]);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState<Option<string>>();
   return (
-    <Theme>
-      <Dropdown selected={value.id} onSelect={setValue} onSearchOptions={onSearch}>
-        <Dropdown.Trigger>
-          {value.id}
+    <BootstrapTheme>
+      <Dropdown open={open} onOpenChange={setOpen} selected={value?.id} onSelect={setValue} onSearchOptions={onSearch}>
+        <Dropdown.Trigger asChild>
+          <div>
+            <PrimaryButton text={value ? value.id : 'Select one item'} onClick={() => setOpen(true)}/>
+          </div>
         </Dropdown.Trigger>
         <Dropdown.Content>
-          <Dropdown.Search value="black" renderer="my-input" />
+          <Dropdown.Search value="black">
+            {({params, ...props}) => (
+              <TextField {...props} params={{...params, label: "Search", input: { placeholder: "Search" }}} />
+            )}
+          </Dropdown.Search>
           <Dropdown.Options<string>>
             {({options, loading}) => (
               <>
@@ -46,28 +54,22 @@ export const Basic = () => {
                 {
                   options.map(option => (
                     <Dropdown.Option key={option.id} option={option}>
-                      <span className="text-start p-2">{option.id}</span>
+                      <Pointer className="p-2">{option.id}</Pointer>
                     </Dropdown.Option>
                   ))
                 }
               </>
             )}
           </Dropdown.Options>
-          <Dropdown.Search value="black">
-            {
-              ({props, params, errors}) => (
-                <FormControl>
-                  <input className="form-control" {...params} {...props} />
-                  {errors.length > 0 && <span className="alert alert-danger my-2">Validation failed {errors}</span>}
-                </FormControl>
-              )
-            }
-          </Dropdown.Search>
         </Dropdown.Content>
       </Dropdown>
-    </Theme>
+    </BootstrapTheme>
   );
-}
+};
+
+const Pointer = styled.div`
+    cursor: pointer;
+`;
 
 export default {
   title: 'Components/Dropdown',
