@@ -1,8 +1,8 @@
 import React from "react";
-import {ThemeProvider, ThemeProviderProps} from "../context/ThemeProvider";
+import {Color, Space, ThemeProvider, ThemeProviderProps} from "../context/ThemeProvider";
 import {Renderers} from "./Renderers";
 
-export const BootstrapTheme = ({children, renderers}: ThemeProviderProps) => (
+export const BootstrapTheme = ({children, renderers}: ThemeProviderProps<Color, Space>) => (
     <ThemeProvider
       renderers={{
         [Renderers.TEXT_LABEL]: ({text, ...props}: Record<string, any>) => (<span className="text-muted" {...props}>{text}</span>),
@@ -22,14 +22,14 @@ export const BootstrapTheme = ({children, renderers}: ThemeProviderProps) => (
 
         [Renderers.FIELD_TEXT]: ({id, props, params, errors}) => (
           <>
-            <div className="form-group">
-              <label htmlFor={id}>{params.label}</label>
+            <div className="form-floating">
               <input
                 id={id}
                 className={`form-control ${errors.length > 0 ? 'is-invalid' : ''}`}
                 {...params.input}
                 {...props}
               />
+              <label htmlFor={id}>{params.label}</label>
             </div>
             {errors.length > 0 && (
               <div className="invalid-feedback">

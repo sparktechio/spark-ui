@@ -1,9 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
 import {ThemeProvider} from "../context/ThemeProvider";
-import {Renderer} from "../context/Renderer";
 import {ErrorText, InfoText, LabelText, SubtitleText, Text, TitleText, WarningText} from "../shared/Text";
-import {ErrorButton, InfoButton, PrimaryButton, SecondaryButton, WarningButton} from "../shared/Button";
 
 export const TextTitle = () => (
   <ThemeProvider>

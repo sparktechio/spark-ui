@@ -1,26 +1,38 @@
 import React, {createContext, JSX, ReactNode, useContext} from "react";
 import {defaultRenderers} from "../shared/Renderers";
 
-export interface ThemeContextProps {
+export interface ThemeContextProps<C extends Color, S extends Space> {
+  colors?: C;
+  spaces?: S;
   render: (renderer: string, id: string, props: Record<string, any>) => JSX.Element;
 }
 
-export interface ThemeProviderProps {
+export interface Color extends Record<string, string> {}
+
+export interface Space extends Record<string, string> {}
+
+export interface ThemeProviderProps<C extends Color, S extends Space> {
+  colors?: C;
+  spaces?: S;
   renderers?: Record<string, (props: Record<string, any>) => JSX.Element>;
   children: ReactNode;
 }
 
-export const ThemeContext = createContext<ThemeContextProps>({
+export const ThemeContext = createContext<ThemeContextProps<Record<string, string>, Record<string, string>>>({
+  colors: {},
+  spaces: {},
   render: () => (<></>),
 });
 
-export const useTheme = () => useContext(ThemeContext);
+export const useTheme = <C extends Color, S extends Space>() => useContext(ThemeContext) as ThemeContextProps<C, S>;
 
-export const ThemeProvider = (
+export const ThemeProvider = <C extends Color, S extends Space>(
   {
+    colors = {} as C,
+    spaces = {} as S,
     renderers = {},
     children,
-  }: ThemeProviderProps
+  }: ThemeProviderProps<C, S>
 ) => {
 
   const render = (name: string, id: string, props: Record<string, any>) => {
@@ -34,7 +46,7 @@ export const ThemeProvider = (
   };
 
   return (
-    <ThemeContext.Provider value={{render}}>
+    <ThemeContext.Provider value={{render, colors, spaces}}>
       {children}
     </ThemeContext.Provider>
   );
