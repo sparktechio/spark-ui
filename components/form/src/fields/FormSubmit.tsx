@@ -1,7 +1,5 @@
 import {JSX, useState} from "react";
-import {useFieldSetContext} from "@sparkui/react-field";
-import {EnhancedField} from "@sparkui/react-field/dist/fields/BaseField";
-import {setNestedValue} from "../../dist/utils/ValueGenerator";
+import {EnhancedField, useFieldsContext, setNestedValue} from "@sparkui/react-field";
 
 export type Submit = <T,>(data: T) => Promise<void>;
 
@@ -33,7 +31,7 @@ export const FormSubmit = (
   }: FormSubmitProps
 ) => {
   const [loading, setLoading] = useState(false);
-  const {fields, getInvalidFields, focusField} = useFieldSetContext();
+  const {fields, getInvalidFields, focusField} = useFieldsContext();
 
   const toValue = (
     {

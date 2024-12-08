@@ -1,14 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useEffect, useRef} from "react";
-import {FormControl, FormRenderer} from "./FormRenderer";
+import {FormControl, Theme} from "./Theme";
 import {Form} from "../Form";
-import {FieldsController} from "@sparkui/react-field";
+import {FieldsController, NumericField} from "@sparkui/react-field";
 import {ErrorText} from "@sparkui/react-theme";
-
-const sate = {personal: {name: '', description: "123", age: 2021}, created: new Date(), status: 'started', color: 'green'};
+import {FormProvider} from "../context/FormProvider";
 
 export const Text = () =>  (
-  <FormRenderer>
+  <Theme>
     <Form value={{name: ''}} className="container row">
       <Form.Text
         renderer="my-input"
@@ -23,11 +22,11 @@ export const Text = () =>  (
         params={"Submit"}
       />
     </Form>
-  </FormRenderer>
+  </Theme>
 );
 
 export const CheckBox = () =>  (
-  <FormRenderer>
+  <Theme>
     <Form value={{new: false}} className="container row">
       <Form.CheckBox
         renderer="my-checkbox"
@@ -43,11 +42,11 @@ export const CheckBox = () =>  (
         params={"Submit"}
       />
     </Form>
-  </FormRenderer>
+  </Theme>
 );
 
 export const Password = () =>  (
-  <FormRenderer>
+  <Theme>
     <Form value={{secret: ''}} className="container row">
       <Form.Password
         renderer="my-input"
@@ -63,11 +62,11 @@ export const Password = () =>  (
         params={"Submit"}
       />
     </Form>
-  </FormRenderer>
+  </Theme>
 );
 
 export const RadioSet = () =>  (
-  <FormRenderer>
+  <Theme>
     <Form value={{color: ''}} className="container row">
       <Form.Radio
         renderer="my-radio-set"
@@ -84,11 +83,11 @@ export const RadioSet = () =>  (
         params={"Submit"}
       />
     </Form>
-  </FormRenderer>
+  </Theme>
 );
 
 export const TextArea = () =>  (
-  <FormRenderer>
+  <Theme>
     <Form value={{description: ''}} className="container row">
       <Form.TextArea
         renderer="my-textarea"
@@ -104,11 +103,11 @@ export const TextArea = () =>  (
         params={"Submit"}
       />
     </Form>
-  </FormRenderer>
+  </Theme>
 );
 
 export const Numeric = () =>  (
-  <FormRenderer>
+  <Theme>
     <Form value={{age: null}} className="container row">
       <Form.Numeric
         renderer="my-input"
@@ -123,11 +122,11 @@ export const Numeric = () =>  (
         params={"Submit"}
       />
     </Form>
-  </FormRenderer>
+  </Theme>
 );
 
 export const IsoDate = () =>  (
-  <FormRenderer>
+  <Theme>
     <Form value={{created: new Date()}} className="container row">
       <Form.Date
         renderer="my-input"
@@ -144,7 +143,7 @@ export const IsoDate = () =>  (
         params={"Submit"}
       />
     </Form>
-  </FormRenderer>
+  </Theme>
 );
 
 export const DynamicValue = () =>  {
@@ -157,7 +156,7 @@ export const DynamicValue = () =>  {
   }, []);
 
   return (
-    <FormRenderer>
+    <Theme>
       <Form value={{name: ''}} className="container row" fieldsControllerRef={ref}>
         <Form.Text
           renderer="my-input"
@@ -172,12 +171,56 @@ export const DynamicValue = () =>  {
           params={"Submit"}
         />
       </Form>
-    </FormRenderer>
+    </Theme>
   )
 };
 
+export const DynamicFieldsValue = () =>  {
+  const ref = useRef<FieldsController<{age: number, size: number}>>();
+
+  useEffect(() => {
+    setTimeout(() => {
+      ref.current?.setValue(
+        {
+          age: 15,
+          size: 12,
+        }
+      );
+    }, 2000);
+    setTimeout(() => {
+      console.log(ref.current?.isValid(true));
+      console.log(ref.current?.getValue());
+    }, 4000);
+  }, []);
+
+  return (
+    <Theme>
+      <FormProvider fieldsControllerRef={ref}>
+        <NumericField
+          renderer="my-input"
+          param="age"
+          min={44}
+          params={{
+            placeholder: "Age"
+          }}
+        />
+        <NumericField
+          renderer="my-input"
+          param="size"
+          min={44}
+          params={{
+            placeholder: "Size"
+          }}
+        />
+      </FormProvider>
+    </Theme>
+  )
+};
+
+const sate = {custom: '', personal: {name: '', description: "123", age: 2021}, created: new Date(), status: 'started', color: 'green'};
+
 export const FullForm = () =>  (
-  <FormRenderer>
+  <Theme>
     <Form value={sate} className="container row">
       <Form.Text
         renderer="my-input"
@@ -277,7 +320,7 @@ export const FullForm = () =>  (
         params={"Submit"}
       />
     </Form>
-  </FormRenderer>
+  </Theme>
 );
 
 export default {

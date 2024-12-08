@@ -3,7 +3,7 @@ import {ReactNode} from "react";
 import styled from "styled-components";
 import {ErrorText, ThemeProvider} from "@sparkui/react-theme";
 
-export const FormRenderer = ({children}: {children: ReactNode}) => (
+export const Theme = ({children}: {children: ReactNode}) => (
   <ThemeProvider
     renderers={
       {

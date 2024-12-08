@@ -6,12 +6,13 @@ import {
   EmailField,
   Field,
   FieldsController,
-  FieldSetProvider, FilesField, NumericField, PasswordField, RadioField,
+  FilesField, NumericField, PasswordField, RadioField,
   SelectField,
   TextAreaField,
-  TextField
+  TextField,
+  EnhancedField
 } from "@sparkui/react-field";
-import { EnhancedField } from "@sparkui/react-field/dist/fields/BaseField";
+import {FormProvider} from "./context/FormProvider";
 
 export interface FormProps<F> extends FormHTMLAttributes<HTMLFormElement> {
   className?: string;
@@ -37,14 +38,14 @@ export const Form = <F,>(
 ) => {
   const ref = useRef<FieldsController<F>>();
   const provider = (
-    <FieldSetProvider
+    <FormProvider
       value={value}
       onChange={onStateChange}
       onFieldChange={onFieldChange}
       fieldsControllerRef={fieldsControllerRef ?? ref}
     >
       {children}
-    </FieldSetProvider>
+    </FormProvider>
   );
 
   return (
