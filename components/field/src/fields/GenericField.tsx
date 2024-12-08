@@ -1,44 +1,43 @@
 import {BaseField, BaseFormFieldProps, FieldChildrenProps, FormFieldProps} from "./BaseField";
 import React, {JSX, MutableRefObject} from "react";
 import {FieldController, hasFieldsContext, StandaloneFieldProvider} from "../context/FieldsProvider";
-import {useThemeContext} from "@sparkui/react-theme";
+import {useTheme, Renderer} from "@sparkui/react-theme";
 
-export interface ThemeFormFieldProps<V, I> extends BaseFormFieldProps<V, I> {
+export interface ThemeFormFieldProps<V, I, P, A> extends BaseFormFieldProps<V, I, P, A> {
   fieldControllerRef?: MutableRefObject<FieldController | undefined>;
-  children?: (props: FieldChildrenProps<V, I>) => JSX.Element;
+  children?: (props: FieldChildrenProps<V, I, P, A>) => JSX.Element;
   renderer?: string;
 }
 
-export interface GenericFieldProps<V, I> extends FormFieldProps<V, I> {
+export interface GenericFieldProps<V, I, P, A> extends FormFieldProps<V, I, P, A> {
   fieldControllerRef?: MutableRefObject<FieldController | undefined>;
 }
 
-export const GenericField = <V, I>({children, fieldControllerRef, ...props}: GenericFieldProps<V, I>) => {
+export const GenericField = <V, I, P, A>({children, fieldControllerRef, ...props}: GenericFieldProps<V, I, P, A>) => {
   const hasContext = hasFieldsContext();
   if (!hasContext) {
     return (
       <StandaloneFieldProvider fieldControllerRef={fieldControllerRef}>
-        <BaseField<V, I> {...props}>{children}</BaseField>
+        <BaseField<V, I, P, A> {...props}>{children}</BaseField>
       </StandaloneFieldProvider>
     );
   } else {
-    return (<BaseField<V, I> {...props}>{children}</BaseField>);
+    return (<BaseField<V, I, P, A> {...props}>{children}</BaseField>);
   }
 };
 
-export const ThemeGenericField = <V, I>({renderer, children, ...props}: ThemeFormFieldProps<V, I>) => {
-  const themeContext = useThemeContext();
+export const ThemeGenericField = <V, I, P, A>({renderer, children, ...props}: ThemeFormFieldProps<V, I, P, A>) => {
+  const themeContext = useTheme();
   if (children){
     return (
-      <GenericField<V, I> {...props}>
+      <GenericField<V, I, P, A> {...props}>
         {children}
       </GenericField>
     )
   } else if (themeContext && renderer) {
-    const {render} = themeContext;
     return (
-      <GenericField<V, I> {...props}>
-        {(props) => render(renderer, props)}
+      <GenericField<V, I, P, A> {...props}>
+        {(props) => (<Renderer name={renderer} props={props}/>)}
       </GenericField>
     );
   } else {

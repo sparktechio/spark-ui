@@ -1,8 +1,8 @@
 import {FieldChildrenProps} from "../fields/BaseField";
-import {ChangeEvent} from "react";
+import {ChangeEvent, InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes} from "react";
 import {isDefined} from "@sparkui/react-utils";
 
-export const getSelectProps = (
+export const getSelectProps = <A>(
   {
     onChange,
     onBlur,
@@ -12,7 +12,7 @@ export const getSelectProps = (
       required,
       disabled,
     }
-  }: FieldChildrenProps<string, HTMLSelectElement>
+  }: FieldChildrenProps<string, HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement>, A>
 ) => {
   return {
     onChange: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onChange(value),
@@ -24,7 +24,7 @@ export const getSelectProps = (
   }
 }
 
-export const getInputTextProps = (
+export const getInputTextProps = <A>(
   {
     onChange,
     onBlur,
@@ -37,7 +37,7 @@ export const getInputTextProps = (
       disabled,
     },
     formatElementValue = (value) => isDefined(value) ? value : '',
-  }: FieldChildrenProps<string, HTMLInputElement>
+  }: FieldChildrenProps<string, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A>
 ) => {
   return {
     onChange: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onChange(value),
@@ -52,7 +52,7 @@ export const getInputTextProps = (
   }
 }
 
-export const getInputTextAreaProps = (
+export const getInputTextAreaProps = <A>(
   {
     onChange,
     onBlur,
@@ -65,7 +65,7 @@ export const getInputTextAreaProps = (
       disabled,
     },
     formatElementValue = (value) => isDefined(value) ? value : '',
-  }: FieldChildrenProps<string, HTMLTextAreaElement>
+  }: FieldChildrenProps<string, HTMLTextAreaElement, TextareaHTMLAttributes<HTMLTextAreaElement>, A>
 ) => {
   return {
     onChange: ({target: {value}}: ChangeEvent<HTMLTextAreaElement>) => onChange(value),
@@ -79,7 +79,7 @@ export const getInputTextAreaProps = (
   }
 }
 
-export const getInputEmailProps = (
+export const getInputEmailProps = <A>(
   {
     onChange,
     onBlur,
@@ -92,7 +92,7 @@ export const getInputEmailProps = (
       disabled,
     },
     formatElementValue = (value) => isDefined(value) ? value : '',
-  }: FieldChildrenProps<string, HTMLInputElement>
+  }: FieldChildrenProps<string, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A>
 ) => {
   return {
     onChange: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onChange(value),
@@ -107,7 +107,7 @@ export const getInputEmailProps = (
   }
 }
 
-export const getInputPasswordProps = (
+export const getInputPasswordProps = <A>(
   {
     onChange,
     onBlur,
@@ -120,7 +120,7 @@ export const getInputPasswordProps = (
       disabled,
     },
     formatElementValue = (value) => isDefined(value) ? value : '',
-  }: FieldChildrenProps<string, HTMLInputElement>
+  }: FieldChildrenProps<string, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A>
 ) => {
   return {
     onChange: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onChange(value),
@@ -135,7 +135,7 @@ export const getInputPasswordProps = (
   }
 }
 
-export const getInputNumericProps = (
+export const getInputNumericProps = <A>(
   {
     onChange,
     onBlur,
@@ -148,7 +148,7 @@ export const getInputNumericProps = (
       disabled,
     },
     formatElementValue = value => isDefined(value) ? value : ''
-  }: FieldChildrenProps<number, HTMLInputElement>
+  }: FieldChildrenProps<number, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A>
 ) => {
   return {
     onChange: ({target: {valueAsNumber}}: ChangeEvent<HTMLInputElement>) => onChange(valueAsNumber),
@@ -163,7 +163,7 @@ export const getInputNumericProps = (
   }
 }
 
-export const getInputCheckboxProps = (
+export const getInputCheckboxProps = <A>(
   {
     onChange,
     onBlur,
@@ -174,7 +174,7 @@ export const getInputCheckboxProps = (
       disabled,
     },
     formatElementValue = (value) => isDefined(value) ? value : false,
-  }: FieldChildrenProps<boolean, HTMLInputElement>
+  }: FieldChildrenProps<boolean, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A>
 ) => {
   return {
     onChange: ({target: {checked}}: ChangeEvent<HTMLInputElement>) => onChange(checked),
@@ -187,7 +187,7 @@ export const getInputCheckboxProps = (
   }
 }
 
-export const getInputRadioProps = (
+export const getInputRadioProps = <A>(
   {
     onChange,
     onBlur,
@@ -197,7 +197,7 @@ export const getInputRadioProps = (
       required,
       disabled,
     }
-  }: FieldChildrenProps<string, HTMLInputElement>
+  }: FieldChildrenProps<string, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A>
 ) => {
   return {
     onChange: ({target: {value}}: ChangeEvent<HTMLInputElement>) => onChange(value),
@@ -210,7 +210,7 @@ export const getInputRadioProps = (
   }
 }
 
-export const getInputDateProps = (
+export const getInputDateProps = <A>(
   {
     onChange,
     onBlur,
@@ -221,7 +221,7 @@ export const getInputDateProps = (
       disabled,
     },
     formatElementValue = (value?: Date) => (value ? new Date(value).toISOString().slice(0, 10): '')
-  }: FieldChildrenProps<Date, HTMLInputElement>
+  }: FieldChildrenProps<Date, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A>
 ) => {
   return {
     onChange: ({target: {valueAsDate}}: ChangeEvent<HTMLInputElement>) => onChange(valueAsDate),
@@ -234,7 +234,7 @@ export const getInputDateProps = (
   }
 }
 
-export const getInputFilesProps = (
+export const getInputFilesProps = <A>(
   {
     onChange,
     onBlur,
@@ -245,7 +245,7 @@ export const getInputFilesProps = (
       disabled,
     },
     formatElementValue = (value) => isDefined(value) ? value : [],
-  }: FieldChildrenProps<File[], HTMLInputElement>
+  }: FieldChildrenProps<File[], HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A>
 ) => {
   return {
     onChange: ({target: {files}}: ChangeEvent<HTMLInputElement>) => onChange(Array.from(files ?? [])),

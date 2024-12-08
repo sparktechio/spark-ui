@@ -11,101 +11,109 @@ import {
 import {Theme} from "./Theme";
 import {FieldController} from "../context/FieldsProvider";
 import {BaseField} from "../fields/BaseField";
+import { BootstrapTheme } from '@sparkui/react-theme';
 
 
 export const Text = () =>  (
-  <Theme>
+  <BootstrapTheme>
     <TextField
-      renderer="my-input"
       params={{
-        placeholder: "Name"
+        label: 'Name',
+        input: {
+          placeholder: "Name"
+        }
       }}
     />
-  </Theme>
+  </BootstrapTheme>
 );
 
 export const Email = () =>  (
-  <Theme>
+  <BootstrapTheme>
     <EmailField
-      renderer="my-input"
       params={{
-        placeholder: "Email"
+        label: 'Email',
+        input: {
+          placeholder: "Email"
+        }
       }}
     />
-  </Theme>
+  </BootstrapTheme>
 );
 
 export const CheckBox = () =>  (
-  <Theme>
+  <BootstrapTheme>
     <CheckBoxField
-      renderer="my-checkbox"
       params={{
         input: {placeholder: "New"},
         label: "New"
       }}
     />
-  </Theme>
+  </BootstrapTheme>
 );
 
 export const Password = () =>  (
-  <Theme>
+  <BootstrapTheme>
     <PasswordField
-      renderer="my-input"
       pattern={/^[0-9\-+\/?]+$/}
       params={{
-        placeholder: "Secret"
+        label: "Secret",
+        input: {
+          placeholder: "Secret"
+        }
       }}
     />
-  </Theme>
+  </BootstrapTheme>
 );
 
 export const RadioSet = () =>  (
-  <Theme>
+  <BootstrapTheme>
     <RadioField
-      renderer="my-radio-set"
       params={[
         {key: 'red', label: 'Red'},
         {key: 'blue', label: 'Blue'},
         {key: 'green', label: 'Green'},
       ]}
     />
-  </Theme>
+  </BootstrapTheme>
 );
 
 export const TextArea = () =>  (
-  <Theme>
+  <BootstrapTheme>
     <TextAreaField
-      renderer="my-textarea"
       params={{
         placeholder: "Description",
         label: "Description"
       }}
     />
-  </Theme>
+  </BootstrapTheme>
 );
 
 export const Numeric = () =>  (
-  <Theme>
+  <BootstrapTheme>
     <NumericField
-      renderer="my-input"
       params={{
-        placeholder: "Age"
+        label: "Age",
+        input: {
+          placeholder: "Age"
+        }
       }}
     />
-  </Theme>
+  </BootstrapTheme>
 );
 
 export const IsoDate = () =>  (
-  <Theme>
+  <BootstrapTheme>
     <DateField
-      renderer="my-input"
       required={true}
       formatOutputValue={(date?: Date) => date?.toISOString()}
       params={{
-        placeholder: "Created"
+        label: "Created",
+        input: {
+          placeholder: "Created"
+        }
       }}
     />
-  </Theme>
+  </BootstrapTheme>
 );
 
 export const DynamicValue = () =>  {

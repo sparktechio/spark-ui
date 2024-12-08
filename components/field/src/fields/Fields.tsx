@@ -1,5 +1,5 @@
 import {ThemeFormFieldProps, ThemeGenericField} from "./GenericField";
-import React from "react";
+import React, {InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes} from "react";
 import {
   getInputCheckboxProps,
   getInputDateProps, getInputEmailProps, getInputFilesProps,
@@ -8,45 +8,46 @@ import {
   getInputTextProps,
   getSelectProps
 } from "../utils/Utils";
+import { Renderers } from "@sparkui/react-theme";
 
-export const SelectField = (props: ThemeFormFieldProps<string, HTMLSelectElement>) => (
-  <ThemeGenericField<string, HTMLSelectElement> {...props} propsGenerator={getSelectProps} />
+export const SelectField = <A,>(props: ThemeFormFieldProps<string, HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement>, A>) => (
+  <ThemeGenericField<string, HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement>, A> {...props} propsGenerator={getSelectProps} renderer={Renderers.FIELD_SELECT} />
 );
 
-export const TextField = (props: ThemeFormFieldProps<string, HTMLInputElement>) => (
-  <ThemeGenericField<string, HTMLInputElement> {...props} propsGenerator={getInputTextProps} />
+export const TextField = <A,>(props: ThemeFormFieldProps<string, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A>) => (
+  <ThemeGenericField<string, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A> {...props} propsGenerator={getInputTextProps} renderer={Renderers.FIELD_TEXT}  />
 );
 
-export const TextAreaField = (props: ThemeFormFieldProps<string, HTMLTextAreaElement>) => (
-  <ThemeGenericField<string, HTMLTextAreaElement> {...props} propsGenerator={getInputTextAreaProps} />
+export const TextAreaField = <A,>(props: ThemeFormFieldProps<string, HTMLTextAreaElement, TextareaHTMLAttributes<HTMLTextAreaElement>, A>) => (
+  <ThemeGenericField<string, HTMLTextAreaElement, TextareaHTMLAttributes<HTMLTextAreaElement>, A> {...props} propsGenerator={getInputTextAreaProps} renderer={Renderers.FIELD_TEXT_AREA}  />
 );
 
-export const EmailField = (props: ThemeFormFieldProps<string, HTMLInputElement>) => (
-  <ThemeGenericField<string, HTMLInputElement> {...props} propsGenerator={getInputEmailProps} />
+export const EmailField = <A,>(props: ThemeFormFieldProps<string, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A>) => (
+  <ThemeGenericField<string, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A> {...props} propsGenerator={getInputEmailProps} renderer={Renderers.FIELD_TEXT} pattern={/^[^\s@]+@[^\s@]+\.[^\s@]+$/} />
 );
 
-export const PasswordField = (props: ThemeFormFieldProps<string, HTMLInputElement>) => (
-  <ThemeGenericField<string, HTMLInputElement> {...props} propsGenerator={getInputPasswordProps} />
+export const PasswordField = <A,>(props: ThemeFormFieldProps<string, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A>) => (
+  <ThemeGenericField<string, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A> {...props} propsGenerator={getInputPasswordProps} renderer={Renderers.FIELD_TEXT}  />
 );
 
-export const DateField = (props: ThemeFormFieldProps<Date, HTMLInputElement>) => (
-  <ThemeGenericField<Date, HTMLInputElement> {...props} propsGenerator={getInputDateProps} />
+export const DateField = <A,>(props: ThemeFormFieldProps<Date, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A>) => (
+  <ThemeGenericField<Date, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A> {...props} propsGenerator={getInputDateProps} renderer={Renderers.FIELD_DATE}  />
 );
 
-export const FilesField = ({children, value = [], ...props}: ThemeFormFieldProps<File[], HTMLInputElement>) => (
-  <ThemeGenericField<File[], HTMLInputElement> {...props} propsGenerator={getInputFilesProps} />
+export const FilesField = <A,>({children, value = [], ...props}: ThemeFormFieldProps<File[], HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A>) => (
+  <ThemeGenericField<File[], HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A> {...props} propsGenerator={getInputFilesProps} renderer={Renderers.FIELD_TEXT}  />
 );
 
-export const NumericField = (props: ThemeFormFieldProps<number, HTMLInputElement>) => (
-  <ThemeGenericField<number, HTMLInputElement> {...props} propsGenerator={getInputNumericProps} />
+export const NumericField = <A,>(props: ThemeFormFieldProps<number, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A>) => (
+  <ThemeGenericField<number, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A> {...props} propsGenerator={getInputNumericProps} renderer={Renderers.FIELD_TEXT}  />
 );
 
-export const CheckBoxField = (props: ThemeFormFieldProps<boolean, HTMLInputElement>) => (
-  <ThemeGenericField<boolean, HTMLInputElement> {...props} propsGenerator={getInputCheckboxProps} />
+export const CheckBoxField = <A,>(props: ThemeFormFieldProps<boolean, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A>) => (
+  <ThemeGenericField<boolean, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A> {...props} propsGenerator={getInputCheckboxProps} renderer={Renderers.FIELD_CHECKBOX}  />
 );
 
-export const RadioField = (props: ThemeFormFieldProps<string, HTMLInputElement>) => (
-  <ThemeGenericField<string, HTMLInputElement> {...props} propsGenerator={getInputRadioProps} />
+export const RadioField = <A,>(props: ThemeFormFieldProps<string, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A>) => (
+  <ThemeGenericField<string, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, A> {...props} propsGenerator={getInputRadioProps} renderer={Renderers.FIELD_RADIO}  />
 );
 
 export const Field = ThemeGenericField;

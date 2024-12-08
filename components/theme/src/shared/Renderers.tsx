@@ -45,7 +45,11 @@ export const defaultRenderers: Record<string, (props: Record<string, any>) => JS
         <label>{params.label}</label>
       </div>
       <input {...params.input} {...props} />
-      {errors.length > 0 && <Error>Validation failed {errors}</Error>}
+      {errors.length > 0 && (
+        <div>
+          <Error>Validation failed {errors}</Error>
+        </div>
+      )}
     </>
   ),
   [Renderers.FIELD_DATE]: ({props, params, errors}) => (
@@ -54,7 +58,11 @@ export const defaultRenderers: Record<string, (props: Record<string, any>) => JS
         <label>{params.label}</label>
       </div>
       <input {...params.input} {...props} />
-      {errors.length > 0 && <Error>Validation failed {errors}</Error>}
+      {errors.length > 0 && (
+        <div>
+          <Error>Validation failed {errors}</Error>
+        </div>
+      )}
     </>
   ),
   [Renderers.FIELD_TEXT_AREA]: ({props, params, errors}) => (
@@ -63,7 +71,11 @@ export const defaultRenderers: Record<string, (props: Record<string, any>) => JS
         <label>{params.label}</label>
       </div>
       <textarea {...params.textarea} {...props}/>
-      {errors.length > 0 && <Error>Validation failed {errors}</Error>}
+      {errors.length > 0 && (
+        <div>
+          <Error>Validation failed {errors}</Error>
+        </div>
+      )}
     </>
   ),
   [Renderers.FIELD_CHECKBOX]: ({props, params, errors}) => (
@@ -72,7 +84,11 @@ export const defaultRenderers: Record<string, (props: Record<string, any>) => JS
         <input id={params.key} {...params.input} {...props}/>
         <label htmlFor={params.key}>{params.label}</label>
       </div>
-      {errors.length > 0 && <Error>Validation failed {errors}</Error>}
+      {errors.length > 0 && (
+        <div>
+          <Error>Validation failed {errors}</Error>
+        </div>
+      )}
     </>
   ),
   [Renderers.FIELD_RADIO]: ({value, props, params, errors}) => (
@@ -85,7 +101,11 @@ export const defaultRenderers: Record<string, (props: Record<string, any>) => JS
           </div>
         ))
       }
-      {errors.length > 0 && <Error>Validation failed {errors}</Error>}
+      {errors.length > 0 && (
+        <div>
+          <Error>Validation failed {errors}</Error>
+        </div>
+      )}
     </>
   ),
   [Renderers.FIELD_SELECT]: ({props, params, errors}) => (
@@ -97,7 +117,11 @@ export const defaultRenderers: Record<string, (props: Record<string, any>) => JS
           </option>
         ))
       }
-      {errors.length > 0 && <Error>Validation failed {errors}</Error>}
+      {errors.length > 0 && (
+        <div>
+          <Error>Validation failed {errors}</Error>
+        </div>
+      )}
     </select>
   ),
 }

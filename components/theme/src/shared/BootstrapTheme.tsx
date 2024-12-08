@@ -20,31 +20,31 @@ export const BootstrapTheme = ({children, renderers}: ThemeProviderProps<Color, 
         [Renderers.BUTTON_INFO]: ({text, ...props}: Record<string, any>) => (
           <button className="btn btn-light" {...props}>{text}</button>),
 
-        [Renderers.FIELD_TEXT]: ({id, props, params, errors}) => (
+        [Renderers.FIELD_TEXT]: ({id, touched, props, params, errors}) => (
           <>
             <div className="form-floating">
               <input
                 id={id}
-                className={`form-control ${errors.length > 0 ? 'is-invalid' : ''}`}
+                className={`form-control ${errors.length > 0 ? 'is-invalid' : (touched ? 'is-valid' : '')}`}
                 {...params.input}
                 {...props}
               />
               <label htmlFor={id}>{params.label}</label>
             </div>
             {errors.length > 0 && (
-              <div className="invalid-feedback">
+              <div className="invalid-feedback d-block">
                 {params.error ? params.error(errors) : `Validation failed ${errors}`}
               </div>
             )}
           </>
         ),
-        [Renderers.FIELD_DATE]: ({id, props, params, errors}) => (
+        [Renderers.FIELD_DATE]: ({id, touched, props, params, errors}) => (
           <>
             <div className="form-group">
-              <label htmlFor="floatingInput">{params.label}</label>
+              <label htmlFor={id}>{params.label}</label>
               <input
                 id={id}
-                className={`form-control-date ${errors.length > 0 ? 'is-invalid' : ''}`}
+                className={`form-control-date ${errors.length > 0 ? 'is-invalid' : (touched ? 'is-valid' : '')}`}
                 {...params.input}
                 {...props}
               />
@@ -56,19 +56,19 @@ export const BootstrapTheme = ({children, renderers}: ThemeProviderProps<Color, 
             )}
           </>
         ),
-        [Renderers.FIELD_TEXT_AREA]: ({id, props, params, errors}) => (
+        [Renderers.FIELD_TEXT_AREA]: ({id, touched, props, params, errors}) => (
           <>
             <div className="form-group">
               <label htmlFor={id}>{params.label}</label>
               <textarea
                 id={id}
-                className={`form-control ${errors.length > 0 ? 'is-invalid' : ''}`}
+                className={`form-control ${errors.length > 0 ? 'is-invalid' : (touched ? 'is-valid' : '')}`}
                 {...params.input}
                 {...props}
               />
             </div>
             {errors.length > 0 && (
-              <div className="invalid-feedback">
+              <div className="invalid-feedback d-block">
                 {params.error ? params.error(errors) : `Validation failed ${errors}`}
               </div>
             )}
@@ -87,20 +87,21 @@ export const BootstrapTheme = ({children, renderers}: ThemeProviderProps<Color, 
                 {params.label}
               </label>
               {errors.length > 0 && (
-                <div className="invalid-feedback">
+                <div className="invalid-feedback d-block">
                   {params.error ? params.error(errors) : `Validation failed ${errors}`}
                 </div>
               )}
             </div>
           </>
         ),
-        [Renderers.FIELD_RADIO]: ({props, params, errors}) => (
+        [Renderers.FIELD_RADIO]: ({id, props, params, errors}) => (
           <>
             {
               params.map((item: any) => (
                 <div className="form-check" key={item.key}>
                   <input
                     id={item.key}
+                    name={id}
                     className="form-check-input"
                     {...item.input}
                     {...props}
@@ -112,7 +113,7 @@ export const BootstrapTheme = ({children, renderers}: ThemeProviderProps<Color, 
               ))
             }
             {errors.length > 0 && (
-              <div className="invalid-feedback">
+              <div className="invalid-feedback d-block">
                 {params.error ? params.error(errors) : `Validation failed ${errors}`}
               </div>
             )}
@@ -130,7 +131,7 @@ export const BootstrapTheme = ({children, renderers}: ThemeProviderProps<Color, 
               }
             </select>
             {errors.length > 0 && (
-              <div className="invalid-feedback">
+              <div className="invalid-feedback d-block">
                 {params.error ? params.error(errors) : `Validation failed ${errors}`}
               </div>
             )}

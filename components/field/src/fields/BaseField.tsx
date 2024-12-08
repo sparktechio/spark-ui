@@ -34,7 +34,7 @@ export interface EnhancedField<V, I extends ControlledElement> extends FieldProp
   errors: ValidationError[];
 }
 
-export interface FieldChildrenProps<V, I> {
+export interface FieldChildrenProps<V, I, P, A> {
   onChange: (value?: V | null) => void;
   onBlur: (value?: V | null) => void;
   validate: () => ValidationError[];
@@ -47,21 +47,22 @@ export interface FieldChildrenProps<V, I> {
   formatElementValue?: (value?: V) => any;
   formatOutputValue?: (value?: V) => any;
   disabled?: boolean,
+  touched?: boolean,
   value?: V;
+  params?: A;
+  props?: P;
+}
+
+export interface BaseFormFieldProps<V, I, P, A> extends FieldProps<V> {
+  propsGenerator?: (props: FieldChildrenProps<V, I, P, A>) => any;
   params?: any;
-  props?: any;
 }
 
-export interface BaseFormFieldProps<V, I> extends FieldProps<V> {
-  propsGenerator?: (props: FieldChildrenProps<V, I>) => any;
-  params?: any;
+export interface FormFieldProps<V, I, P, A> extends BaseFormFieldProps<V, I, P, A> {
+  children: (props: FieldChildrenProps<V, I, P, A>) => JSX.Element;
 }
 
-export interface FormFieldProps<V, I> extends BaseFormFieldProps<V, I> {
-  children: (props: FieldChildrenProps<V, I>) => JSX.Element;
-}
-
-export const BaseField = <V, I>({children, params, propsGenerator, ...fieldProps}: FormFieldProps<V, I>) => {
+export const BaseField = <V, I, P, A>({children, params, propsGenerator, ...fieldProps}: FormFieldProps<V, I, P, A>) => {
 
   const {fields, setField, initField, registerField, unRegisterField} = useFieldsContext();
 
@@ -78,7 +79,7 @@ export const BaseField = <V, I>({children, params, propsGenerator, ...fieldProps
     []
   );
 
-  const element: FieldChildrenProps<V, I> = {
+  const element: FieldChildrenProps<V, I, P, A> = {
     onChange: (value) => setField({...field, value, errors: field.touched ? validateFormField({...field, value}) : field.errors}, field.onChange),
     onBlur: (value) => setField({...field, value, touched: true, errors: validateFormField({...field, value})}, field.onBlur),
     validate: () => validateFormField(field),
@@ -87,6 +88,7 @@ export const BaseField = <V, I>({children, params, propsGenerator, ...fieldProps
     formatElementValue: field.formatElementValue,
     formatOutputValue: field.formatOutputValue,
     disabled: field.disabled,
+    touched: field.touched,
     getField: (param: string) => fields.find(item => item.param === param),
     getValue: (param: string) => fields.find(item => item.param === param)?.value,
     params,
