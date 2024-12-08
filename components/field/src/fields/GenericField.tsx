@@ -1,6 +1,6 @@
 import {BaseField, BaseFormFieldProps, FieldChildrenProps, FormFieldProps} from "./BaseField";
 import React, {JSX, MutableRefObject} from "react";
-import {FieldController, FieldSetProvider, hasFieldSetContext} from "../context/FieldSetProvider";
+import {FieldController, hasFieldsContext, StandaloneFieldProvider} from "../context/FieldsProvider";
 import {useThemeContext} from "@sparkui/react-theme";
 
 export interface ThemeFormFieldProps<V, I> extends BaseFormFieldProps<V, I> {
@@ -14,12 +14,12 @@ export interface GenericFieldProps<V, I> extends FormFieldProps<V, I> {
 }
 
 export const GenericField = <V, I>({children, fieldControllerRef, ...props}: GenericFieldProps<V, I>) => {
-  const hasContext = hasFieldSetContext();
+  const hasContext = hasFieldsContext();
   if (!hasContext) {
     return (
-      <FieldSetProvider fieldControllerRef={fieldControllerRef}>
+      <StandaloneFieldProvider fieldControllerRef={fieldControllerRef}>
         <BaseField<V, I> {...props}>{children}</BaseField>
-      </FieldSetProvider>
+      </StandaloneFieldProvider>
     );
   } else {
     return (<BaseField<V, I> {...props}>{children}</BaseField>);

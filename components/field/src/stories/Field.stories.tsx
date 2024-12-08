@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useEffect, useRef} from 'react';
 import {
   CheckBoxField, DateField, EmailField,
-  Field,
   NumericField,
   PasswordField,
   RadioField,
@@ -10,16 +9,27 @@ import {
   TextField
 } from "../fields/Fields";
 import {Theme} from "./Theme";
-import {FieldController, FieldsController, FieldSetProvider} from "../context/FieldSetProvider";
+import {FieldController} from "../context/FieldsProvider";
+import {BaseField} from "../fields/BaseField";
 
 
 export const Text = () =>  (
   <Theme>
     <TextField
       renderer="my-input"
-      param="name"
       params={{
         placeholder: "Name"
+      }}
+    />
+  </Theme>
+);
+
+export const Email = () =>  (
+  <Theme>
+    <EmailField
+      renderer="my-input"
+      params={{
+        placeholder: "Email"
       }}
     />
   </Theme>
@@ -29,7 +39,6 @@ export const CheckBox = () =>  (
   <Theme>
     <CheckBoxField
       renderer="my-checkbox"
-      param="new"
       params={{
         input: {placeholder: "New"},
         label: "New"
@@ -42,7 +51,6 @@ export const Password = () =>  (
   <Theme>
     <PasswordField
       renderer="my-input"
-      param="secret"
       pattern={/^[0-9\-+\/?]+$/}
       params={{
         placeholder: "Secret"
@@ -55,7 +63,6 @@ export const RadioSet = () =>  (
   <Theme>
     <RadioField
       renderer="my-radio-set"
-      param="color"
       params={[
         {key: 'red', label: 'Red'},
         {key: 'blue', label: 'Blue'},
@@ -69,7 +76,6 @@ export const TextArea = () =>  (
   <Theme>
     <TextAreaField
       renderer="my-textarea"
-      param="description"
       params={{
         placeholder: "Description",
         label: "Description"
@@ -82,7 +88,6 @@ export const Numeric = () =>  (
   <Theme>
     <NumericField
       renderer="my-input"
-      param="age"
       params={{
         placeholder: "Age"
       }}
@@ -94,7 +99,6 @@ export const IsoDate = () =>  (
   <Theme>
     <DateField
       renderer="my-input"
-      param="created"
       required={true}
       formatOutputValue={(date?: Date) => date?.toISOString()}
       params={{
@@ -121,7 +125,6 @@ export const DynamicValue = () =>  {
       <NumericField
         fieldControllerRef={ref}
         renderer="my-input"
-        param="age"
         min={44}
         params={{
           placeholder: "Age"
@@ -131,52 +134,9 @@ export const DynamicValue = () =>  {
   )
 };
 
-export const DynamicFieldsValue = () =>  {
-  const ref = useRef<FieldsController<{age: number, size: number}>>();
-
-  useEffect(() => {
-    setTimeout(() => {
-      ref.current?.setValue(
-        {
-          age: 15,
-          size: 12,
-        }
-      );
-    }, 2000);
-    setTimeout(() => {
-      console.log(ref.current?.isValid(true));
-      console.log(ref.current?.getValue());
-    }, 4000);
-  }, []);
-
-  return (
-    <Theme>
-      <FieldSetProvider fieldsControllerRef={ref}>
-        <NumericField
-          renderer="my-input"
-          param="age"
-          min={44}
-          params={{
-            placeholder: "Age"
-          }}
-        />
-        <NumericField
-          renderer="my-input"
-          param="size"
-          min={44}
-          params={{
-            placeholder: "Size"
-          }}
-        />
-      </FieldSetProvider>
-    </Theme>
-  )
-};
-
-
 export default {
   title: 'Components/Field',
-  component: Field,
+  component: BaseField,
   parameters: {
     layout: 'centered',
   },

@@ -1,8 +1,8 @@
 import {JSX, RefObject, useEffect, useRef} from "react";
-import {useFieldSetContext} from "../context/FieldSetProvider";
+import {useFieldsContext} from "../context/FieldsProvider";
 import {validateFormField, ValidationError} from "../validation/Validator";
 
-export interface Field<V> {
+export interface FieldProps<V> {
   param?: string,
 
   value?: V;
@@ -19,17 +19,16 @@ export interface Field<V> {
   min?: number,
   max?: number,
 
-  onChange?: (value: Field<V>) => void;
-  onBlur?: (value: Field<V>) => void;
+  onChange?: (value: FieldProps<V>) => void;
+  onBlur?: (value: FieldProps<V>) => void;
 }
 
 export interface ControlledElement {
   focus(options?: FocusOptions): void;
-
   scrollIntoView(arg?: boolean | ScrollIntoViewOptions): void;
 }
 
-export interface EnhancedField<V, I extends ControlledElement> extends Field<V> {
+export interface EnhancedField<V, I extends ControlledElement> extends FieldProps<V> {
   reference: RefObject<I>;
   touched?: boolean;
   errors: ValidationError[];
@@ -40,10 +39,10 @@ export interface FieldChildrenProps<V, I> {
   onBlur: (value?: V | null) => void;
   validate: () => ValidationError[];
   errors: ValidationError[];
-  getField: (param: string) => Field<V> | undefined;
+  getField: (param: string) => FieldProps<V> | undefined;
   getValue: (param: string) => V | undefined;
-  fields: Field<any>[];
-  field: Field<any>;
+  fields: FieldProps<any>[];
+  field: FieldProps<any>;
   ref: RefObject<I>;
   formatElementValue?: (value?: V) => any;
   formatOutputValue?: (value?: V) => any;
@@ -53,7 +52,7 @@ export interface FieldChildrenProps<V, I> {
   props?: any;
 }
 
-export interface BaseFormFieldProps<V, I> extends Field<V> {
+export interface BaseFormFieldProps<V, I> extends FieldProps<V> {
   propsGenerator?: (props: FieldChildrenProps<V, I>) => any;
   params?: any;
 }
@@ -64,10 +63,10 @@ export interface FormFieldProps<V, I> extends BaseFormFieldProps<V, I> {
 
 export const BaseField = <V, I>({children, params, propsGenerator, ...fieldProps}: FormFieldProps<V, I>) => {
 
-  const {fields, setField, getField, registerField, unRegisterField} = useFieldSetContext();
+  const {fields, setField, initField, registerField, unRegisterField} = useFieldsContext();
 
   const ref = useRef<I>(null);
-  const field = getField(fieldProps, ref);
+  const field = initField(fieldProps, ref);
 
   useEffect(
     () => {
