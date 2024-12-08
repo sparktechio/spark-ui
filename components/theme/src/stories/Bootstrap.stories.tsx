@@ -4,51 +4,52 @@ import {ThemeProvider} from "../context/ThemeProvider";
 import {Renderer} from "../context/Renderer";
 import {ErrorText, InfoText, LabelText, SubtitleText, Text, TitleText, WarningText} from "../shared/Text";
 import {ErrorButton, InfoButton, PrimaryButton, SecondaryButton, WarningButton} from "../shared/Button";
+import {BootstrapTheme} from "../shared/BootstrapTheme";
 
 export const TextTitle = () => (
-  <ThemeProvider>
+  <BootstrapTheme>
     <TitleText text="Title Text"/>
-  </ThemeProvider>
+  </BootstrapTheme>
 );
 
 export const TextSubtitle = () => (
-  <ThemeProvider>
+  <BootstrapTheme>
     <SubtitleText text="Subtitle Text"/>
-  </ThemeProvider>
+  </BootstrapTheme>
 );
 
 export const TextLabel = () => (
-  <ThemeProvider>
+  <BootstrapTheme>
     <LabelText text="Label Text"/>
-  </ThemeProvider>
+  </BootstrapTheme>
 );
 
 export const TextBody = () => (
-  <ThemeProvider>
+  <BootstrapTheme>
     <Text text="Body Text"/>
-  </ThemeProvider>
+  </BootstrapTheme>
 );
 
 export const TextError = () => (
-  <ThemeProvider>
+  <BootstrapTheme>
     <ErrorText text="Error Text"/>
-  </ThemeProvider>
+  </BootstrapTheme>
 );
 
 export const TextWarning = () => (
-  <ThemeProvider>
+  <BootstrapTheme>
     <WarningText text="Warning Text"/>
-  </ThemeProvider>
+  </BootstrapTheme>
 );
 
 export const TextInfo = () => (
-  <ThemeProvider>
+  <BootstrapTheme>
     <InfoText text="Info Text"/>
-  </ThemeProvider>
+  </BootstrapTheme>
 );
 
 export default {
-  title: 'Default/Text',
+  title: 'Bootstrap/Text',
   component: ThemeProvider,
   parameters: {
     layout: 'centered',

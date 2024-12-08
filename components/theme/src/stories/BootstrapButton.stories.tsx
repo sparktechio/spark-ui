@@ -3,65 +3,40 @@ import React from "react";
 import {ThemeProvider} from "../context/ThemeProvider";
 import {Renderer} from "../context/Renderer";
 import {ErrorButton, InfoButton, PrimaryButton, SecondaryButton, WarningButton} from "../shared/Button";
+import {BootstrapTheme} from "../shared/BootstrapTheme";
 
 export const ButtonPrimary = () => (
-  <ThemeProvider>
+  <BootstrapTheme>
     <PrimaryButton onClick={console.log} text="Primary Text"/>
-  </ThemeProvider>
+  </BootstrapTheme>
 );
 
 export const ButtonSecondary = () => (
-  <ThemeProvider>
+  <BootstrapTheme>
     <SecondaryButton onClick={console.log} text="Secondary Text"/>
-  </ThemeProvider>
+  </BootstrapTheme>
 );
 
 export const ButtonInfo = () => (
-  <ThemeProvider>
+  <BootstrapTheme>
     <InfoButton onClick={console.log} text="Info Text"/>
-  </ThemeProvider>
+  </BootstrapTheme>
 );
 
 export const ButtonError = () => (
-  <ThemeProvider>
+  <BootstrapTheme>
     <ErrorButton onClick={console.log} text="Error Text"/>
-  </ThemeProvider>
+  </BootstrapTheme>
 );
 
 export const ButtonWarning = () => (
-  <ThemeProvider>
+  <BootstrapTheme>
     <WarningButton onClick={console.log} text="Warning Text"/>
-  </ThemeProvider>
-);
-
-const Button = () => {
-  return <Renderer
-    name='my-submit'
-    props={
-      {
-        props: {className: "btn btn-primary p-2", onClick: console.log},
-        params: {title: 'Submit'}
-      }
-    }
-  />
-}
-
-export const Custom = () => (
-  <ThemeProvider
-    renderers={
-      {
-        'my-submit': ({props, params}) => (
-          <button {...props}>{params.title}</button>
-        )
-      }
-    }
-  >
-    <Button />
-  </ThemeProvider>
+  </BootstrapTheme>
 );
 
 export default {
-  title: 'Default/Button',
+  title: 'Bootstrap/Button',
   component: ThemeProvider,
   parameters: {
     layout: 'centered',

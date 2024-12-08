@@ -2,27 +2,32 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
 import {ThemeProvider} from "../context/ThemeProvider";
 import {Renderer} from "../context/Renderer";
-import {ErrorText, InfoText, LabelText, SubtitleText, Text, TitleText, WarningText} from "../shared/Text";
-import {ErrorButton, InfoButton, PrimaryButton, SecondaryButton, WarningButton} from "../shared/Button";
 import {Renderers} from "../shared/Renderers";
+import {BootstrapTheme} from "../shared/BootstrapTheme";
 
 export const Input = () => (
-  <ThemeProvider>
+  <BootstrapTheme>
     <Renderer name={Renderers.FIELD_TEXT} props={{errors: [], props: {}, params: {label: 'Sample', input: {onBlur: console.log}}}} />
-  </ThemeProvider>
+  </BootstrapTheme>
+);
+
+export const CheckBox = () => (
+  <BootstrapTheme>
+    <Renderer name={Renderers.FIELD_CHECKBOX} props={{errors: [], props: {type:'checkbox', onChange: console.log}, params: {label: 'Sample'}}} />
+  </BootstrapTheme>
 );
 
 export const Select = () => (
-  <ThemeProvider>
+  <BootstrapTheme>
     <Renderer name={Renderers.FIELD_SELECT} props={{errors: [], props: {onChange: console.log}, params: [
         {value: 1, label: 'First'},
         {value: 2, label: 'Second'}
       ]}} />
-  </ThemeProvider>
+  </BootstrapTheme>
 );
 
 export default {
-  title: 'Default/Field',
+  title: 'Bootstrap/Field',
   component: ThemeProvider,
   parameters: {
     layout: 'centered',

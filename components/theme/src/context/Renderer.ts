@@ -1,4 +1,5 @@
-import {useThemeContext} from "./ThemeProvider";
+import {useTheme} from "./ThemeProvider";
+import {useId} from "react";
 
 export interface RendererProps {
   name: string;
@@ -6,6 +7,7 @@ export interface RendererProps {
 }
 
 export const Renderer = ({name, props = {}}: RendererProps) => {
-  const {render} = useThemeContext();
-  return render(name, props);
+  const {render} = useTheme();
+  const id = useId();
+  return render(name, id, props);
 }

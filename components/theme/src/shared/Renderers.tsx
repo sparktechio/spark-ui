@@ -16,7 +16,8 @@ export enum Renderers {
   BUTTON_ERROR = "button-error",
   BUTTON_INFO = "button-info",
 
-  FIELD_INPUT = "field-input",
+  FIELD_TEXT = "field-text",
+  FIELD_DATE = "field-date",
   FIELD_TEXT_AREA = "field-text-area",
   FIELD_SELECT = "field-select",
   FIELD_RADIO = "field-radio",
@@ -38,7 +39,16 @@ export const defaultRenderers: Record<string, (props: Record<string, any>) => JS
   [Renderers.BUTTON_ERROR]: ({text, ...props}: Record<string, any>) => (<button {...props}><Error>{text}</Error></button>),
   [Renderers.BUTTON_INFO]: ({text, ...props}: Record<string, any>) => (<button {...props}><Info>{text}</Info></button>),
 
-  [Renderers.FIELD_INPUT]: ({props, params, errors}) => (
+  [Renderers.FIELD_TEXT]: ({props, params, errors}) => (
+    <>
+      <div>
+        <label>{params.label}</label>
+      </div>
+      <input {...params.input} {...props} />
+      {errors.length > 0 && <Error>Validation failed {errors}</Error>}
+    </>
+  ),
+  [Renderers.FIELD_DATE]: ({props, params, errors}) => (
     <>
       <div>
         <label>{params.label}</label>
