@@ -51,12 +51,24 @@ const StyledContent = styled(RadixDialog.Content)`
             transform: translate(-50%, -50%) scale(1);
         }
     }
-`
+`;
+
+export interface DialogContentProps extends RadixDialog.DialogContentProps {
+  overlay?: React.ReactNode;
+}
 
 Dialog.Trigger = Trigger;
 Dialog.Portal = RadixDialog.Portal;
+Dialog.InlineContent = RadixDialog.Content;
 Dialog.Overlay = StyledOverlay;
-Dialog.Content = StyledContent;
+Dialog.Content = ({overlay = <StyledOverlay />, children, ...props}: DialogContentProps) => (
+  <RadixDialog.Portal>
+    {overlay}
+    <StyledContent {...props}>
+      {children}
+    </StyledContent>
+  </RadixDialog.Portal>
+)
 Dialog.Title = RadixDialog.Title;
 Dialog.Description = RadixDialog.Description;
 Dialog.Close = RadixDialog.Close;

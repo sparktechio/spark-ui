@@ -2,27 +2,24 @@ import React from "react";
 import {Dialog} from "../dialog/Dialog";
 import styled from "styled-components";
 
-export const Basic = () => (
+export const BasicDialog = () => (
   <Dialog>
     <Dialog.Trigger asChild>
       <button>Open</button>
     </Dialog.Trigger>
-    <Dialog.Portal>
-      <Dialog.Overlay />
-      <Dialog.Content>
-        <Wrapper>
-          <Dialog.Title>
-            Title
-          </Dialog.Title>
-          <Dialog.Description>
-            Description
-          </Dialog.Description>
-          <Dialog.Close>
-            Close
-          </Dialog.Close>
-        </Wrapper>
-      </Dialog.Content>
-    </Dialog.Portal>
+    <Dialog.Content>
+      <Wrapper>
+        <Dialog.Title>
+          Title
+        </Dialog.Title>
+        <Dialog.Description>
+          Description
+        </Dialog.Description>
+        <Dialog.Close>
+          Close
+        </Dialog.Close>
+      </Wrapper>
+    </Dialog.Content>
   </Dialog>
 );
 
