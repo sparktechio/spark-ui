@@ -1,57 +1,52 @@
-import React, {JSX, useState, MouseEvent, KeyboardEvent} from "react";
+import React, {useState, MouseEvent, KeyboardEvent} from "react";
 import {useSelectContext} from "../context/DropdownContext";
 import {useDebounce} from "../hooks/useDebounce";
-import * as RadixDropdown from "@radix-ui/react-dropdown-menu";
+import {FieldProps, TextField, ThemeFormFieldProps} from "@sparkui/react-field";
+import {isDefined} from "@sparkui/react-utils";
 
-export interface DropdownSearchChildrenProps {
-  className?: string;
-  onChange: (value?: string | null) => void;
-  onClick: (event: MouseEvent) => void;
-  onKeyDown: (event: KeyboardEvent) => void;
-  value?: string;
-}
-
-export interface DropdownSearchProps<T> {
+export interface DropdownSearchProps<T> extends ThemeFormFieldProps<string, HTMLInputElement>{
   className?: string;
   debounceMs?: number;
-  children: (props: DropdownSearchChildrenProps) => JSX.Element;
 }
 
 export const DropdownSearch = <T,>(
   {
     className,
     debounceMs = 200,
-    children,
+    params,
+    onChange,
+    value,
+    ...props
   }: DropdownSearchProps<T>
 ) => {
   const {query, search} = useSelectContext();
-  const [value, setValue] = useState(query);
+  const [searchQuery, setSearchQuery] = useState(value ?? query);
 
   useDebounce({
-    value,
+    value: searchQuery,
     debounceMs,
     onChange: search
-  })
+  });
 
-  const onChange = (value?: string | null) => {
-    if (value !== null && value !== undefined) {
-      setValue(value);
+  const onChangeField = (field: FieldProps<string>) => {
+    if (isDefined(field.value)) {
+      setSearchQuery(field.value);
+      if (onChange) {
+        onChange(field)
+      }
     }
   }
 
   return (
-    <RadixDropdown.Item>
-      {
-        children(
-          {
-            value,
-            className,
-            onChange,
-            onKeyDown: (event: KeyboardEvent) => event.stopPropagation(),
-            onClick: (event: MouseEvent) => event.stopPropagation()
-          }
-        )
-      }
-    </RadixDropdown.Item>
+    <TextField
+      onChange={onChangeField}
+      value={searchQuery}
+      params={{
+        ...(params ?? {}),
+        onKeyDown: (event: KeyboardEvent) => event.stopPropagation(),
+        onClick: (event: MouseEvent) => event.stopPropagation()
+      }}
+      {...props}
+    />
   );
 }
