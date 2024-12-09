@@ -5,6 +5,8 @@ import {Renderers} from "./Renderers";
 export const BootstrapTheme = ({children, renderers}: ThemeProviderProps<Color, Space>) => (
   <ThemeProvider
     renderers={{
+      [Renderers.TEXT]: ({children, ...props}: HTMLAttributes<HTMLSpanElement>) => (
+        <span {...props}>{children}</span>),
       [Renderers.TEXT_LABEL]: ({children, ...props}: HTMLAttributes<HTMLSpanElement>) => (
         <span className="text-muted" {...props}>{children}</span>),
       [Renderers.TEXT_TITLE]: ({children, ...props}: HTMLAttributes<HTMLSpanElement>) => (
@@ -12,6 +14,8 @@ export const BootstrapTheme = ({children, renderers}: ThemeProviderProps<Color, 
       [Renderers.TEXT_SUBTITLE]: ({children, ...props}: HTMLAttributes<HTMLSpanElement>) => (
         <span className="fs-4" {...props}>{children}</span>),
 
+      [Renderers.BUTTON]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (
+        <button className="btn" {...props}>{children}</button>),
       [Renderers.BUTTON_PRIMARY]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (
         <button className="btn btn-primary" {...props}>{children}</button>),
       [Renderers.BUTTON_SECONDARY]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (

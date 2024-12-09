@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
-import {ErrorButton, InfoButton, PrimaryButton, SecondaryButton, WarningButton} from "../shared/Button";
+import {Button, ErrorButton, InfoButton, PrimaryButton, SecondaryButton, WarningButton} from "../shared/Button";
 import {BootstrapTheme} from "../shared/BootstrapTheme";
 
 export const ButtonPrimary = () => (
@@ -35,7 +35,7 @@ export const ButtonWarning = () => (
 
 export default {
   title: 'Bootstrap/Button',
-  component: PrimaryButton,
+  component: Button,
   parameters: {
     layout: 'centered',
   },

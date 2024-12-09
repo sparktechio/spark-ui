@@ -2,6 +2,7 @@ import React, {ButtonHTMLAttributes, HTMLAttributes, JSX} from "react";
 import styled from "styled-components";
 
 export enum Renderers {
+  TEXT = "text",
   TEXT_LABEL = "text-label",
   TEXT_TITLE = "text-title",
   TEXT_SUBTITLE = "text-subtitle",
@@ -10,6 +11,7 @@ export enum Renderers {
   TEXT_WARNING = "text-warning",
   TEXT_ERROR = "text-error",
 
+  BUTTON = "button",
   BUTTON_PRIMARY = "button-primary",
   BUTTON_SECONDARY = "button-secondary",
   BUTTON_WARNING = "button-warning",
@@ -25,6 +27,7 @@ export enum Renderers {
 }
 
 export const defaultRenderers: Record<string, (props: Record<string, any>) => JSX.Element> = {
+  [Renderers.TEXT]: ({children, ...props}: HTMLAttributes<HTMLSpanElement>) => (<span {...props}>{children}</span>),
   [Renderers.TEXT_LABEL]: ({children, ...props}: HTMLAttributes<HTMLSpanElement>) => (<span {...props}>{children}</span>),
   [Renderers.TEXT_TITLE]: ({children, ...props}: HTMLAttributes<HTMLSpanElement>) => (<h1 {...props}>{children}</h1>),
   [Renderers.TEXT_SUBTITLE]: ({children, ...props}: HTMLAttributes<HTMLSpanElement>) => (<h3 {...props}>{children}</h3>),
@@ -33,6 +36,7 @@ export const defaultRenderers: Record<string, (props: Record<string, any>) => JS
   [Renderers.TEXT_WARNING]: ({children, ...props}: HTMLAttributes<HTMLSpanElement>) => (<Warning {...props}>{children}</Warning>),
   [Renderers.TEXT_ERROR]: ({children, ...props}: HTMLAttributes<HTMLSpanElement>) => (<Error {...props}>{children}</Error>),
 
+  [Renderers.BUTTON]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (<button {...props}>{children}</button>),
   [Renderers.BUTTON_PRIMARY]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (<button {...props}><Primary>{children}</Primary></button>),
   [Renderers.BUTTON_SECONDARY]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (<button {...props}><Secondary>{children}</Secondary></button>),
   [Renderers.BUTTON_WARNING]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (<button {...props}><Warning>{children}</Warning></button>),

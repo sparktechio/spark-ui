@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
-import {ErrorText, InfoText, LabelText, SubtitleText, Text, TitleText, WarningText} from "../shared/Text";
+import {BodyText, ErrorText, InfoText, LabelText, SubtitleText, Text, TitleText, WarningText} from "../shared/Text";
 import {BootstrapTheme} from "../shared/BootstrapTheme";
 
 export const TextTitle = () => (
@@ -21,12 +21,6 @@ export const TextLabel = () => (
   </BootstrapTheme>
 );
 
-export const TextBody = () => (
-  <BootstrapTheme>
-    <Text children="Body Text"/>
-  </BootstrapTheme>
-);
-
 export const TextError = () => (
   <BootstrapTheme>
     <ErrorText children="Error Text"/>
@@ -42,6 +36,12 @@ export const TextWarning = () => (
 export const TextInfo = () => (
   <BootstrapTheme>
     <InfoText>Info Text</InfoText>
+  </BootstrapTheme>
+);
+
+export const TextBody = () => (
+  <BootstrapTheme>
+    <BodyText>Body Text</BodyText>
   </BootstrapTheme>
 );
 

@@ -6,6 +6,10 @@ export interface TextProps extends HTMLAttributes<HTMLSpanElement|HTMLDivElement
   renderer?: string;
 }
 
+export const Text = ({renderer, ...props}: TextProps) => (
+  <Renderer name={renderer ?? Renderers.TEXT} props={props} />
+);
+
 export const TitleText = ({renderer, ...props}: TextProps) => (
   <Renderer name={renderer ?? Renderers.TEXT_TITLE} props={props} />
 );
@@ -30,6 +34,6 @@ export const InfoText = ({renderer, ...props}: TextProps) => (
   <Renderer name={renderer ?? Renderers.TEXT_INFO} props={props} />
 );
 
-export const Text = ({renderer, ...props}: TextProps) => (
+export const BodyText = ({renderer, ...props}: TextProps) => (
   <Renderer name={renderer ?? Renderers.TEXT_BODY} props={props} />
 );

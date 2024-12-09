@@ -6,6 +6,10 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   renderer?: string;
 }
 
+export const Button = ({renderer, ...props}: ButtonProps) => (
+  <Renderer name={renderer ?? Renderers.BUTTON} props={props} />
+);
+
 export const PrimaryButton = ({renderer, ...props}: ButtonProps) => (
   <Renderer name={renderer ?? Renderers.BUTTON_PRIMARY} props={props} />
 );
