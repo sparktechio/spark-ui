@@ -102,17 +102,17 @@ export const BootstrapTheme = ({children, renderers}: ThemeProviderProps<Color, 
           </div>
         </>
       ),
-      [Renderers.FIELD_RADIO]: ({id, props, params, errors}) => (
+      [Renderers.FIELD_RADIO]: ({props, params: {name, options, error}, errors}) => (
         <>
           {
-            params.map((item: any) => (
+            options.map((item: any) => (
               <div className="form-check" key={item.key}>
                 <input
-                  id={item.key}
-                  name={id}
                   className="form-check-input"
-                  {...item.input}
                   {...props}
+                  {...item.input}
+                  id={item.key}
+                  name={name}
                 />
                 <label className="form-check-label" htmlFor={item.key}>
                   {item.label}
@@ -122,7 +122,7 @@ export const BootstrapTheme = ({children, renderers}: ThemeProviderProps<Color, 
           }
           {errors.length > 0 && (
             <div className="invalid-feedback d-block">
-              {params.error ? params.error(errors) : `Validation failed ${errors}`}
+              {error ? error(errors) : `Validation failed ${errors}`}
             </div>
           )}
         </>

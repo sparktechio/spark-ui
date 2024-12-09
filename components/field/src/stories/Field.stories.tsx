@@ -11,8 +11,7 @@ import {
 import {Theme} from "./Theme";
 import {FieldController} from "../context/FieldsProvider";
 import {BaseField} from "../fields/BaseField";
-import { BootstrapTheme } from '@sparkui/react-theme';
-
+import {BootstrapTheme, Renderers} from '@sparkui/react-theme';
 
 export const Text = () =>  (
   <BootstrapTheme>
@@ -68,11 +67,14 @@ export const Password = () =>  (
 export const RadioSet = () =>  (
   <BootstrapTheme>
     <RadioField
-      params={[
-        {key: 'red', label: 'Red'},
-        {key: 'blue', label: 'Blue'},
-        {key: 'green', label: 'Green'},
-      ]}
+      params={{
+        name: 'colors',
+        options: [
+          {key: 'red', label: 'Red'},
+          {key: 'blue', label: 'Blue'},
+          {key: 'green', label: 'Green'},
+        ]
+      }}
     />
   </BootstrapTheme>
 );

@@ -1,7 +1,7 @@
 import React from "react";
 import {ReactNode} from "react";
 import styled from "styled-components";
-import {ThemeProvider} from "@sparkui/react-theme";
+import {Renderers, ThemeProvider} from "@sparkui/react-theme";
 
 export const Theme = ({children}: {children: ReactNode}) => (
   <ThemeProvider

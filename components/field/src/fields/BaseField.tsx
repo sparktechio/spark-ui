@@ -55,7 +55,7 @@ export interface FieldChildrenProps<V, I, P, A> {
 
 export interface BaseFormFieldProps<V, I, P, A> extends FieldProps<V> {
   propsGenerator?: (props: FieldChildrenProps<V, I, P, A>) => any;
-  params?: any;
+  params?: A;
 }
 
 export interface FormFieldProps<V, I, P, A> extends BaseFormFieldProps<V, I, P, A> {
