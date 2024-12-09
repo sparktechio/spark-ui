@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {ButtonHTMLAttributes, HTMLAttributes} from "react";
 import {Color, Space, ThemeProvider, ThemeProviderProps} from "../context/ThemeProvider";
 import {Renderers} from "./Renderers";

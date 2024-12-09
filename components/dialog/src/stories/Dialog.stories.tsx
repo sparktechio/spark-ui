@@ -1,31 +1,42 @@
 import React from "react";
 import {Dialog} from "../dialog/Dialog";
 import styled from "styled-components";
+import {BootstrapTheme, PrimaryButton} from "@sparkui/react-theme";
 
 export const BasicDialog = () => (
-  <Dialog>
-    <Dialog.Trigger asChild>
-      <button>Open</button>
-    </Dialog.Trigger>
-    <Dialog.Content>
-      <Wrapper>
-        <Dialog.Title>
-          Title
-        </Dialog.Title>
+  <BootstrapTheme>
+    <Dialog>
+      <Dialog.Trigger>
+        Open
+      </Dialog.Trigger>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title>
+            Title
+          </Dialog.Title>
+
+          <Dialog.Close>
+            X
+          </Dialog.Close>
+        </Dialog.Header>
         <Dialog.Description>
-          Description
+          <Wrapper>
+            Description
+          </Wrapper>
         </Dialog.Description>
-        <Dialog.Close>
-          Close
-        </Dialog.Close>
-      </Wrapper>
-    </Dialog.Content>
-  </Dialog>
+        <Dialog.Actions>
+          <PrimaryButton>
+            Save
+          </PrimaryButton>
+        </Dialog.Actions>
+      </Dialog.Content>
+    </Dialog>
+  </BootstrapTheme>
 );
 
 const Wrapper = styled.div`
-    padding: 16px;
-`
+    padding: 116px;
+`;
 
 export default {
   title: 'Components/Dialog',
