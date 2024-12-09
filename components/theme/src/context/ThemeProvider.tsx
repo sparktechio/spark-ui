@@ -1,10 +1,10 @@
 import React, {createContext, JSX, ReactNode, useContext} from "react";
 import {defaultRenderers} from "../shared/Renderers";
 
-export interface ThemeContextProps<C extends Color, S extends Space> {
+export interface ThemeContextProps<C extends Color, S extends Space, P> {
   colors?: C;
   spaces?: S;
-  render: (renderer: string, id: string, props: Record<string, any>) => JSX.Element;
+  render: (renderer: string, id: string, props: P) => JSX.Element;
 }
 
 export interface Color extends Record<string, string> {}
@@ -18,13 +18,13 @@ export interface ThemeProviderProps<C extends Color, S extends Space> {
   children: ReactNode;
 }
 
-export const ThemeContext = createContext<ThemeContextProps<Record<string, string>, Record<string, string>>>({
+export const ThemeContext = createContext<ThemeContextProps<Record<string, string>, Record<string, string>, any>>({
   colors: {},
   spaces: {},
   render: () => (<></>),
 });
 
-export const useTheme = <C extends Color, S extends Space>() => useContext(ThemeContext) as ThemeContextProps<C, S>;
+export const useTheme = <C extends Color, S extends Space, P>() => useContext(ThemeContext) as ThemeContextProps<C, S, P>;
 
 export const ThemeProvider = <C extends Color, S extends Space>(
   {

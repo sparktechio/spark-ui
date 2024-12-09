@@ -5,43 +5,43 @@ import {ErrorText, InfoText, LabelText, SubtitleText, Text, TitleText, WarningTe
 
 export const TextTitle = () => (
   <ThemeProvider>
-    <TitleText text="Title Text"/>
+    <TitleText children="Title Text"/>
   </ThemeProvider>
 );
 
 export const TextSubtitle = () => (
   <ThemeProvider>
-    <SubtitleText text="Subtitle Text"/>
+    <SubtitleText children="Subtitle Text"/>
   </ThemeProvider>
 );
 
 export const TextLabel = () => (
   <ThemeProvider>
-    <LabelText text="Label Text"/>
+    <LabelText children="Label Text"/>
   </ThemeProvider>
 );
 
 export const TextBody = () => (
   <ThemeProvider>
-    <Text text="Body Text"/>
+    <Text children="Body Text"/>
   </ThemeProvider>
 );
 
 export const TextError = () => (
   <ThemeProvider>
-    <ErrorText text="Error Text"/>
+    <ErrorText children="Error Text"/>
   </ThemeProvider>
 );
 
 export const TextWarning = () => (
   <ThemeProvider>
-    <WarningText text="Warning Text"/>
+    <WarningText children="Warning Text"/>
   </ThemeProvider>
 );
 
 export const TextInfo = () => (
   <ThemeProvider>
-    <InfoText text="Info Text"/>
+    <InfoText children="Info Text"/>
   </ThemeProvider>
 );
 

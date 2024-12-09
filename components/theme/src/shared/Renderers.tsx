@@ -1,4 +1,4 @@
-import React, {JSX} from "react";
+import React, {ButtonHTMLAttributes, HTMLAttributes, JSX} from "react";
 import styled from "styled-components";
 
 export enum Renderers {
@@ -25,19 +25,19 @@ export enum Renderers {
 }
 
 export const defaultRenderers: Record<string, (props: Record<string, any>) => JSX.Element> = {
-  [Renderers.TEXT_LABEL]: ({text, ...props}: Record<string, any>) => (<span {...props}>{text}</span>),
-  [Renderers.TEXT_TITLE]: ({text, ...props}: Record<string, any>) => (<h1 {...props}>{text}</h1>),
-  [Renderers.TEXT_SUBTITLE]: ({text, ...props}: Record<string, any>) => (<h3 {...props}>{text}</h3>),
-  [Renderers.TEXT_BODY]: ({text, ...props}: Record<string, any>) => (<p {...props}>{text}</p>),
-  [Renderers.TEXT_INFO]: ({text, ...props}: Record<string, any>) => (<Info {...props}>{text}</Info>),
-  [Renderers.TEXT_WARNING]: ({text, ...props}: Record<string, any>) => (<Warning {...props}>{text}</Warning>),
-  [Renderers.TEXT_ERROR]: ({text, ...props}: Record<string, any>) => (<Error {...props}>{text}</Error>),
+  [Renderers.TEXT_LABEL]: ({children, ...props}: HTMLAttributes<HTMLSpanElement>) => (<span {...props}>{children}</span>),
+  [Renderers.TEXT_TITLE]: ({children, ...props}: HTMLAttributes<HTMLSpanElement>) => (<h1 {...props}>{children}</h1>),
+  [Renderers.TEXT_SUBTITLE]: ({children, ...props}: HTMLAttributes<HTMLSpanElement>) => (<h3 {...props}>{children}</h3>),
+  [Renderers.TEXT_BODY]: ({children, ...props}: HTMLAttributes<HTMLSpanElement>) => (<p {...props}>{children}</p>),
+  [Renderers.TEXT_INFO]: ({children, ...props}: HTMLAttributes<HTMLSpanElement>) => (<Info {...props}>{children}</Info>),
+  [Renderers.TEXT_WARNING]: ({children, ...props}: HTMLAttributes<HTMLSpanElement>) => (<Warning {...props}>{children}</Warning>),
+  [Renderers.TEXT_ERROR]: ({children, ...props}: HTMLAttributes<HTMLSpanElement>) => (<Error {...props}>{children}</Error>),
 
-  [Renderers.BUTTON_PRIMARY]: ({text, ...props}: Record<string, any>) => (<button {...props}><Primary>{text}</Primary></button>),
-  [Renderers.BUTTON_SECONDARY]: ({text, ...props}: Record<string, any>) => (<button {...props}><Secondary>{text}</Secondary></button>),
-  [Renderers.BUTTON_WARNING]: ({text, ...props}: Record<string, any>) => (<button {...props}><Warning>{text}</Warning></button>),
-  [Renderers.BUTTON_ERROR]: ({text, ...props}: Record<string, any>) => (<button {...props}><Error>{text}</Error></button>),
-  [Renderers.BUTTON_INFO]: ({text, ...props}: Record<string, any>) => (<button {...props}><Info>{text}</Info></button>),
+  [Renderers.BUTTON_PRIMARY]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (<button {...props}><Primary>{children}</Primary></button>),
+  [Renderers.BUTTON_SECONDARY]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (<button {...props}><Secondary>{children}</Secondary></button>),
+  [Renderers.BUTTON_WARNING]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (<button {...props}><Warning>{children}</Warning></button>),
+  [Renderers.BUTTON_ERROR]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (<button {...props}><Error>{children}</Error></button>),
+  [Renderers.BUTTON_INFO]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (<button {...props}><Info>{children}</Info></button>),
 
   [Renderers.FIELD_TEXT]: ({props, params, errors}) => (
     <>

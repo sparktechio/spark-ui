@@ -1,12 +1,12 @@
 import {useTheme} from "./ThemeProvider";
 import {useId} from "react";
 
-export interface RendererProps {
+export interface RendererProps<P> {
   name: string;
-  props?: Record<string, any>;
+  props?: P;
 }
 
-export const Renderer = ({name, props = {}}: RendererProps) => {
+export const Renderer = <P,>({name, props = {} as P}: RendererProps<P>) => {
   const {render} = useTheme();
   const id = useId();
   return render(name, id, props);

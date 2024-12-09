@@ -7,31 +7,31 @@ import {BootstrapTheme} from "../shared/BootstrapTheme";
 
 export const ButtonPrimary = () => (
   <BootstrapTheme>
-    <PrimaryButton onClick={console.log} text="Primary Text"/>
+    <PrimaryButton onClick={console.log} children="Primary Text"/>
   </BootstrapTheme>
 );
 
 export const ButtonSecondary = () => (
   <BootstrapTheme>
-    <SecondaryButton onClick={console.log} text="Secondary Text"/>
+    <SecondaryButton onClick={console.log} children="Secondary Text"/>
   </BootstrapTheme>
 );
 
 export const ButtonInfo = () => (
   <BootstrapTheme>
-    <InfoButton onClick={console.log} text="Info Text"/>
+    <InfoButton onClick={console.log} children="Info Text"/>
   </BootstrapTheme>
 );
 
 export const ButtonError = () => (
   <BootstrapTheme>
-    <ErrorButton onClick={console.log} text="Error Text"/>
+    <ErrorButton onClick={console.log} children="Error Text"/>
   </BootstrapTheme>
 );
 
 export const ButtonWarning = () => (
   <BootstrapTheme>
-    <WarningButton onClick={console.log} text="Warning Text"/>
+    <WarningButton onClick={console.log} children="Warning Text"/>
   </BootstrapTheme>
 );
 

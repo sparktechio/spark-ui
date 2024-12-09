@@ -6,31 +6,31 @@ import {ErrorButton, InfoButton, PrimaryButton, SecondaryButton, WarningButton} 
 
 export const ButtonPrimary = () => (
   <ThemeProvider>
-    <PrimaryButton onClick={console.log} text="Primary Text"/>
+    <PrimaryButton onClick={console.log} children="Primary Text"/>
   </ThemeProvider>
 );
 
 export const ButtonSecondary = () => (
   <ThemeProvider>
-    <SecondaryButton onClick={console.log} text="Secondary Text"/>
+    <SecondaryButton onClick={console.log} children="Secondary Text"/>
   </ThemeProvider>
 );
 
 export const ButtonInfo = () => (
   <ThemeProvider>
-    <InfoButton onClick={console.log} text="Info Text"/>
+    <InfoButton onClick={console.log} children="Info Text"/>
   </ThemeProvider>
 );
 
 export const ButtonError = () => (
   <ThemeProvider>
-    <ErrorButton onClick={console.log} text="Error Text"/>
+    <ErrorButton onClick={console.log} children="Error Text"/>
   </ThemeProvider>
 );
 
 export const ButtonWarning = () => (
   <ThemeProvider>
-    <WarningButton onClick={console.log} text="Warning Text"/>
+    <WarningButton onClick={console.log} children="Warning Text"/>
   </ThemeProvider>
 );
 

@@ -8,43 +8,43 @@ import {BootstrapTheme} from "../shared/BootstrapTheme";
 
 export const TextTitle = () => (
   <BootstrapTheme>
-    <TitleText text="Title Text"/>
+    <TitleText children="Title Text"/>
   </BootstrapTheme>
 );
 
 export const TextSubtitle = () => (
   <BootstrapTheme>
-    <SubtitleText text="Subtitle Text"/>
+    <SubtitleText children="Subtitle Text"/>
   </BootstrapTheme>
 );
 
 export const TextLabel = () => (
   <BootstrapTheme>
-    <LabelText text="Label Text"/>
+    <LabelText children="Label Text"/>
   </BootstrapTheme>
 );
 
 export const TextBody = () => (
   <BootstrapTheme>
-    <Text text="Body Text"/>
+    <Text children="Body Text"/>
   </BootstrapTheme>
 );
 
 export const TextError = () => (
   <BootstrapTheme>
-    <ErrorText text="Error Text"/>
+    <ErrorText children="Error Text"/>
   </BootstrapTheme>
 );
 
 export const TextWarning = () => (
   <BootstrapTheme>
-    <WarningText text="Warning Text"/>
+    <WarningText children="Warning Text"/>
   </BootstrapTheme>
 );
 
 export const TextInfo = () => (
   <BootstrapTheme>
-    <InfoText text="Info Text"/>
+    <InfoText>Info Text</InfoText>
   </BootstrapTheme>
 );
 

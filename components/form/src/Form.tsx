@@ -91,7 +91,7 @@ Form.ButtonSubmit = ({children, ...props}: FormSubmitProps) => (
 Form.Submit = ({renderer = Renderers.BUTTON_PRIMARY, ...props}: AppFormSubmitProps) => {
   return (
     <FormSubmit {...props} propsGenerator={getButtonSubmitProps}>
-      {(props) => <Renderer name={renderer} {...props} props={props}/>}
+      {(props) => <Renderer name={renderer} props={props}/>}
     </FormSubmit>
   );
 }

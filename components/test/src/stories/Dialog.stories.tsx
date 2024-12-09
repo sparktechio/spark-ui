@@ -4,7 +4,7 @@ import {Dialog} from "@sparkui/react-dialog";
 import styled from "styled-components";
 import {Form} from "@sparkui/react-form";
 import {Option} from "@sparkui/react-dropdown";
-import {BootstrapTheme, ErrorText} from "@sparkui/react-theme";
+import {BootstrapTheme, ErrorText, PrimaryButton} from "@sparkui/react-theme";
 import {MyDropdown} from "./MyDropdown";
 
 const options: Option<string>[] = [
@@ -42,7 +42,7 @@ export const Basic = () => (
   >
     <Dialog>
       <Dialog.Trigger asChild>
-        <button>Open</button>
+        <PrimaryButton text="Open"/>
       </Dialog.Trigger>
       <Dialog.Content>
         <Wrapper>
@@ -67,11 +67,11 @@ export const Basic = () => (
             />
             <Form.Submit
               onSubmit={async (e) => console.log(e)}
-              params="Submit"
+              params={{title: "Submit"}}
             />
           </Form>
-          <Dialog.Close>
-            Close
+          <Dialog.Close asChild>
+            <PrimaryButton text="Close"/>
           </Dialog.Close>
         </Wrapper>
       </Dialog.Content>
