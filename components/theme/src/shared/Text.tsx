@@ -2,30 +2,34 @@ import {Renderer} from "../context/Renderer";
 import React, {HTMLAttributes} from "react";
 import {Renderers} from "./Renderers";
 
-export const TitleText = (props: HTMLAttributes<HTMLSpanElement>) => (
-  <Renderer name={Renderers.TEXT_TITLE} props={props} />
+export interface TextProps extends HTMLAttributes<HTMLSpanElement|HTMLDivElement> {
+  renderer?: string;
+}
+
+export const TitleText = ({renderer, ...props}: TextProps) => (
+  <Renderer name={renderer ?? Renderers.TEXT_TITLE} props={props} />
 );
 
-export const SubtitleText = (props: HTMLAttributes<HTMLSpanElement>) => (
-  <Renderer name={Renderers.TEXT_SUBTITLE} props={props} />
+export const SubtitleText = ({renderer, ...props}: TextProps) => (
+  <Renderer name={renderer ?? Renderers.TEXT_SUBTITLE} props={props} />
 );
 
-export const LabelText = (props: HTMLAttributes<HTMLSpanElement>) => (
-  <Renderer name={Renderers.TEXT_LABEL} props={props} />
+export const LabelText = ({renderer, ...props}: TextProps) => (
+  <Renderer name={renderer ?? Renderers.TEXT_LABEL} props={props} />
 );
 
-export const ErrorText = (props: HTMLAttributes<HTMLSpanElement>) => (
-  <Renderer name={Renderers.TEXT_ERROR} props={props} />
+export const ErrorText = ({renderer, ...props}: TextProps) => (
+  <Renderer name={renderer ?? Renderers.TEXT_ERROR} props={props} />
 );
 
-export const WarningText = (props: HTMLAttributes<HTMLSpanElement>) => (
-  <Renderer name={Renderers.TEXT_WARNING} props={props} />
+export const WarningText = ({renderer, ...props}: TextProps) => (
+  <Renderer name={renderer ?? Renderers.TEXT_WARNING} props={props} />
 );
 
-export const InfoText = (props: HTMLAttributes<HTMLSpanElement>) => (
-  <Renderer name={Renderers.TEXT_INFO} props={props} />
+export const InfoText = ({renderer, ...props}: TextProps) => (
+  <Renderer name={renderer ?? Renderers.TEXT_INFO} props={props} />
 );
 
-export const Text = (props: HTMLAttributes<HTMLSpanElement>) => (
-  <Renderer name={Renderers.TEXT_BODY} props={props} />
+export const Text = ({renderer, ...props}: TextProps) => (
+  <Renderer name={renderer ?? Renderers.TEXT_BODY} props={props} />
 );

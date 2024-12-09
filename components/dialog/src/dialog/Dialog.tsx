@@ -11,7 +11,9 @@ export const Dialog = (props: DialogProps) => {
 export interface DialogTriggerProps extends RadixDialog.DialogTriggerProps {}
 
 export const Trigger = (props: DialogTriggerProps) => {
-  return <RadixDialog.Trigger {...props} />;
+  return <RadixDialog.Trigger asChild>
+
+  </RadixDialog.Trigger>;
 }
 
 const StyledOverlay = styled(RadixDialog.Overlay)`
