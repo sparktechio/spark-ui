@@ -1,6 +1,6 @@
 import React, {FormHTMLAttributes, MutableRefObject, ReactNode, useRef} from "react";
 import {BaseFormSubmitProps, FormSubmit, FormSubmitProps, SubmitChildrenProps} from "./fields/FormSubmit";
-import {useThemeContext} from "@sparkui/react-theme";
+import {Renderer} from "@sparkui/react-theme";
 import {
   CheckBoxField, DateField,
   EmailField,
@@ -13,6 +13,7 @@ import {
   EnhancedField
 } from "@sparkui/react-field";
 import {FormProvider} from "./context/FormProvider";
+import {Renderers} from "@sparkui/react-theme/dist/shared/Renderers";
 
 export interface FormProps<F> extends FormHTMLAttributes<HTMLFormElement> {
   className?: string;
@@ -66,7 +67,7 @@ export const getButtonSubmitProps = ({onSubmit, loading}: SubmitChildrenProps) =
 }
 
 export interface AppFormSubmitProps extends BaseFormSubmitProps {
-  renderer: string;
+  renderer?: string;
 }
 
 Form.Field = Field;
@@ -87,11 +88,10 @@ Form.ButtonSubmit = ({children, ...props}: FormSubmitProps) => (
   </FormSubmit>
 );
 
-Form.Submit = ({renderer, ...props}: AppFormSubmitProps) => {
-  const {render} = useThemeContext();
+Form.Submit = ({renderer = Renderers.BUTTON_PRIMARY, ...props}: AppFormSubmitProps) => {
   return (
     <FormSubmit {...props} propsGenerator={getButtonSubmitProps}>
-      {(props) => render(renderer, props)}
+      {(props) => <Renderer name={renderer} {...props} props={props}/>}
     </FormSubmit>
   );
 }

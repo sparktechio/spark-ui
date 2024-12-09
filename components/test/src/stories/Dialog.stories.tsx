@@ -3,8 +3,9 @@ import React from 'react';
 import {Dialog} from "@sparkui/react-dialog";
 import styled from "styled-components";
 import {Form} from "@sparkui/react-form";
-import {FormRenderer} from "./FormRenderer";
-import {Option} from "@sparkui/react-dropdown/dist/dropdown/DropdownOptions";
+import {Option} from "@sparkui/react-dropdown";
+import {BootstrapTheme, ErrorText} from "@sparkui/react-theme";
+import {MyDropdown} from "./MyDropdown";
 
 const options: Option<string>[] = [
   {
@@ -29,22 +30,31 @@ const onSearch = (query: string) => new Promise<Option<string>[]>(resolve => set
 }, 1000));
 
 export const Basic = () => (
-  <Dialog>
-    <Dialog.Trigger asChild>
-      <button>Open</button>
-    </Dialog.Trigger>
-    <Dialog.Content>
-      <Wrapper>
-        <Dialog.Title>
-          Title
-        </Dialog.Title>
-        <FormRenderer>
+  <BootstrapTheme
+    renderers={{
+      'my-dropdown': ({value, onChange, params, errors}) => (
+        <FormControl>
+          <MyDropdown {...{value, onChange}} {...params} />
+          {errors.length > 0 && <ErrorText text={`Validation failed ${errors}`} />}
+        </FormControl>
+      )
+    }}
+  >
+    <Dialog>
+      <Dialog.Trigger asChild>
+        <button>Open</button>
+      </Dialog.Trigger>
+      <Dialog.Content>
+        <Wrapper>
+          <Dialog.Title>
+            Title
+          </Dialog.Title>
           <Form value={{name: '', size: 'one'}} className="container row">
             <Form.Text
-              renderer="my-input"
               param="name"
               params={{
-                placeholder: "Name"
+                label: "Name",
+                input: {placeholder: "Name"}
               }}
             />
             <Form.Field
@@ -56,23 +66,28 @@ export const Basic = () => (
               }}
             />
             <Form.Submit
-              renderer="my-submit"
               onSubmit={async (e) => console.log(e)}
-              params={"Submit"}
+              params="Submit"
             />
           </Form>
-        </FormRenderer>
-        <Dialog.Close>
-          Close
-        </Dialog.Close>
-      </Wrapper>
-    </Dialog.Content>
-  </Dialog>
+          <Dialog.Close>
+            Close
+          </Dialog.Close>
+        </Wrapper>
+      </Dialog.Content>
+    </Dialog>
+  </BootstrapTheme>
 );
 
 const Wrapper = styled.div`
     padding: 16px;
-`
+`;
+
+export const FormControl = styled.div.attrs({className: "col-12 p-2"})`
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+`;
 
 export default {
   title: 'Components/Dialog',

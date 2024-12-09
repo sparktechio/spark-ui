@@ -1,6 +1,6 @@
 {
   "name": "@sparkui/react-dialog",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "license": "MIT",
   "description": "Spark UI, React dialog",
   "main": "dist/index.js",
@@ -36,9 +36,9 @@
   ],
   "author": "akifh@spark-tech.io",
   "dependencies": {
+    "react": "^18.3.1",
     "@radix-ui/react-dialog": "^1.1.2",
-    "@sparkui/react-theme": "^1.0.2",
-    "react": "^18.3.1"
+    "@sparkui/react-theme": "^1.0.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.9",
