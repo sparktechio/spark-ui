@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
-import {ThemeProvider} from "../context/ThemeProvider";
 import {Renderer} from "../context/Renderer";
 import {Renderers} from "../shared/Renderers";
 import {BootstrapTheme} from "../shared/BootstrapTheme";
@@ -28,7 +27,7 @@ export const Select = () => (
 
 export default {
   title: 'Bootstrap/Field',
-  component: ThemeProvider,
+  component: Renderer,
   parameters: {
     layout: 'centered',
   },
