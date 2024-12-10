@@ -15,14 +15,14 @@ export const Theme = ({children}: {children: ReactNode}) => (
         'my-input': ({props, params, errors}) => (
           <FormControl>
             <input className="form-control" {...params} {...props} />
-            {errors.length > 0 && <ErrorText text={`Validation failed ${errors}`} />}
+            {errors.length > 0 && <ErrorText children={`Validation failed ${errors}`} />}
           </FormControl>
         ),
         'my-textarea': ({props, params, errors}) => (
           <FormControl>
             <label>{...params.label}</label>
             <textarea className="form-control" {...params.input} {...props}/>
-            {errors.length > 0 && <ErrorText text={`Validation failed ${errors}`} />}
+            {errors.length > 0 && <ErrorText children={`Validation failed ${errors}`} />}
           </FormControl>
         ),
         'my-checkbox': ({props, params, errors}) => (
@@ -31,7 +31,7 @@ export const Theme = ({children}: {children: ReactNode}) => (
               <input id="new" className="form-check-input" {...params.input} {...props}/>
               <label htmlFor="new">{...params.label}</label>
             </Row>
-            {errors.length > 0 && <ErrorText text={`Validation failed ${errors}`} />}
+            {errors.length > 0 && <ErrorText children={`Validation failed ${errors}`} />}
           </FormControl>
         ),
         'my-radio-set': ({value, props, params, errors}) => (
@@ -44,7 +44,7 @@ export const Theme = ({children}: {children: ReactNode}) => (
                 </Row>
               ))
             }
-            {errors.length > 0 && <ErrorText text={`Validation failed ${errors}`} />}
+            {errors.length > 0 && <ErrorText children={`Validation failed ${errors}`} />}
           </FormControl>
         ),
       }

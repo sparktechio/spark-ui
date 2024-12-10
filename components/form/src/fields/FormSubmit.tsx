@@ -1,34 +1,35 @@
 import {JSX, useState} from "react";
 import {EnhancedField, useFieldsContext, setNestedValue} from "@sparkui/react-field";
+import {ButtonProps} from "@sparkui/react-theme";
 
 export type Submit = <T,>(data: T) => Promise<void>;
 
-export interface SubmitChildrenProps {
+export interface SubmitChildrenProps<CustomProps> {
   onSubmit: Submit;
   loading: boolean;
-  props?: any;
-  params?: any;
+  props?: ButtonProps;
+  params?: CustomProps;
 }
 
-export interface BaseFormSubmitProps {
+export interface BaseFormSubmitProps<CustomProps> {
   onSubmit: Submit;
-  onError?: (error: unknown) => void;
-  params?: any;
-  propsGenerator?: (props: SubmitChildrenProps) => any;
+  onError?: (error: Error) => void;
+  params?: CustomProps;
+  props?: ButtonProps;
 }
 
-export interface FormSubmitProps extends BaseFormSubmitProps {
-  children: (props: SubmitChildrenProps) => JSX.Element;
+export interface FormSubmitProps<CustomProps> extends BaseFormSubmitProps<CustomProps> {
+  children: (props: SubmitChildrenProps<CustomProps>) => JSX.Element;
 }
 
-export const FormSubmit = (
+export const FormSubmit = <CustomProps,>(
   {
     onSubmit,
     onError,
-    propsGenerator,
     children,
+    props,
     params,
-  }: FormSubmitProps
+  }: FormSubmitProps<CustomProps>
 ) => {
   const [loading, setLoading] = useState(false);
   const {fields, getInvalidFields, focusField} = useFieldsContext();
@@ -56,7 +57,7 @@ export const FormSubmit = (
           }), {})
         );
       } catch (error: unknown) {
-        onError && onError(error);
+        onError && onError(new Error(`${error}`));
       } finally {
         setLoading(false);
       }
@@ -67,12 +68,17 @@ export const FormSubmit = (
     onSubmit: onBeforeSubmit,
     loading,
     params,
-  }
+  };
 
   return (children(
     {
+      ...(props ?? {}),
       ...element,
-      props: propsGenerator ? propsGenerator(element) : undefined,
+      props: {
+        onClick: onBeforeSubmit,
+        disabled: loading,
+        type: "button",
+      },
     }
   ));
 }

@@ -1,6 +1,6 @@
-import React, {FormHTMLAttributes, MutableRefObject, ReactNode, useRef} from "react";
-import {BaseFormSubmitProps, FormSubmit, FormSubmitProps, SubmitChildrenProps} from "./fields/FormSubmit";
-import {Renderer} from "@sparkui/react-theme";
+import React, {cloneElement, FormHTMLAttributes, JSX, MutableRefObject, ReactElement, ReactNode, useRef} from "react";
+import {BaseFormSubmitProps, FormSubmit, SubmitChildrenProps} from "./fields/FormSubmit";
+import {ButtonProps, Renderer} from "@sparkui/react-theme";
 import {
   CheckBoxField, DateField,
   EmailField,
@@ -58,16 +58,9 @@ export const Form = <F,>(
   )
 }
 
-export const getButtonSubmitProps = ({onSubmit, loading}: SubmitChildrenProps) => {
-  return {
-    onClick: onSubmit,
-    disabled: loading,
-    type: "button",
-  }
-}
-
-export interface AppFormSubmitProps extends BaseFormSubmitProps {
+export interface AppFormSubmitProps<CustomProps> extends BaseFormSubmitProps<CustomProps> {
   renderer?: string;
+  children?: ((props: SubmitChildrenProps<CustomProps>) => JSX.Element) | ReactElement<ButtonProps>;
 }
 
 Form.Field = Field;
@@ -82,15 +75,22 @@ Form.Radio = RadioField;
 Form.Numeric = NumericField;
 Form.Date = DateField;
 
-Form.ButtonSubmit = ({children, ...props}: FormSubmitProps) => (
-  <FormSubmit {...props} propsGenerator={getButtonSubmitProps}>
-    {children}
-  </FormSubmit>
-);
-
-Form.Submit = ({renderer = Renderers.BUTTON_PRIMARY, ...props}: AppFormSubmitProps) => {
+Form.Submit = <CustomProps,>({renderer = Renderers.BUTTON_PRIMARY, children, ...props}: AppFormSubmitProps<CustomProps>) => {
+  if (children && typeof children === "function") {
+    return (
+      <FormSubmit {...props}>
+        {children}
+      </FormSubmit>
+    )
+  } else if (children) {
+    return (
+      <FormSubmit {...props}>
+        {({props}) => cloneElement(children, { ...props })}
+      </FormSubmit>
+    )
+  }
   return (
-    <FormSubmit {...props} propsGenerator={getButtonSubmitProps}>
+    <FormSubmit {...props}>
       {(props) => <Renderer name={renderer} props={props}/>}
     </FormSubmit>
   );

@@ -1,35 +1,53 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import React, {useEffect, useRef} from "react";
+import React, {InputHTMLAttributes, useEffect, useRef} from "react";
 import {FormControl, Theme} from "./Theme";
 import {Form} from "../Form";
 import {FieldsController, NumericField} from "@sparkui/react-field";
-import {ErrorText} from "@sparkui/react-theme";
+import {ErrorText, BootstrapTheme, PrimaryButton, WarningText} from "@sparkui/react-theme";
 import {FormProvider} from "../context/FormProvider";
 
 export const Text = () =>  (
-  <Theme>
-    <Form value={{name: ''}} className="container row">
+  <BootstrapTheme>
+    <Form value={{name: ''}} className="d-flex flex-column justify-content-between gap-2">
       <Form.Text
-        renderer="my-input"
         param="name"
         params={{
-          placeholder: "Name"
+          label: 'Name',
+          input: {
+            placeholder: "Name"
+          }
         }}
       />
-      <Form.Submit
-        renderer="my-submit"
-        onSubmit={async (e) => console.log(e)}
-        params={"Submit"}
-      />
+      <Form.Submit onSubmit={async (e) => console.log(e)}>
+        {({props}) => <PrimaryButton {...props}>Submit</PrimaryButton>}
+      </Form.Submit>
     </Form>
-  </Theme>
+  </BootstrapTheme>
+);
+
+export const Email = () =>  (
+  <BootstrapTheme>
+    <Form value={{name: ''}} className="d-flex flex-column justify-content-between gap-2">
+      <WarningText>Required field</WarningText>
+      <Form.Email
+        param="email"
+        params={{
+          label: 'Email',
+          input: {
+            placeholder: "Email"
+          }
+        }}
+      />
+      <Form.Submit onSubmit={async (e) => console.log(e)}>
+        <PrimaryButton>Submit</PrimaryButton>
+      </Form.Submit>
+    </Form>
+  </BootstrapTheme>
 );
 
 export const CheckBox = () =>  (
-  <Theme>
-    <Form value={{new: false}} className="container row">
+  <BootstrapTheme>
+    <Form value={{new: false}} className="d-flex flex-column justify-content-between gap-2">
       <Form.CheckBox
-        renderer="my-checkbox"
         param="new"
         params={{
           input: {placeholder: "New"},
@@ -37,12 +55,11 @@ export const CheckBox = () =>  (
         }}
       />
       <Form.Submit
-        renderer="my-submit"
         onSubmit={async (e) => console.log(e)}
-        params={"Submit"}
+        props={{children: 'Submit'}}
       />
     </Form>
-  </Theme>
+  </BootstrapTheme>
 );
 
 export const Password = () =>  (
@@ -277,7 +294,7 @@ export const FullForm = () =>  (
           placeholder: "Age"
         }}
       />
-      <Form.Field<string, HTMLInputElement> param="custom" required={true}>
+      <Form.Field<string, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, any> param="custom" required={true}>
         {({onChange, onBlur, ref, value, errors}) => (
           <FormControl>
             <input
@@ -289,19 +306,19 @@ export const FullForm = () =>  (
               onChange={({target: {value}}) => onChange(value)}
               onBlur={({target: {value}}) => onBlur(value)}
             />
-            {errors.length > 0 && <ErrorText text={`Validation failed ${errors}`} />}
+            {errors.length > 0 && <ErrorText children={`Validation failed ${errors}`} />}
           </FormControl>
         )}
       </Form.Field>
       <Form.Select param="status" required={true}>
         {({props, errors}) => (
           <FormControl>
-            <select className="form-control" placeholder="Color" {...props}>
+            <select className="form-control" {...props}>
               <option value="" disabled>Select your option</option>
               <option value="started">Started</option>
               <option value="finished">Finished</option>
             </select>
-            {errors.length > 0 && <ErrorText text={`Validation failed ${errors}`} />}
+            {errors.length > 0 && <ErrorText children={`Validation failed ${errors}`} />}
           </FormControl>
         )}
       </Form.Select>
@@ -310,7 +327,7 @@ export const FullForm = () =>  (
           <FormControl>
             <span className="form-label">Digits or special characters only: -+/?</span>
             <input className="form-control" placeholder="Desc" {...props} />
-            {errors.length > 0 && <ErrorText text={`Validation failed ${errors}`} />}
+            {errors.length > 0 && <ErrorText children={`Validation failed ${errors}`} />}
           </FormControl>
         )}
       </Form.Text>
