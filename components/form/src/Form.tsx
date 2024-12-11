@@ -1,4 +1,4 @@
-import React, {cloneElement, FormHTMLAttributes, JSX, MutableRefObject, ReactElement, ReactNode, useRef} from "react";
+import React, {cloneElement, FormHTMLAttributes, JSX, MutableRefObject, ReactElement, ReactNode, useRef, MouseEvent} from "react";
 import {BaseFormSubmitProps, FormSubmit, SubmitChildrenProps} from "./fields/FormSubmit";
 import {ButtonProps, Renderer} from "@sparkui/react-theme";
 import {
@@ -85,7 +85,16 @@ Form.Submit = <CustomProps,>({renderer = Renderers.BUTTON_PRIMARY, children, ...
   } else if (children) {
     return (
       <FormSubmit {...props}>
-        {({props}) => cloneElement(children, { ...props })}
+        {({props}) => {
+          if (children.props.onClick) {
+            const onClick = (event: MouseEvent<HTMLButtonElement>) => {
+              props?.onClick?.(event);
+              children.props.onClick?.(event)
+            };
+            return cloneElement(children, { ...props, onClick });
+          }
+          return cloneElement(children, { ...props });
+        }}
       </FormSubmit>
     )
   }

@@ -10,6 +10,7 @@ export const Text = () =>  (
     <Form value={{name: ''}} className="d-flex flex-column justify-content-between gap-2">
       <Form.Text
         param="name"
+        required={true}
         params={{
           label: 'Name',
           input: {
@@ -18,7 +19,7 @@ export const Text = () =>  (
         }}
       />
       <Form.Submit onSubmit={async (e) => console.log(e)}>
-        {({props}) => <PrimaryButton {...props}>Submit</PrimaryButton>}
+        <PrimaryButton onClick={console.log}>Submit</PrimaryButton>
       </Form.Submit>
     </Form>
   </BootstrapTheme>
