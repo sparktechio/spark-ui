@@ -55,10 +55,9 @@ export const CheckBox = () =>  (
           label: "New"
         }}
       />
-      <Form.Submit
-        onSubmit={async (e) => console.log(e)}
-        props={{children: 'Submit'}}
-      />
+      <Form.Submit onSubmit={async (e) => console.log(e)}>
+        <PrimaryButton>Submit</PrimaryButton>
+      </Form.Submit>
     </Form>
   </BootstrapTheme>
 );
