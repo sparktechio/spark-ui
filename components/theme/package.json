@@ -1,6 +1,6 @@
 {
   "name": "@sparkui/react-theme",
-  "version": "1.0.13",
+  "version": "1.0.12",
   "license": "MIT",
   "description": "Spark UI, React theme",
   "main": "dist/index.js",
@@ -43,6 +43,9 @@
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
     "@babel/preset-typescript": "^7.26.0",
+    "@types/react": "^18.3.12",
+    "typescript": "^5.7.2",
+    "styled-components": "^6.1.13",
     "@storybook/addon-essentials": "^8.4.5",
     "@storybook/addon-interactions": "^8.4.5",
     "@storybook/addon-links": "^8.4.5",
@@ -51,11 +54,9 @@
     "@storybook/react-vite": "^8.4.5",
     "@storybook/testing-library": "^0.0.14-next.2",
     "@types/node": "^22.10.0",
-    "@types/react": "^18.3.12",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "storybook": "^8.4.5",
-    "styled-components": "^6.1.13",
-    "typescript": "^5.7.2"
+    "bootstrap": "^5.3.3"
   }
 }
