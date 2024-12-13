@@ -11,7 +11,7 @@ import {
 import {Theme} from "./Theme";
 import {FieldController} from "../context/FieldsProvider";
 import {BaseField} from "../fields/BaseField";
-import {BootstrapTheme, Renderers} from '@sparkui/react-theme';
+import {BootstrapTheme} from '@sparkui/react-theme/dist/examples';
 
 export const Text = () =>  (
   <BootstrapTheme>

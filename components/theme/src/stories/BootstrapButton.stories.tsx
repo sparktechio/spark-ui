@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
 import {Button, ErrorButton, InfoButton, PrimaryButton, SecondaryButton, WarningButton} from "../shared/Button";
-import {BootstrapTheme} from "../shared/BootstrapTheme";
+import {BootstrapTheme} from "../examples";
 
 export const ButtonPrimary = () => (
   <BootstrapTheme>

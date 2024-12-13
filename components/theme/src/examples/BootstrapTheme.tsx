@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {ButtonHTMLAttributes, HTMLAttributes} from "react";
 import {Color, Space, ThemeProvider, ThemeProviderProps} from "../context/ThemeProvider";
-import {Renderers} from "./Renderers";
+import {Renderers} from "../shared/Renderers";
 
 export const BootstrapTheme = ({children, renderers}: ThemeProviderProps<Color, Space>) => (
   <ThemeProvider

@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
 import {Renderer} from "../context/Renderer";
 import {Renderers} from "../shared/Renderers";
-import {BootstrapTheme} from "../shared/BootstrapTheme";
+import {BootstrapTheme} from "../examples";
 
 export const Input = () => (
   <BootstrapTheme>

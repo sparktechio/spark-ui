@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
 import {BodyText, ErrorText, InfoText, LabelText, SubtitleText, Text, TitleText, WarningText} from "../shared/Text";
-import {BootstrapTheme} from "../shared/BootstrapTheme";
+import {BootstrapTheme} from "../examples";
 
 export const TextTitle = () => (
   <BootstrapTheme>

@@ -2,8 +2,9 @@ import React, {InputHTMLAttributes, useEffect, useRef} from "react";
 import {FormControl, Theme} from "./Theme";
 import {Form} from "../Form";
 import {FieldsController, NumericField} from "@sparkui/react-field";
-import {ErrorText, BootstrapTheme, PrimaryButton, WarningText} from "@sparkui/react-theme";
+import {ErrorText, PrimaryButton, WarningText} from "@sparkui/react-theme";
 import {FormProvider} from "../context/FormProvider";
+import {BootstrapTheme} from "@sparkui/react-theme/dist/examples";
 
 export const Text = () =>  (
   <BootstrapTheme>
