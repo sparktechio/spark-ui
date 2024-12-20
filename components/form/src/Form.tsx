@@ -1,3 +1,5 @@
+"use client"
+
 import React, {cloneElement, FormHTMLAttributes, JSX, MutableRefObject, ReactElement, ReactNode, useRef, MouseEvent} from "react";
 import {BaseFormSubmitProps, FormSubmit, SubmitChildrenProps} from "./fields/FormSubmit";
 import {ButtonProps, Renderer} from "@sparkui/react-theme";
@@ -15,17 +17,17 @@ import {
 import {FormProvider} from "./context/FormProvider";
 import {Renderers} from "@sparkui/react-theme/dist/shared/Renderers";
 
-export interface FormProps<F> extends FormHTMLAttributes<HTMLFormElement> {
+export interface FormProps<FormData> extends FormHTMLAttributes<HTMLFormElement> {
   className?: string;
   hideForm?: boolean;
-  value?: F;
-  fieldsControllerRef?: MutableRefObject<FieldsController<F> | undefined>;
-  onStateChange?: (value: F) => void;
+  value?: FormData;
+  fieldsControllerRef?: MutableRefObject<FieldsController<FormData> | undefined>;
+  onStateChange?: (value: FormData) => void;
   onFieldChange?: (field: EnhancedField<any, any>) => void;
   children: ReactNode;
 }
 
-export const Form = <F,>(
+export const Form = <FormData,>(
   {
     className,
     hideForm,
@@ -35,9 +37,9 @@ export const Form = <F,>(
     onFieldChange,
     children,
     ...other
-  }: FormProps<F>
+  }: FormProps<FormData>
 ) => {
-  const ref = useRef<FieldsController<F>>();
+  const ref = useRef<FieldsController<FormData>>();
   const provider = (
     <FormProvider
       value={value}
@@ -58,9 +60,9 @@ export const Form = <F,>(
   )
 }
 
-export interface AppFormSubmitProps<CustomProps> extends BaseFormSubmitProps<CustomProps> {
+export interface AppFormSubmitProps<FormData, CustomProps> extends BaseFormSubmitProps<FormData, CustomProps> {
   renderer?: string;
-  children?: ((props: SubmitChildrenProps<CustomProps>) => JSX.Element) | ReactElement<ButtonProps>;
+  children?: ((props: SubmitChildrenProps<FormData, CustomProps>) => JSX.Element) | ReactElement<ButtonProps>;
 }
 
 Form.Field = Field;
@@ -75,7 +77,7 @@ Form.Radio = RadioField;
 Form.Numeric = NumericField;
 Form.Date = DateField;
 
-Form.Submit = <CustomProps,>({renderer = Renderers.BUTTON_PRIMARY, children, ...props}: AppFormSubmitProps<CustomProps>) => {
+Form.Submit = <FormData, CustomProps = {}>({renderer = Renderers.BUTTON_PRIMARY, children, ...props}: AppFormSubmitProps<FormData, CustomProps>) => {
   if (children && typeof children === "function") {
     return (
       <FormSubmit {...props}>

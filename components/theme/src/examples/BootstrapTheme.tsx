@@ -1,3 +1,5 @@
+"use client"
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {ButtonHTMLAttributes, HTMLAttributes} from "react";
 import {Color, Space, ThemeProvider, ThemeProviderProps} from "../context/ThemeProvider";
@@ -25,6 +27,8 @@ export const BootstrapTheme = ({children, renderers}: ThemeProviderProps<Color, 
         <button className="btn btn-warning" {...props}>{children}</button>),
       [Renderers.BUTTON_ERROR]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (
         <button className="btn btn-danger" {...props}>{children}</button>),
+      [Renderers.BUTTON_SUCCESS]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (
+        <button className="btn btn-success" {...props}>{children}</button>),
       [Renderers.BUTTON_INFO]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (
         <button className="btn btn-light" {...props}>{children}</button>),
 

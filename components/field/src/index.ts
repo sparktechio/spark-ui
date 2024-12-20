@@ -1,3 +1,5 @@
+"use client"
+
 export * from './context/FieldsProvider';
 export * from './fields/Fields';
 export * from './fields/BaseField';

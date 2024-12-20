@@ -16,6 +16,7 @@ export enum Renderers {
   BUTTON_SECONDARY = "button-secondary",
   BUTTON_WARNING = "button-warning",
   BUTTON_ERROR = "button-error",
+  BUTTON_SUCCESS = "button-success",
   BUTTON_INFO = "button-info",
 
   FIELD_TEXT = "field-text",
@@ -41,6 +42,7 @@ export const defaultRenderers: Record<string, (props: Record<string, any>) => JS
   [Renderers.BUTTON_SECONDARY]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (<button {...props}><Secondary>{children}</Secondary></button>),
   [Renderers.BUTTON_WARNING]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (<button {...props}><Warning>{children}</Warning></button>),
   [Renderers.BUTTON_ERROR]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (<button {...props}><Error>{children}</Error></button>),
+  [Renderers.BUTTON_SUCCESS]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (<button {...props}><Info>{children}</Info></button>),
   [Renderers.BUTTON_INFO]: ({children, ...props}: ButtonHTMLAttributes<HTMLButtonElement>) => (<button {...props}><Info>{children}</Info></button>),
 
   [Renderers.FIELD_TEXT]: ({props, params, errors}) => (

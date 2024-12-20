@@ -2,34 +2,32 @@ import {JSX, useState} from "react";
 import {EnhancedField, useFieldsContext, setNestedValue} from "@sparkui/react-field";
 import {ButtonProps} from "@sparkui/react-theme";
 
-export type Submit = <T,>(data: T) => Promise<void>;
-
-export interface SubmitChildrenProps<CustomProps> {
-  onSubmit: Submit;
+export interface SubmitChildrenProps<FormData, CustomProps> {
+  onSubmit: (data: FormData) => Promise<void>;
   loading: boolean;
   props?: ButtonProps;
   params?: CustomProps;
 }
 
-export interface BaseFormSubmitProps<CustomProps> {
-  onSubmit: Submit;
+export interface BaseFormSubmitProps<FormData, CustomProps> {
+  onSubmit: (data: FormData) => Promise<void>;
   onError?: (error: Error) => void;
   params?: CustomProps;
   props?: ButtonProps;
 }
 
-export interface FormSubmitProps<CustomProps> extends BaseFormSubmitProps<CustomProps> {
-  children: (props: SubmitChildrenProps<CustomProps>) => JSX.Element;
+export interface FormSubmitProps<FormData, CustomProps> extends BaseFormSubmitProps<FormData, CustomProps> {
+  children: (props: SubmitChildrenProps<FormData, CustomProps>) => JSX.Element;
 }
 
-export const FormSubmit = <CustomProps,>(
+export const FormSubmit = <FormData, CustomProps>(
   {
     onSubmit,
     onError,
     children,
     props,
     params,
-  }: FormSubmitProps<CustomProps>
+  }: FormSubmitProps<FormData, CustomProps>
 ) => {
   const [loading, setLoading] = useState(false);
   const {fields, getInvalidFields, focusField} = useFieldsContext();
@@ -54,7 +52,7 @@ export const FormSubmit = <CustomProps,>(
           fields.reduce((previousValue, field) => ({
             ...previousValue,
             ...setNestedValue(previousValue, field.param ?? '', toValue(field))
-          }), {})
+          }), {}) as FormData
         );
       } catch (error: unknown) {
         onError && onError(new Error(`${error}`));

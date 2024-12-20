@@ -1,3 +1,5 @@
+"use client"
+
 import React, {createContext, JSX, ReactNode, useContext} from "react";
 import {defaultRenderers} from "../shared/Renderers";
 

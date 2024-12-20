@@ -95,9 +95,9 @@ export const RadioSet = () =>  (
           {key: 'green', label: 'Green'},
         ]}
       />
-      <Form.Submit
+      <Form.Submit<{color: string}>
         renderer="my-submit"
-        onSubmit={async (e) => console.log(e)}
+        onSubmit={async ({color}) => console.log(color)}
         params={"Submit"}
       />
     </Form>
