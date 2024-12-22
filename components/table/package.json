@@ -1,0 +1,62 @@
+{
+  "name": "@sparkui/react-table",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "Spark UI, React table",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "source": "src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sparktechio/spark-ui.git"
+  },
+  "scripts": {
+    "build": "tsc && babel dist --out-dir dist --extensions \".ts,.tsx\"",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "patch": "npm version patch",
+    "publish": "npm publish --access public",
+    "release": "npm run build && npm run patch && npm run publish",
+    "test": "echo \"Form\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "theme",
+    "form",
+    "field",
+    "input",
+    "select",
+    "checkbox",
+    "radio"
+  ],
+  "files": [
+    "src",
+    "dist"
+  ],
+  "author": "akifh@spark-tech.io",
+  "dependencies": {
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.25.9",
+    "@babel/preset-typescript": "^7.26.0",
+    "@types/react": "^18.3.12",
+    "typescript": "^5.7.2",
+    "styled-components": "^6.1.13",
+    "@storybook/addon-essentials": "^8.4.5",
+    "@storybook/addon-interactions": "^8.4.5",
+    "@storybook/addon-links": "^8.4.5",
+    "@storybook/blocks": "^8.4.5",
+    "@storybook/react": "^8.4.5",
+    "@storybook/react-vite": "^8.4.5",
+    "@storybook/testing-library": "^0.0.14-next.2",
+    "@types/node": "^22.10.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "storybook": "^8.4.5",
+    "bootstrap": "^5.3.3"
+  }
+}
