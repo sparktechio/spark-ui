@@ -10,6 +10,7 @@ import {
   setNestedValue,
   validateFormField
 } from "@sparkui/react-field";
+import {isDefined} from "@sparkui/react-utils";
 
 export const FormProvider = <F,>(
   {
@@ -22,19 +23,19 @@ export const FormProvider = <F,>(
 ) => {
   const [fields, setFields] = useState<EnhancedField<any, any>[]>([]);
 
-  const objectToDictionary = (input: any, parentKey = '') => {
+  const objectToParams = (input: any, parentKey = '') => {
     let result: {key: string, value: any}[] = [];
     for (const [key, value] of Object.entries(input)) {
       const currentPath = parentKey ? `${parentKey}.${key}` : key;
 
       if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-        result = result.concat(objectToDictionary(value, currentPath));
+        result = result.concat(objectToParams(value, currentPath));
       } else if (value !== null && Array.isArray(value)) {
         value.forEach((item, index) => {
           if (typeof item !== 'object' && typeof item !== 'function') {
             result.push({ key: `${currentPath}[${index}]`, value: item });
           } else {
-            result = result.concat(objectToDictionary(item, `${currentPath}[${index}]`))
+            result = result.concat(objectToParams(item, `${currentPath}[${index}]`))
           }
         });
       } else {
@@ -65,7 +66,7 @@ export const FormProvider = <F,>(
         }), {}) as F
       ),
       setValue: (value: F) => {
-        const dictionary = objectToDictionary(value);
+        const dictionary = objectToParams(value);
         setFields(fields => fields.map(field => {
           const requested = dictionary.find(item => item.key === field.param);
           if (requested) {
@@ -86,20 +87,13 @@ export const FormProvider = <F,>(
   }
 
   const getNestedValue = (target: any, key: string, defaultValue: any) => {
-    const keys = key.split(".");
-    let currentTarget = target;
-    for (let index = 0; index < keys.length; index++) {
-      const nestedKey = keys[index];
-      if (
-        !currentTarget ||
-        typeof currentTarget !== "object" ||
-        !(nestedKey in currentTarget)
-      ) {
-        return defaultValue;
-      }
-      currentTarget = currentTarget[nestedKey];
+    const params = objectToParams(target);
+    const item = params.find(item => item.key === key);
+    if (isDefined(item)) {
+      return item.value ?? defaultValue;
+    } else {
+      return defaultValue;
     }
-    return currentTarget !== undefined ? currentTarget : defaultValue;
   };
 
   const setField = (field: EnhancedField<any, any>, trigger?: (value: FieldProps<any>) => void) => {
