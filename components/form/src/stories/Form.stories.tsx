@@ -26,6 +26,37 @@ export const Text = () =>  (
   </BootstrapTheme>
 );
 
+
+export const Array = () =>  (
+  <BootstrapTheme>
+    <Form value={{name: ['', '']}} className="d-flex flex-column justify-content-between gap-2">
+      <Form.Text
+        param="name[0]"
+        required={true}
+        params={{
+          label: 'Name',
+          input: {
+            placeholder: "Name"
+          }
+        }}
+      />
+      <Form.Text
+        param="name[1].a"
+        required={true}
+        params={{
+          label: 'Name 2',
+          input: {
+            placeholder: "Name 2"
+          }
+        }}
+      />
+      <Form.Submit onSubmit={async (e) => console.log(e)}>
+        <PrimaryButton onClick={console.log}>Submit</PrimaryButton>
+      </Form.Submit>
+    </Form>
+  </BootstrapTheme>
+);
+
 export const Email = () =>  (
   <BootstrapTheme>
     <Form value={{name: ''}} className="d-flex flex-column justify-content-between gap-2">
