@@ -29,6 +29,14 @@ export const FormProvider = <F,>(
 
       if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
         result = result.concat(objectToDictionary(value, currentPath));
+      } else if (value !== null && Array.isArray(value)) {
+        value.forEach((item, index) => {
+          if (typeof item !== 'object' && typeof item !== 'function') {
+            result.push({ key: `${currentPath}[${index}]`, value: item });
+          } else {
+            result = result.concat(objectToDictionary(item, `${currentPath}[${index}]`))
+          }
+        });
       } else {
         result.push({ key: currentPath, value: value });
       }
