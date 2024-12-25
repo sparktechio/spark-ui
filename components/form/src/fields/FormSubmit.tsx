@@ -1,6 +1,7 @@
 import {JSX, useState} from "react";
 import {EnhancedField, useFieldsContext, setNestedValue} from "@sparkui/react-field";
 import {ButtonProps} from "@sparkui/react-theme";
+import {isDefined} from "@sparkui/react-utils";
 
 export interface SubmitChildrenProps<FormData, CustomProps> {
   onSubmit: (data: FormData) => Promise<void>;
@@ -14,6 +15,7 @@ export interface BaseFormSubmitProps<FormData, CustomProps> {
   onError?: (error: Error) => void;
   params?: CustomProps;
   props?: ButtonProps;
+  excludeNonDefinedArrayItems?: boolean;
 }
 
 export interface FormSubmitProps<FormData, CustomProps> extends BaseFormSubmitProps<FormData, CustomProps> {
@@ -27,6 +29,7 @@ export const FormSubmit = <FormData, CustomProps>(
     children,
     props,
     params,
+    excludeNonDefinedArrayItems = true
   }: FormSubmitProps<FormData, CustomProps>
 ) => {
   const [loading, setLoading] = useState(false);
@@ -41,6 +44,21 @@ export const FormSubmit = <FormData, CustomProps>(
     return formatOutputValue(value);
   }
 
+  const removeNonDefinedValuesFromArrays = (target: any): FormData=> {
+    if (!isDefined(target)) {
+      return undefined as FormData;
+    } else if (Array.isArray(target)) {
+      return target.filter(isDefined).map(removeNonDefinedValuesFromArrays) as FormData;
+    } else if (typeof target === 'object') {
+      for (const key in target) {
+        if (target.hasOwnProperty(key)) {
+          target[key] = removeNonDefinedValuesFromArrays(target[key]);
+        }
+      }
+    }
+    return target;
+  }
+
   const onBeforeSubmit = async () => {
     const invalid = getInvalidFields().find(() => true);
     if (invalid) {
@@ -48,12 +66,11 @@ export const FormSubmit = <FormData, CustomProps>(
     } else {
       setLoading(true);
       try {
-        await onSubmit(
-          fields.reduce((previousValue, field) => ({
-            ...previousValue,
-            ...setNestedValue(previousValue, field.param ?? '', toValue(field))
-          }), {}) as FormData
-        );
+        const data = fields.reduce((previousValue, field) => ({
+          ...previousValue,
+          ...setNestedValue(previousValue, field.param ?? '', toValue(field))
+        }), {}) as FormData;
+        await onSubmit(excludeNonDefinedArrayItems ? removeNonDefinedValuesFromArrays(data) : data);
       } catch (error: unknown) {
         onError && onError(new Error(`${error}`));
       } finally {

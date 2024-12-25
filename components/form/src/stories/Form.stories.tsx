@@ -29,10 +29,9 @@ export const Text = () =>  (
 
 export const Array = () =>  (
   <BootstrapTheme>
-    <Form value={{name: ['one', {a: 'two'}]}} className="d-flex flex-column justify-content-between gap-2">
+    <Form value={{name: [undefined, {a: 'two'}]}} className="d-flex flex-column justify-content-between gap-2">
       <Form.Text
         param="name[0]"
-        required={true}
         params={{
           label: 'Name',
           input: {
