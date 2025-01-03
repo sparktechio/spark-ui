@@ -1,4 +1,4 @@
-import React, {JSX, useEffect, useState} from "react";
+import {JSX, useEffect, useState} from "react";
 
 export enum PagerError {
   FETCH = "FETCH",
@@ -17,6 +17,8 @@ export interface ChildrenProps<D> {
   hasMore: boolean;
   percentage: number;
   loadMore: () => void;
+  fetchData: (page: number) => void;
+  setItems: (setter: (items: D[]) => D[]) => void;
 }
 
 export interface PagerProps<D, P> {
@@ -83,6 +85,8 @@ export const Pager = <D, P>(
       hasMore: items.length < total,
       percentage: Math.round((items.length / total) * 100),
       loadMore,
+      fetchData,
+      setItems
     }
   );
 }
