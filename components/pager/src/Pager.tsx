@@ -16,12 +16,15 @@ export interface ChildrenProps<D> {
   loading: boolean;
   hasMore: boolean;
   percentage: number;
+  pageCount: number;
+  pageSize: number;
   loadMore: () => void;
   fetchData: (page: number) => void;
   setItems: (setter: (items: D[]) => D[]) => void;
 }
 
 export interface PagerProps<D, P> {
+  pageSize?: number;
   params?: P;
   onFetch?: (page: Page<D>) => void;
   onError?: (pagerError: PagerError, error: unknown) => void;
@@ -33,6 +36,7 @@ export const Pager = <D, P>(
   {
     params,
     fetcher,
+    pageSize = 12,
     onFetch = () => ({}),
     onError = () => ({}),
     children
@@ -82,8 +86,10 @@ export const Pager = <D, P>(
       page,
       total,
       loading,
+      pageSize,
       hasMore: items.length < total,
-      percentage: Math.round((items.length / total) * 100),
+      pageCount: pageSize === 0 ? 0 : Math.ceil((total / pageSize)),
+      percentage: total === 0 ? 0 : Math.round((items.length / total) * 100),
       loadMore,
       fetchData,
       setItems
