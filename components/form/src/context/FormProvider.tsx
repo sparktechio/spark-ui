@@ -152,7 +152,7 @@ export const FormProvider = <F,>(
 
   const getInvalidFields = (touch = true) => {
     return fields.map(field => {
-      const errors = validateFormField(field);
+      const errors = validateFormField(field, fields);
       if (touch && errors.length > 0) {
         const newField = {...field, touched: true, errors};
         setField(newField);

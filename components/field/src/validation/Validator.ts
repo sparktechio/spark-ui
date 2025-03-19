@@ -1,4 +1,4 @@
-import {FieldProps} from "../fields/BaseField";
+import {EnhancedField, FieldProps} from "../fields/BaseField";
 import {isDefined} from "@sparkui/react-utils";
 
 export enum ValidationError {
@@ -21,7 +21,8 @@ export const validateFormField = <T,>(
     max,
     value,
     validate = () => true
-  }: FieldProps<T>
+  }: FieldProps<T>,
+  fields: EnhancedField<any, any>[]
 ) => {
   const errors: ValidationError[] = [];
   if (required && (!isDefined(value) || value === '')) {
@@ -33,7 +34,7 @@ export const validateFormField = <T,>(
       errors.push(ValidationError.PATTERN);
     }
 
-    if (validate && !validate(value)) {
+    if (validate && !validate(value, fields)) {
       errors.push(ValidationError.CUSTOM);
     }
 

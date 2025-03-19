@@ -11,7 +11,7 @@ export interface FieldProps<V> {
   label?: string,
   disabled?: boolean,
 
-  validate?: (value?: V) => boolean,
+  validate?: (value?: V, fields?: EnhancedField<any, any>[]) => boolean,
   pattern?: RegExp,
   required?: boolean,
   maxLength?: number,
@@ -80,9 +80,9 @@ export const BaseField = <V, I, P, A>({children, params, propsGenerator, ...fiel
   );
 
   const element: FieldChildrenProps<V, I, P, A> = {
-    onChange: (value) => setField({...field, value, errors: field.touched ? validateFormField({...field, value}) : field.errors}, field.onChange),
-    onBlur: (value) => setField({...field, value, touched: true, errors: validateFormField({...field, value})}, field.onBlur),
-    validate: () => validateFormField(field),
+    onChange: (value) => setField({...field, value, errors: field.touched ? validateFormField({...field, value}, fields) : field.errors}, field.onChange),
+    onBlur: (value) => setField({...field, value, touched: true, errors: validateFormField({...field, value}, fields)}, field.onBlur),
+    validate: () => validateFormField(field, fields),
     errors: field.errors,
     value: field.value,
     formatElementValue: field.formatElementValue,

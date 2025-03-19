@@ -137,7 +137,7 @@ export const StandaloneFieldProvider = (
 
   const getInvalidFields = (touch = true) => {
     if (standaloneField) {
-      const errors = validateFormField(standaloneField);
+      const errors = validateFormField(standaloneField, [standaloneField]);
       if (errors.length > 0) {
         if (touch) {
           const newField = {...standaloneField, errors};
