@@ -1,4 +1,4 @@
-import {JSX, RefObject, useEffect, useRef} from "react";
+import {ReactNode, RefObject, useEffect, useRef} from "react";
 import {useFieldsContext} from "../context/FieldsProvider";
 import {validateFormField, ValidationError} from "../validation/Validator";
 
@@ -50,16 +50,16 @@ export interface FieldChildrenProps<V, I, P, A> {
   touched?: boolean,
   value?: V;
   params?: A;
-  props?: P;
+  props?: P | {ref: RefObject<I>};
 }
 
 export interface BaseFormFieldProps<V, I, P, A> extends FieldProps<V> {
-  propsGenerator?: (props: FieldChildrenProps<V, I, P, A>) => any;
+  propsGenerator?: (props: FieldChildrenProps<V, I, P, A>) => P | {ref: RefObject<I>};
   params?: A;
 }
 
 export interface FormFieldProps<V, I, P, A> extends BaseFormFieldProps<V, I, P, A> {
-  children: (props: FieldChildrenProps<V, I, P, A>) => JSX.Element;
+  children: (props: FieldChildrenProps<V, I, P, A>) => ReactNode;
 }
 
 export const BaseField = <V, I, P, A>({children, params, propsGenerator, ...fieldProps}: FormFieldProps<V, I, P, A>) => {

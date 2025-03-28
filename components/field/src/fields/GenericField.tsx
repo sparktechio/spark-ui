@@ -1,11 +1,11 @@
 import {BaseField, BaseFormFieldProps, FieldChildrenProps, FormFieldProps} from "./BaseField";
-import React, {JSX, MutableRefObject} from "react";
+import React, {MutableRefObject, ReactNode} from "react";
 import {FieldController, hasFieldsContext, StandaloneFieldProvider} from "../context/FieldsProvider";
 import {useTheme, Renderer} from "@sparkui/react-theme";
 
 export interface ThemeFormFieldProps<V, I, P, A> extends BaseFormFieldProps<V, I, P, A> {
   fieldControllerRef?: MutableRefObject<FieldController | undefined>;
-  children?: (props: FieldChildrenProps<V, I, P, A>) => JSX.Element;
+  children?: (props: FieldChildrenProps<V, I, P, A>) => ReactNode;
   renderer?: string;
 }
 
@@ -26,7 +26,7 @@ export const GenericField = <V, I, P, A>({children, fieldControllerRef, ...props
   }
 };
 
-export const ThemeGenericField = <V, I, P, A>({renderer, children, ...props}: ThemeFormFieldProps<V, I, P, A>) => {
+export const ThemeGenericField = <V, I, P = {}, A = {}>({renderer, children, ...props}: ThemeFormFieldProps<V, I, P, A>) => {
   const themeContext = useTheme();
   if (children){
     return (

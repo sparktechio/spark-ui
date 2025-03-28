@@ -11,7 +11,7 @@ Automated the functional part of the React input fields:
 - Globally defined elements
 - Applicable to any React framework
 
-### `Field<ValueType, ElementType>`
+### `Field<ValueType, ElementType, NativeElementType, CustomPropsType>`
 
 The `Field` component is the child container that manages the state of the form field.
 
@@ -24,7 +24,7 @@ The `Field` component is the child container that manages the state of the form 
 - **minLength** (number, optional): Min length
 - **maxLength** (number, optional): Max length
 - **custom** (function(value?: T) => boolean, optional): Custom validator
-- **children** (function(props: FieldChildrenProps<ValueType, ElementType>) => JSX.Element, required): Field renderer
+- **children** (function(props: FieldChildrenProps<ValueType, ElementType>) => ReactNode, required): Field renderer
     - **onChange** (function(value?: T) => void, required): Set new value
     - **onBlur** (function(value?: T) => void), required: Mark as touched and set new value
     - **ref** (RefObject, required): Reference that should be forwarded to focusable element
