@@ -28,7 +28,7 @@ export interface FieldController {
 
 export interface FieldsContextProps {
   name: string;
-  onSubmit: (data: any) => void;
+  onSubmit: (data: any) => Promise<void> | void;
   submitting: boolean;
   setSubmitting: (value: boolean) => void;
   fields: EnhancedField<any, any>[];
@@ -52,7 +52,7 @@ export interface FieldsContextProviderProps<F> {
 export const FieldsContext = createContext<FieldsContextProps>({
   name: 'init',
   fields: [],
-  onSubmit: () => ({}),
+  onSubmit: () => undefined,
   submitting: false,
   setSubmitting: () => ({}),
   focusField: () => ({}),
@@ -167,7 +167,7 @@ export const StandaloneFieldProvider = (
         getInvalidFields,
         registerField,
         unRegisterField,
-        onSubmit: () => ({}),
+        onSubmit: () => undefined,
         submitting,
         setSubmitting,
       }}
