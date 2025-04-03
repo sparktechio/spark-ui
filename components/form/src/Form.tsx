@@ -53,7 +53,7 @@ export const Form = <FormData,>(
 
   return (
     hideForm ? (provider) : (
-      <form className={className} {...other}>
+      <form className={className} onSubmit={event => event.preventDefault()} {...other}>
         {provider}
       </form>
     )

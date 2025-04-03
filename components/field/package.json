@@ -1,6 +1,6 @@
 {
   "name": "@sparkui/react-field",
-  "version": "1.0.13",
+  "version": "1.0.20",
   "license": "MIT",
   "description": "Spark UI, React field",
   "main": "dist/index.js",
