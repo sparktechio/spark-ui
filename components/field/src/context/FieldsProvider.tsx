@@ -28,6 +28,9 @@ export interface FieldController {
 
 export interface FieldsContextProps {
   name: string;
+  onSubmit: (data: any) => void;
+  submitting: boolean;
+  setSubmitting: (value: boolean) => void;
   fields: EnhancedField<any, any>[];
   focusField: (field: EnhancedField<any, any>) => void;
   setField: (field: EnhancedField<any, any>, trigger?: (value: FieldProps<any>) => void) => void;
@@ -49,6 +52,9 @@ export interface FieldsContextProviderProps<F> {
 export const FieldsContext = createContext<FieldsContextProps>({
   name: 'init',
   fields: [],
+  onSubmit: () => ({}),
+  submitting: false,
+  setSubmitting: () => ({}),
   focusField: () => ({}),
   setField: () => ({}),
   initField: () => ({} as EnhancedField<any, any>),
@@ -71,6 +77,7 @@ export const StandaloneFieldProvider = (
     children
   }: FieldsContextProviderProps<any>
 ) => {
+  const [submitting, setSubmitting] = useState(false);
   const [standaloneField, setStandaloneField] = useState<EnhancedField<any, any> | undefined>(undefined);
 
   const focusField = (invalid: EnhancedField<any, any>) => {
@@ -159,7 +166,10 @@ export const StandaloneFieldProvider = (
         focusField,
         getInvalidFields,
         registerField,
-        unRegisterField
+        unRegisterField,
+        onSubmit: () => ({}),
+        submitting,
+        setSubmitting,
       }}
     >
       {children}
