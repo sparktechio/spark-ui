@@ -28,7 +28,7 @@ export interface FieldController {
 
 export interface FieldsContextProps {
   name: string;
-  onSubmit: (data: any) => Promise<void> | void;
+  onBeforeSubmit: (onError: (error: Error) => void, excludeNonDefinedArrayItems: boolean) => Promise<void> | void;
   submitting: boolean;
   setSubmitting: (value: boolean) => void;
   fields: EnhancedField<any, any>[];
@@ -42,6 +42,7 @@ export interface FieldsContextProps {
 
 export interface FieldsContextProviderProps<F> {
   value?: F;
+  onSubmit?: () => Promise<void> | void;
   onChange?: (value: F) => void;
   fieldControllerRef?: MutableRefObject<FieldController | undefined>;
   fieldsControllerRef?: MutableRefObject<FieldsController<F> | undefined>;
@@ -52,7 +53,7 @@ export interface FieldsContextProviderProps<F> {
 export const FieldsContext = createContext<FieldsContextProps>({
   name: 'init',
   fields: [],
-  onSubmit: () => undefined,
+  onBeforeSubmit: () => undefined,
   submitting: false,
   setSubmitting: () => ({}),
   focusField: () => ({}),
@@ -167,7 +168,7 @@ export const StandaloneFieldProvider = (
         getInvalidFields,
         registerField,
         unRegisterField,
-        onSubmit: () => undefined,
+        onBeforeSubmit: () => undefined,
         submitting,
         setSubmitting,
       }}
