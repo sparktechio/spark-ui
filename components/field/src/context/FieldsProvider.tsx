@@ -28,6 +28,9 @@ export interface FieldController {
 
 export interface FieldsContextProps {
   name: string;
+  onBeforeSubmit: (onError: (error: Error) => void, excludeNonDefinedArrayItems: boolean) => Promise<void> | void;
+  submitting: boolean;
+  setSubmitting: (value: boolean) => void;
   fields: EnhancedField<any, any>[];
   focusField: (field: EnhancedField<any, any>) => void;
   setField: (field: EnhancedField<any, any>, trigger?: (value: FieldProps<any>) => void) => void;
@@ -39,6 +42,7 @@ export interface FieldsContextProps {
 
 export interface FieldsContextProviderProps<F> {
   value?: F;
+  onSubmit?: () => Promise<void> | void;
   onChange?: (value: F) => void;
   fieldControllerRef?: MutableRefObject<FieldController | undefined>;
   fieldsControllerRef?: MutableRefObject<FieldsController<F> | undefined>;
@@ -49,6 +53,9 @@ export interface FieldsContextProviderProps<F> {
 export const FieldsContext = createContext<FieldsContextProps>({
   name: 'init',
   fields: [],
+  onBeforeSubmit: () => undefined,
+  submitting: false,
+  setSubmitting: () => ({}),
   focusField: () => ({}),
   setField: () => ({}),
   initField: () => ({} as EnhancedField<any, any>),
@@ -71,6 +78,7 @@ export const StandaloneFieldProvider = (
     children
   }: FieldsContextProviderProps<any>
 ) => {
+  const [submitting, setSubmitting] = useState(false);
   const [standaloneField, setStandaloneField] = useState<EnhancedField<any, any> | undefined>(undefined);
 
   const focusField = (invalid: EnhancedField<any, any>) => {
@@ -159,7 +167,10 @@ export const StandaloneFieldProvider = (
         focusField,
         getInvalidFields,
         registerField,
-        unRegisterField
+        unRegisterField,
+        onBeforeSubmit: () => undefined,
+        submitting,
+        setSubmitting,
       }}
     >
       {children}
