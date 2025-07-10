@@ -1,7 +1,7 @@
 import React, {InputHTMLAttributes, useEffect, useRef} from "react";
 import {FormControl, Theme} from "./Theme";
 import {Form} from "../Form";
-import {FieldsController, NumericField} from "@sparkui/react-field";
+import {FieldsController, NumericField, ValidationError} from "@sparkui/react-field";
 import {ErrorText, PrimaryButton, WarningText} from "@sparkui/react-theme";
 import {FormProvider} from "../context/FormProvider";
 import {BootstrapTheme} from "@sparkui/react-theme/dist/examples";
@@ -258,6 +258,32 @@ export const DynamicFieldsValue = () =>  {
           min={44}
           params={{
             placeholder: "Size"
+          }}
+        />
+      </FormProvider>
+    </Theme>
+  )
+};
+
+export const DynamicSetErrorsFieldsValue = () =>  {
+  const ref = useRef<FieldsController<{age: number}>>();
+
+  useEffect(() => {
+    setTimeout(() => {
+      ref.current?.setValue({age: 45});
+      ref.current?.setFieldErrors("age", [ValidationError.CUSTOM])
+    }, 4000);
+  }, []);
+
+  return (
+    <Theme>
+      <FormProvider fieldsControllerRef={ref}>
+        <NumericField
+          renderer="my-input"
+          param="age"
+          min={44}
+          params={{
+            placeholder: "Age"
           }}
         />
       </FormProvider>

@@ -1,6 +1,6 @@
 {
   "name": "@sparkui/react-form",
-  "version": "1.0.38",
+  "version": "1.0.40",
   "license": "MIT",
   "description": "Spark UI, React form",
   "main": "dist/index.js",
@@ -36,7 +36,7 @@
   "dependencies": {
     "react": "^18.3.1",
     "@sparkui/react-theme": "^1.0.16",
-    "@sparkui/react-field": "^1.0.20"
+    "@sparkui/react-field": "^1.0.21"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.9",

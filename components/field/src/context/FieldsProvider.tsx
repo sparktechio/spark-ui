@@ -8,7 +8,7 @@ import React, {
   useContext, useState,
 } from "react";
 import {EnhancedField, FieldProps} from "../fields/BaseField";
-import {validateFormField} from "../validation/Validator";
+import {validateFormField, ValidationError} from "../validation/Validator";
 import {isDefined} from "@sparkui/react-utils";
 
 export interface FieldsController<F> {
@@ -17,12 +17,14 @@ export interface FieldsController<F> {
   setValue: (value: F) => void;
   getValue: () => F;
   setFieldValue: (param: string, value: any) => void;
+  setFieldErrors: (param: string, errors: ValidationError[]) => void;
 }
 
 export interface FieldController {
   isValid: (touch?: boolean) => boolean;
   getInvalidField: (touch?: boolean) => EnhancedField<any, any> | undefined;
   setValue: (value: any) => void;
+  setErrors: (errors: ValidationError[]) => void;
   getValue: () => any;
 }
 
@@ -98,6 +100,9 @@ export const StandaloneFieldProvider = (
       getValue: () => standaloneField?.value,
       setValue: (value: any) => {
         setStandaloneField(standaloneField => standaloneField ? {...standaloneField, value} : standaloneField);
+      },
+      setErrors: (errors: ValidationError[]) => {
+        setStandaloneField(standaloneField => standaloneField ? {...standaloneField, errors} : standaloneField);
       },
     }
   }

@@ -8,7 +8,7 @@ import {
   FieldProps,
   FieldsContextProviderProps,
   setNestedValue,
-  validateFormField
+  validateFormField, ValidationError
 } from "@sparkui/react-field";
 import {isDefined} from "@sparkui/react-utils";
 
@@ -21,6 +21,7 @@ export const FormProvider = <F,>(
     children
   }: FieldsContextProviderProps<F>
 ) => {
+  const [submitting, setSubmitting] = useState(false);
   const [fields, setFields] = useState<EnhancedField<any, any>[]>([]);
 
   const objectToParams = (input: any, parentKey = '') => {
@@ -79,6 +80,14 @@ export const FormProvider = <F,>(
         setFields(fields => fields.map(field => {
           if (field.param === param) {
             return {...field, value};
+          }
+          return field;
+        }))
+      },
+      setFieldErrors: (param: string, errors: ValidationError[]) => {
+        setFields(fields => fields.map(field => {
+          if (field.param === param) {
+            return {...field, errors, touched: true};
           }
           return field;
         }))
@@ -166,6 +175,9 @@ export const FormProvider = <F,>(
     <FieldsContext.Provider
       value={{
         name: 'form',
+        submitting,
+        setSubmitting,
+        onBeforeSubmit: () => undefined,
         fields,
         setField,
         initField,
