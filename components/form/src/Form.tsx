@@ -22,8 +22,8 @@ export interface FormProps<FormData> extends FormHTMLAttributes<HTMLFormElement>
   hideForm?: boolean;
   value?: FormData;
   fieldsControllerRef?: MutableRefObject<FieldsController<FormData> | undefined>;
-  onStateChange?: (value: FormData) => void;
-  onFieldChange?: (field: EnhancedField<any, any>) => void;
+  onStateChange?: (value: FormData, override: (param: string, props: any) => void) => void;
+  onFieldChange?: (field: EnhancedField<any, any>, override: (param: string, props: any) => void) => void;
   children: ReactNode;
 }
 
