@@ -18,6 +18,7 @@ export interface FieldsController<F> {
   getValue: () => F;
   setFieldValue: (param: string, value: any) => void;
   setFieldErrors: (param: string, errors: ValidationError[]) => void;
+  overrideField: (param: string, props: any) => void;
 }
 
 export interface FieldController {
@@ -25,6 +26,7 @@ export interface FieldController {
   getInvalidField: (touch?: boolean) => EnhancedField<any, any> | undefined;
   setValue: (value: any) => void;
   setErrors: (errors: ValidationError[]) => void;
+  override: (props: any) => void;
   getValue: () => any;
 }
 
@@ -45,10 +47,10 @@ export interface FieldsContextProps {
 export interface FieldsContextProviderProps<F> {
   value?: F;
   onSubmit?: () => Promise<void> | void;
-  onChange?: (value: F) => void;
+  onChange?: (value: F, override: (param: string, props: any) => void) => void;
   fieldControllerRef?: MutableRefObject<FieldController | undefined>;
   fieldsControllerRef?: MutableRefObject<FieldsController<F> | undefined>;
-  onFieldChange?: (field: EnhancedField<any, any>) => void;
+  onFieldChange?: (field: EnhancedField<any, any>, override: (param: string, props: any) => void) => void;
   children: ReactNode;
 }
 
@@ -104,6 +106,9 @@ export const StandaloneFieldProvider = (
       setErrors: (errors: ValidationError[]) => {
         setStandaloneField(standaloneField => standaloneField ? {...standaloneField, errors} : standaloneField);
       },
+      override: (props: any) => {
+        setStandaloneField(standaloneField => standaloneField ? {...standaloneField, props} : standaloneField);
+      }
     }
   }
 
@@ -113,7 +118,7 @@ export const StandaloneFieldProvider = (
     }
     setStandaloneField(field);
     if (onFieldChange) {
-      onFieldChange(field);
+      onFieldChange(field, (_, props) => setStandaloneField({...field, ...props}));
     }
   }
 

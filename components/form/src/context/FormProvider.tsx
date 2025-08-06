@@ -56,6 +56,15 @@ export const FormProvider = <F,>(
     }
   }
 
+  const overrideField = (param: string, props: EnhancedField<any, any>) => {
+    setFields(fields => fields.map(field => {
+      if (field.param === param) {
+        return {...field, ...props};
+      }
+      return field;
+    }))
+  }
+
   if (fieldsControllerRef) {
     fieldsControllerRef.current = {
       isValid: (touch) => !!getFirstInvalidField(touch),
@@ -92,6 +101,7 @@ export const FormProvider = <F,>(
           return field;
         }))
       },
+      overrideField
     }
   }
 
@@ -116,13 +126,14 @@ export const FormProvider = <F,>(
           newFields.reduce((previousValue, currentValue) => ({
             ...previousValue,
             ...setNestedValue(previousValue, currentValue.param ?? '', currentValue.value)
-          }), {}) as F
+          }), {}) as F,
+          overrideField
         );
       }
       return newFields;
     });
     if (onFieldChange) {
-      onFieldChange(field);
+      onFieldChange(field, overrideField);
     }
   }
 

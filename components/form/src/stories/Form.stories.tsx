@@ -291,6 +291,32 @@ export const DynamicSetErrorsFieldsValue = () =>  {
   )
 };
 
+export const DynamicOverrideField = () =>  {
+
+  return (
+    <Theme>
+      <FormProvider
+        onFieldChange={
+          (field, override) => {
+            if (field.param === "age" && field.value === 10) {
+              override("age", {disabled: true})
+            }
+        }
+      }>
+        <NumericField
+          renderer="my-input"
+          param="age"
+          value={5}
+          min={4}
+          params={{
+            placeholder: "Age"
+          }}
+        />
+      </FormProvider>
+    </Theme>
+  )
+};
+
 const sate = {custom: '', personal: {name: '', description: "123", age: 2021}, created: new Date(), status: 'started', color: 'green'};
 
 export const FullForm = () =>  (
