@@ -15,6 +15,7 @@ export interface BaseFormSubmitProps<FormData, CustomProps> {
   onError?: (error: Error) => void;
   params?: CustomProps;
   props?: ButtonProps;
+  disabled?: (fields: EnhancedField<any, any>[]) => boolean;
   excludeNonDefinedArrayItems?: boolean;
 }
 
@@ -29,7 +30,8 @@ export const FormSubmit = <FormData, CustomProps>(
     children,
     props,
     params,
-    excludeNonDefinedArrayItems = true
+    excludeNonDefinedArrayItems = true,
+    disabled = () => false
   }: FormSubmitProps<FormData, CustomProps>
 ) => {
   const [loading, setLoading] = useState(false);
@@ -91,7 +93,7 @@ export const FormSubmit = <FormData, CustomProps>(
       ...element,
       props: {
         onClick: onBeforeSubmit,
-        disabled: loading,
+        disabled: loading || disabled(fields),
         type: "button",
       },
     }

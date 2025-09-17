@@ -418,6 +418,7 @@ export const FullForm = () =>  (
         renderer="my-submit"
         onSubmit={async (e) => console.log(e)}
         params={"Submit"}
+        disabled={(fields) => fields[0]?.value?.length < 2}
       />
     </Form>
   </Theme>
