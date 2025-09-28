@@ -31,6 +31,7 @@ export const FormProvider = <F,>(
 
       if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
         result = result.concat(objectToParams(value, currentPath));
+        result.push({ key: currentPath, value });
       } else if (value !== null && Array.isArray(value)) {
         value.forEach((item, index) => {
           if (typeof item !== 'object' && typeof item !== 'function') {
@@ -40,7 +41,7 @@ export const FormProvider = <F,>(
           }
         });
       } else {
-        result.push({ key: currentPath, value: value });
+        result.push({ key: currentPath, value });
       }
     }
     return result;

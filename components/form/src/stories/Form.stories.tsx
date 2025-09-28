@@ -424,6 +424,39 @@ export const FullForm = () =>  (
   </Theme>
 );
 
+
+export const CustomObjectForm = () =>  (
+  <Theme>
+    <Form value={{custom: {data: '1233'}}} className="container row">
+      <Form.Field<{ data: string }, HTMLInputElement, InputHTMLAttributes<HTMLInputElement>, any> param="custom" required={true}>
+        {({onChange, onBlur, ref, value, errors}) => {
+          console.log('CustomObjectForm', value);
+          return (
+            <FormControl>
+              <input
+                className="form-control"
+                placeholder="Data"
+                type="text"
+                ref={ref}
+                value={value?.data}
+                onChange={({target: {value}}) => onChange({data: value})}
+                onBlur={({target: {value}}) => onBlur({data: value})}
+              />
+              {errors.length > 0 && <ErrorText children={`Validation failed ${errors}`} />}
+            </FormControl>
+          )
+        }}
+      </Form.Field>
+      <Form.Submit
+        renderer="my-submit"
+        onSubmit={async (e) => console.log(e)}
+        params={"Submit"}
+        disabled={(fields) => fields[0]?.value?.length < 2}
+      />
+    </Form>
+  </Theme>
+);
+
 export default {
   title: 'Components/Form',
   component: Form,
